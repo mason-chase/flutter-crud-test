@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
 import 'package:mc_crud_test/locator.dart';
 
 void main() async {
-  setup();
+  WidgetsFlutterBinding.ensureInitialized();
+  await  setup();
   runApp(const MyApp());
 }
 
@@ -12,14 +15,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Customer',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => locator<CustomerListBloc>(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Customer',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: AllCustomers(),
       ),
-      home: const Customers(),
     );
   }
 }
-

@@ -12,12 +12,12 @@ import '../../../../core/resources/data_state.dart';
 part 'customers_event.dart';
 part 'customers_state.dart';
 
-class CustomersBloc extends Bloc<CustomersEvent, CustomersState> {
+class CustomerListBloc extends Bloc<CustomersEvent, CustomersState> {
 
   GetCustomerListUseCase getCustomerListUseCase;
 
 
-  CustomersBloc(this.getCustomerListUseCase) : super(CustomersState(getAllCustomersStatus: CustomersLoading())) {
+  CustomerListBloc(this.getCustomerListUseCase) : super(CustomersState(getAllCustomersStatus: CustomersLoading())) {
     on<GetAllCustomersEvent>((event, emit) async {
       emit(state.copyWith(newListStatus: CustomersLoading()));
 
