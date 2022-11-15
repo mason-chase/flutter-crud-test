@@ -9,7 +9,6 @@ class CustomerListRepositoryImpl extends CustomerListRepository {
   CustomerListRepositoryImpl(this.customerDao);
 
 
-
   @override
   Future<DataState<List<CustomerEntity>>> getAllCustomers() async {
     try {
