@@ -6,7 +6,7 @@ abstract class CustomersStatus extends Equatable{}
 
 
 
-class CustomersLoading extends CustomersState {
+class CustomersLoading extends CustomersStatus {
   @override
   List<Object?> get props => [];
 }
