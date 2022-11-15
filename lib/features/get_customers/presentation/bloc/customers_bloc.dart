@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_status.dart';
 import 'package:meta/meta.dart';
 
 part 'customers_event.dart';

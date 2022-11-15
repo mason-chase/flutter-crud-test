@@ -1,6 +1,20 @@
 part of 'customers_bloc.dart';
 
-@immutable
-abstract class CustomersState {}
+class CustomersState extends Equatable {
+  CustomersStatus getAllCustomersStatus;
 
-class CustomersInitial extends CustomersState {}
+  CustomersState({required this.getAllCustomersStatus});
+
+  CustomersState copyWith(
+      {CustomersStatus? newListStatus,
+      }) {
+    return CustomersState(
+      getAllCustomersStatus: newListStatus ?? getAllCustomersStatus,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        getAllCustomersStatus
+      ];
+}
