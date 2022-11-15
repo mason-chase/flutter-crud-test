@@ -13,6 +13,16 @@ class AllCustomers extends StatefulWidget {
 }
 
 class _AllCustomersState extends State<AllCustomers> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<CustomerListBloc>(context).add(GetAllCustomersEvent());
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
