@@ -10,12 +10,12 @@ class AddCustomerRepositoryImpl extends AddCustomerRepository {
   AddCustomerRepositoryImpl(this.customerDao);
 
   @override
-  Future<void> addCustomer(CustomerEntity customer) async {
+  Future<DataState<CustomerEntity>> addCustomer(CustomerEntity customer) async {
       try {
         await customerDao.insertCustomer(customer);
-        // return DataSuccess(customer);
+        return DataSuccess(customer);
       } catch (e) {
-        // return DataFailed(e.toString());
+        return DataFailed(e.toString());
       }
   }
 
