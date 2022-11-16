@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/screens/add_customer.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_status.dart';
@@ -15,6 +16,7 @@ class AllCustomers extends StatefulWidget {
 
 class _AllCustomersState extends State<AllCustomers> {
 
+  Logger logger = Logger(printer: PrettyPrinter());
 
   @override
   void initState() {
@@ -58,6 +60,7 @@ class _AllCustomersState extends State<AllCustomers> {
                   }
                 },
                 builder: (context, state) {
+                  logger.d(state);
                   if (state.getAllCustomersStatus is CustomersLoading) {
                     return CircularProgressIndicator();
                   }

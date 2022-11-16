@@ -1,6 +1,10 @@
 
 
 import 'package:get_it/get_it.dart';
+import 'package:mc_crud_test/features/add_customer/data/repository/add_customer_repository_impl.dart';
+import 'package:mc_crud_test/features/add_customer/domain/repository/add_customer_repository.dart';
+import 'package:mc_crud_test/features/add_customer/domain/usecase/add_customer_usecase.dart';
+import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/data/repository/customer_list_repository_impl.dart';
 import 'package:mc_crud_test/features/get_customers/domain/repository/customer_list_repository.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
@@ -17,14 +21,15 @@ setup() async {
   locator.registerSingleton<AppDatabase>(database);
 
   /// Repository
-  locator
-      .registerSingleton<CustomerListRepository>(CustomerListRepositoryImpl(database.customerDao));
+  locator.registerSingleton<CustomerListRepository>(CustomerListRepositoryImpl(database.customerDao));
+  locator.registerSingleton<AddCustomerRepository>(AddCustomerRepositoryImpl(database.customerDao));
 
   /// Usecase
-  locator.registerSingleton<GetCustomerListUseCase>(
-      GetCustomerListUseCase(locator()));
+  locator.registerSingleton<GetCustomerListUseCase>(GetCustomerListUseCase(locator()));
+  locator.registerSingleton<AddCustomerUseCase>(AddCustomerUseCase(locator()));
 
   /// Bloc
   locator.registerFactory<CustomerListBloc>( () => CustomerListBloc(locator()));
+  locator.registerFactory<AddCustomerBloc>( () => AddCustomerBloc(locator()));
 
 }

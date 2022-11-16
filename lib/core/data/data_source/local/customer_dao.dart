@@ -8,14 +8,14 @@ abstract class CustomerDao {
   @insert
   Future<void> insertCustomer(CustomerEntity customer);
 
-  @Query("SELECT * FROM Customer")
+  @Query("SELECT * FROM CustomerEntity")
   Future<List<CustomerEntity>> getAll();
 
 
-  @Query("SELECT * FROM Customer WHERE id =:customerId")
+  @Query("SELECT * FROM CustomerEntity WHERE id =:customerId")
   Future<CustomerEntity?> getCustomer(int customerId);
 
 
-  @Query("DELETE from Customer where id =:customerId")
+  @Query("DELETE from CustomerEntity where id =:customerId")
   Future<void> deletePackage(int customerId);
 }

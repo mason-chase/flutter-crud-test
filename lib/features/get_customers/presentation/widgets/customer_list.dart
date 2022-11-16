@@ -32,7 +32,7 @@ class CustomerList extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   child: Text(
-                    "mY nAME IS mAHSAAAaa",
+                    customerList[index].firstName!,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),

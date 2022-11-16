@@ -12,4 +12,13 @@ class CustomerEntity {
   String? email;
   String? bankAccountNumber;
   int? dateOfBirth;
+
+  CustomerEntity(
+      {this.firstName,
+        this.lastName,
+        this.phoneNumber,
+        this.email,
+        this.bankAccountNumber,
+        this.dateOfBirth,
+     });
 }
