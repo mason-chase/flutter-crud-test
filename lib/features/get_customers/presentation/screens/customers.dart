@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/features/add_customer/presentation/screens/add_customer.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_status.dart';
 
@@ -30,7 +31,14 @@ class _AllCustomersState extends State<AllCustomers> {
         title: Text("Customers"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddCustomerScreen(),
+            ),
+          );
+        },
         child: const Icon(Icons.add),
       ),
       body: Container(
