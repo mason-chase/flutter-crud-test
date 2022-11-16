@@ -127,20 +127,32 @@ class _$CustomerDao extends CustomerDao {
 
   @override
   Future<List<CustomerEntity>> getAll() async {
-    return _queryAdapter.queryList('SELECT * FROM Customer',
-        mapper: (Map<String, Object?> row) => CustomerEntity());
+    return _queryAdapter.queryList('SELECT * FROM CustomerEntity',
+        mapper: (Map<String, Object?> row) => CustomerEntity(
+            firstName: row['firstName'] as String?,
+            lastName: row['lastName'] as String?,
+            phoneNumber: row['phoneNumber'] as String?,
+            email: row['email'] as String?,
+            bankAccountNumber: row['bankAccountNumber'] as String?,
+            dateOfBirth: row['dateOfBirth'] as int?));
   }
 
   @override
   Future<CustomerEntity?> getCustomer(int customerId) async {
-    return _queryAdapter.query('SELECT * FROM Customer WHERE id =?1',
-        mapper: (Map<String, Object?> row) => CustomerEntity(),
+    return _queryAdapter.query('SELECT * FROM CustomerEntity WHERE id =?1',
+        mapper: (Map<String, Object?> row) => CustomerEntity(
+            firstName: row['firstName'] as String?,
+            lastName: row['lastName'] as String?,
+            phoneNumber: row['phoneNumber'] as String?,
+            email: row['email'] as String?,
+            bankAccountNumber: row['bankAccountNumber'] as String?,
+            dateOfBirth: row['dateOfBirth'] as int?),
         arguments: [customerId]);
   }
 
   @override
-  Future<void> deletePackage(int customerId) async {
-    await _queryAdapter.queryNoReturn('DELETE from Customer where id =?1',
+  Future<bool?> deleteCustomer(int customerId) async {
+    await _queryAdapter.queryNoReturn('DELETE from CustomerEntity where id =?1',
         arguments: [customerId]);
   }
 

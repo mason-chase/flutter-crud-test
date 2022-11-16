@@ -5,14 +5,15 @@ import 'package:mc_crud_test/features/get_customers/presentation/screens/custome
 
 import '../../../../core/data/data_source/local/customer_entity.dart';
 
-class AddCustomerScreen extends StatefulWidget {
-  const AddCustomerScreen({Key? key}) : super(key: key);
+class UpdateCustomerScreen extends StatefulWidget {
+  CustomerEntity customerEntity;
+  UpdateCustomerScreen({required this.customerEntity, Key? key}) : super(key: key);
 
   @override
-  State<AddCustomerScreen> createState() => _AddCustomerScreenState();
+  State<UpdateCustomerScreen> createState() => _UpdateCustomerScreenState();
 }
 
-class _AddCustomerScreenState extends State<AddCustomerScreen> {
+class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -23,6 +24,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   @override
   void initState() {
     super.initState();
+   setData();
   }
 
   @override
@@ -98,6 +100,15 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
     email: emailController.text,
     dateOfBirth: 555555,
     bankAccountNumber: bankAccountController.text,);
+  }
+
+  setData(){
+    firstNameController.text = widget.customerEntity.firstName!;
+    lastNameController.text = widget.customerEntity.lastName!;
+    emailController.text = widget.customerEntity.email!;
+    bankAccountController.text = widget.customerEntity.bankAccountNumber!;
+    phoneNumberController.text = widget.customerEntity.phoneNumber!;
+    // .text = widget.customerEntity.firstName!;
   }
 
 }

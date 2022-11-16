@@ -17,5 +17,5 @@ abstract class CustomerDao {
 
 
   @Query("DELETE from CustomerEntity where id =:customerId")
-  Future<void> deletePackage(int customerId);
+  Future<bool?> deleteCustomer(int customerId);
 }

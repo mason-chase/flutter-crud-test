@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
+import 'package:mc_crud_test/features/delete_customer/presentation/bloc/delete_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
 import 'package:mc_crud_test/locator.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<AddCustomerBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<DeleteCustomerBloc>(),
         ),
       ],
       child: MaterialApp(

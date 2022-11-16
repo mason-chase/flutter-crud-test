@@ -15,19 +15,22 @@ class AllCustomers extends StatefulWidget {
 }
 
 class _AllCustomersState extends State<AllCustomers> {
-
   Logger logger = Logger(printer: PrettyPrinter());
+
+  _loadData() {
+    BlocProvider.of<CustomerListBloc>(context).add(GetAllCustomersEvent());
+  }
 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CustomerListBloc>(context).add(GetAllCustomersEvent());
+    logger.d("init state");
+    _loadData();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
+    logger.d("BuildContext");
     return Scaffold(
       appBar: AppBar(
         title: Text("Customers"),
@@ -64,16 +67,12 @@ class _AllCustomersState extends State<AllCustomers> {
                   if (state.getAllCustomersStatus is CustomersLoading) {
                     return CircularProgressIndicator();
                   }
-                  if (state.getAllCustomersStatus
-                      is GetAllCustomersCompleted) {
+                  if (state.getAllCustomersStatus is GetAllCustomersCompleted) {
                     GetAllCustomersCompleted getAllCustomersCompleted =
-                        state.getAllCustomersStatus
-                            as GetAllCustomersCompleted;
-                    var customerList =
-                        getAllCustomersCompleted.customerList;
+                        state.getAllCustomersStatus as GetAllCustomersCompleted;
+                    var customerList = getAllCustomersCompleted.customerList;
                     if (customerList.isNotEmpty) {
-                      return CustomerList(
-                          customerList: customerList);
+                      return CustomerList(customerList: customerList);
                     } else {
                       return Container();
                     }
