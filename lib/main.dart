@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/config/app_theme.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
 import 'package:mc_crud_test/features/delete_customer/presentation/bloc/delete_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
@@ -32,9 +33,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Customer',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: appTheme(),
         home: AllCustomers(),
       ),
     );

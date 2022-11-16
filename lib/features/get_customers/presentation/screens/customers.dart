@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -17,20 +19,14 @@ class AllCustomers extends StatefulWidget {
 class _AllCustomersState extends State<AllCustomers> {
   Logger logger = Logger(printer: PrettyPrinter());
 
-  _loadData() {
+  @override
+  void initState() {
+    super.initState();
     BlocProvider.of<CustomerListBloc>(context).add(GetAllCustomersEvent());
   }
 
   @override
-  void initState() {
-    super.initState();
-    logger.d("init state");
-    _loadData();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    logger.d("BuildContext");
     return Scaffold(
       appBar: AppBar(
         title: Text("Customers"),
@@ -47,6 +43,17 @@ class _AllCustomersState extends State<AllCustomers> {
         child: const Icon(Icons.add),
       ),
       body: Container(
+        decoration: new BoxDecoration(
+          image: new DecorationImage(
+            image: new ExactAssetImage('assets/images/main_bg.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: new BackdropFilter(
+          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: new Container(
+            decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -84,6 +91,7 @@ class _AllCustomersState extends State<AllCustomers> {
                 },
               ),
             ],
+          ), ),
           ),
         ),
       ),

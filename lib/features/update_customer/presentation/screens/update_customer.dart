@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
+import 'package:mc_crud_test/features/update_customer/presentation/bloc/update_customer_bloc.dart';
 
 import '../../../../core/data/data_source/local/customer_entity.dart';
 
@@ -70,8 +71,8 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
               color: Colors.blue,
               child: Text('Save'),
               onPressed: () {
-                BlocProvider.of<AddCustomerBloc>(context).add(
-                    NewCustomerEvent(setCustomerInfo()));
+                BlocProvider.of<UpdateCustomerBloc>(context).add(
+                    UpdateCustomerEvent(setCustomerInfo()));
 
                 // Navigator.pop(context);
 
@@ -108,7 +109,6 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
     emailController.text = widget.customerEntity.email!;
     bankAccountController.text = widget.customerEntity.bankAccountNumber!;
     phoneNumberController.text = widget.customerEntity.phoneNumber!;
-    // .text = widget.customerEntity.firstName!;
   }
 
 }
