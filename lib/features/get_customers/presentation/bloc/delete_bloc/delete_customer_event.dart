@@ -3,10 +3,9 @@ part of 'delete_customer_bloc.dart';
 // @immutable
 // abstract class DeleteCustomerEvent {}
 
-@immutable
 class DeleteCustomerEvent {
-  int customerId;
+  CustomerEntity customer;
 
-  DeleteCustomerEvent(this.customerId);
+  DeleteCustomerEvent(this.customer);
 }
 

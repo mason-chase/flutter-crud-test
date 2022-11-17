@@ -3,5 +3,5 @@ import '../../../../core/resources/data_state.dart';
 
 abstract class DeleteCustomerRepository {
 
-  Future<DataState<bool>> deleteCustomer(int customerId);
+  Future<DataState<int>> deleteCustomer(CustomerEntity customer);
 }

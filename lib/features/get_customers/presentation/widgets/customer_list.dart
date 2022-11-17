@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/config/app_theme.dart';
 import 'package:mc_crud_test/core/data/data_source/local/customer_entity.dart';
-import 'package:mc_crud_test/features/delete_customer/presentation/bloc/delete_customer_bloc.dart';
+import 'package:mc_crud_test/features/get_customers/presentation/bloc/delete_bloc/delete_customer_bloc.dart';
 import 'package:mc_crud_test/features/update_customer/presentation/screens/update_customer.dart';
 
-import '../bloc/customers_bloc.dart';
+import '../bloc/customer_list_bloc/customers_bloc.dart';
 
 class CustomerList extends StatelessWidget {
   List<CustomerEntity> customerList;
@@ -84,7 +84,7 @@ class CustomerList extends StatelessWidget {
                         color: Theme.of(context).iconTheme.color,
                         onPressed: () {
                           BlocProvider.of<DeleteCustomerBloc>(context).add(
-                              DeleteCustomerEvent(customerList[index].id!));
+                              DeleteCustomerEvent(customerList[index]));
                           BlocProvider.of<CustomerListBloc>(context)
                               .add(GetAllCustomersEvent());
                         },

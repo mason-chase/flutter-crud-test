@@ -13,9 +13,9 @@ abstract class CustomerDao {
   @Query("SELECT * FROM CustomerEntity WHERE id =:customerId")
   Future<CustomerEntity?> getCustomer(int customerId);
 
-  @Query("DELETE from CustomerEntity where id =:customerId")
-  Future<void> deleteCustomer(int customerId);
+  @Query("DELETE from CustomerEntity WHERE email = :email")
+  Future<int?> deleteCustomer(String email);
 
   @update
-  Future<void> updateCustomer(CustomerEntity customer);
+  Future<int> updateCustomer(CustomerEntity customer);
 }

@@ -1,7 +1,10 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/core/utils/app_utils.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
+import 'package:mc_crud_test/locator.dart';
 
 import '../../../../config/app_theme.dart';
 import '../../../../core/data/data_source/local/customer_entity.dart';
@@ -15,6 +18,8 @@ class AddCustomerScreen extends StatefulWidget {
 }
 
 class _AddCustomerScreenState extends State<AddCustomerScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -72,40 +77,73 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Card(
-                child: TextField(
+                child: TextFormField(
                   controller: phoneNumberController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone_android),
                     labelText: 'Phone Number',
                     hintText: 'Enter Your Phone Number',
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty ||
+                        !locator<AppUtils>().isMobilePhoneNumberValid(value)) {
+                      return 'Enter a valid phone number!';
+                    }
+                    return null;
+                  },
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                child: TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    labelText: 'Email',
-                    hintText: 'Enter Your Email',
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Card(
+                      child: TextFormField(
+                        controller: emailController,
+                        // validator: validateEmail,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          labelText: 'Email',
+                          hintText: 'Enter Your Email',
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        onFieldSubmitted: (value) {
+                          //Validator
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty ||
+                              !locator<AppUtils>().isEmailValid(value)) {
+                            return 'Enter a valid email!';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                child: TextField(
-                  controller: bankAccountNumberController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.monetization_on),
-                    labelText: 'Bank Account Number',
-                    hintText: 'Enter Your Bank Account Number',
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Card(
+                      child: TextFormField(
+                        controller: bankAccountNumberController,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.monetization_on),
+                          labelText: 'Bank Account Number',
+                          hintText: 'Enter Your Bank Account Number',
+                        ),
+                          onFieldSubmitted: (value){},
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter a valid account number!';
+                            }
+                            return null;
+                          }
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             Row(
@@ -116,12 +154,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     padding: const EdgeInsets.all(4.0),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        BlocProvider.of<AddCustomerBloc>(context)
-                            .add(NewCustomerEvent(setCustomerInfo()));
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllCustomers()));
+                        _submit();
+
                       },
                       icon: const Icon(Icons.save),
                       label: const Text("Save"),
@@ -186,5 +220,26 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       dateOfBirth: dateController.text,
       bankAccountNumber: bankAccountNumberController.text,
     );
+  }
+
+
+  void _submit() {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    } else {
+      BlocProvider.of<AddCustomerBloc>(context)
+          .add(NewCustomerEvent(setCustomerInfo()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => AllCustomers()));
+    }
+    _formKey.currentState!.save();
+  }
+
+  String? validateEmail(String? value) {
+    if (EmailValidator.validate(value!))
+      return 'Name must be more than 2 charater';
+    else
+      return null;
   }
 }

@@ -86,6 +86,8 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `CustomerEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `firstName` TEXT, `lastName` TEXT, `phoneNumber` TEXT, `email` TEXT, `bankAccountNumber` TEXT, `dateOfBirth` TEXT)');
+        await database.execute(
+            'CREATE UNIQUE INDEX `index_CustomerEntity_firstName_lastName_dateOfBirth_email` ON `CustomerEntity` (`firstName`, `lastName`, `dateOfBirth`, `email`)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -166,9 +168,10 @@ class _$CustomerDao extends CustomerDao {
   }
 
   @override
-  Future<void> deleteCustomer(int customerId) async {
-    await _queryAdapter.queryNoReturn('DELETE from CustomerEntity where id =?1',
-        arguments: [customerId]);
+  Future<int?> deleteCustomer(String email) async {
+    await _queryAdapter.queryNoReturn(
+        'DELETE from CustomerEntity WHERE email = ?1',
+        arguments: [email]);
   }
 
   @override
@@ -178,8 +181,8 @@ class _$CustomerDao extends CustomerDao {
   }
 
   @override
-  Future<void> updateCustomer(CustomerEntity customer) async {
-    await _customerEntityUpdateAdapter.update(
+  Future<int> updateCustomer(CustomerEntity customer) {
+    return _customerEntityUpdateAdapter.updateAndReturnChangedRows(
         customer, OnConflictStrategy.abort);
   }
 }

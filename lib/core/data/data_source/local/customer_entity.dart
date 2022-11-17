@@ -1,6 +1,7 @@
 import 'package:floor/floor.dart';
 
-@entity
+
+@Entity(indices: [Index(value: ["firstName", "lastName", "dateOfBirth", "email"],unique: true)])
 class CustomerEntity {
 
   @PrimaryKey(autoGenerate: true,)

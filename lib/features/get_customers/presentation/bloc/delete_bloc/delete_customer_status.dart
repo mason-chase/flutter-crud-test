@@ -1,9 +1,15 @@
 
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/data/data_source/local/customer_entity.dart';
+import '../../../../../core/data/data_source/local/customer_entity.dart';
 
 abstract class DeleteCustomerStatus extends Equatable {}
+
+
+class DeleteCustomerInitial extends DeleteCustomerStatus {
+  @override
+  List<Object?> get props => [];
+}
 
 
 
