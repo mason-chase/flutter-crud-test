@@ -50,10 +50,10 @@ ThemeData appTheme() {
     ),
 
     // Floating Button
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       elevation: 16,
       iconSize: 24.0,
-      backgroundColor: secondaryDarkColor,
+      backgroundColor: secondaryLightColor,
     ),
 
     // Icon Them
@@ -77,8 +77,9 @@ ThemeData appTheme() {
     ),
 
     inputDecorationTheme: const InputDecorationTheme(
+      labelStyle: TextStyle(fontSize: 14,),
       errorStyle: TextStyle(
-          color: primaryDarkColor, fontWeight: FontWeight.bold, fontSize: 16.0),
+          color: primaryDarkColor, fontWeight: FontWeight.bold, fontSize: 14.0),
       border: UnderlineInputBorder(
         borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
       ),
