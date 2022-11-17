@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/images/add_bg.png
     - assets/images/main_bg.png
+    - assets/images/edit_info.png
 #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

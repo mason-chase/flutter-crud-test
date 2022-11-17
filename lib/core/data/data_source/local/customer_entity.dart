@@ -11,7 +11,7 @@ class CustomerEntity {
   String? phoneNumber;
   String? email;
   String? bankAccountNumber;
-  int? dateOfBirth;
+  String? dateOfBirth;
 
   CustomerEntity(
       {this.firstName,

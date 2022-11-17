@@ -1,23 +1,28 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
+import 'package:logger/logger.dart';
+import 'package:mc_crud_test/core/utils/app_utils.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
 import 'package:mc_crud_test/features/update_customer/presentation/bloc/update_customer_bloc.dart';
+import 'package:mc_crud_test/locator.dart';
 
 import '../../../../config/app_theme.dart';
 import '../../../../core/data/data_source/local/customer_entity.dart';
 
 class UpdateCustomerScreen extends StatefulWidget {
   CustomerEntity customerEntity;
-  UpdateCustomerScreen({required this.customerEntity, Key? key}) : super(key: key);
+
+  UpdateCustomerScreen({required this.customerEntity, Key? key})
+      : super(key: key);
 
   @override
   State<UpdateCustomerScreen> createState() => _UpdateCustomerScreenState();
 }
 
 class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
-
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -25,22 +30,31 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
   TextEditingController bankAccountNumberController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
+  AppUtils appUtils = locator<AppUtils>();
+  List<String> date = [];
+  Logger logger = Logger(printer: PrettyPrinter());
+
   @override
   void initState() {
     super.initState();
-   setData();
+    setData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset("assets/images/add_bg.png"),
+              child: CircleAvatar(
+                backgroundColor: secondaryLightColor,
+                radius: 64,
+                child: Image.asset("assets/images/edit_info.png"),
+                //Text
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
@@ -163,9 +177,8 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
             context: context,
-            initialDate: DateTime.utc(1988, 05, 23),
+            initialDate: DateTime.utc(int.parse(date[0]),int.parse(date[1]), int.parse(date[2])),
             firstDate: DateTime(1900),
-            //DateTime.now() - not to allow to choose before today.
             lastDate: DateTime(2101));
         if (pickedDate != null) {
           String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
@@ -180,22 +193,26 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
     );
   }
 
-
   CustomerEntity setCustomerInfo() {
-    return CustomerEntity(firstName: firstNameController.text,
-    lastName: lastNameController.text,
-    phoneNumber: phoneNumberController.text,
-    email: emailController.text,
-    dateOfBirth: 555555,
-    bankAccountNumber: bankAccountNumberController.text,);
+    return CustomerEntity(
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      phoneNumber: phoneNumberController.text,
+      email: emailController.text,
+      dateOfBirth: dateController.text,
+      bankAccountNumber: bankAccountNumberController.text,
+    );
   }
 
-  setData(){
+  setData() {
     firstNameController.text = widget.customerEntity.firstName!;
     lastNameController.text = widget.customerEntity.lastName!;
     emailController.text = widget.customerEntity.email!;
     bankAccountNumberController.text = widget.customerEntity.bankAccountNumber!;
     phoneNumberController.text = widget.customerEntity.phoneNumber!;
+    dateController.text = widget.customerEntity.dateOfBirth!;
+    date = appUtils.splitDate(widget.customerEntity.dateOfBirth!);
   }
+
 
 }

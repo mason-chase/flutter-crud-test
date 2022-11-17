@@ -44,24 +44,11 @@ class CustomerList extends StatelessWidget {
                     Expanded(
                       flex: 5,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  customerList[index].firstName!,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  customerList[index].lastName!,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            "${customerList[index].firstName!}   ${customerList[index].lastName!}",
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(

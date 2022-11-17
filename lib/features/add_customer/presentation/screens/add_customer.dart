@@ -183,7 +183,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       lastName: lastNameController.text,
       phoneNumber: phoneNumberController.text,
       email: emailController.text,
-      dateOfBirth: 555555,
+      dateOfBirth: dateController.text,
       bankAccountNumber: bankAccountNumberController.text,
     );
   }

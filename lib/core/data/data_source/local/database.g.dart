@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `CustomerEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `firstName` TEXT, `lastName` TEXT, `phoneNumber` TEXT, `email` TEXT, `bankAccountNumber` TEXT, `dateOfBirth` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `CustomerEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `firstName` TEXT, `lastName` TEXT, `phoneNumber` TEXT, `email` TEXT, `bankAccountNumber` TEXT, `dateOfBirth` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -149,7 +149,7 @@ class _$CustomerDao extends CustomerDao {
             phoneNumber: row['phoneNumber'] as String?,
             email: row['email'] as String?,
             bankAccountNumber: row['bankAccountNumber'] as String?,
-            dateOfBirth: row['dateOfBirth'] as int?));
+            dateOfBirth: row['dateOfBirth'] as String?));
   }
 
   @override
@@ -161,7 +161,7 @@ class _$CustomerDao extends CustomerDao {
             phoneNumber: row['phoneNumber'] as String?,
             email: row['email'] as String?,
             bankAccountNumber: row['bankAccountNumber'] as String?,
-            dateOfBirth: row['dateOfBirth'] as int?),
+            dateOfBirth: row['dateOfBirth'] as String?),
         arguments: [customerId]);
   }
 

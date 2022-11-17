@@ -5,6 +5,7 @@ import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_custome
 import 'package:mc_crud_test/features/delete_customer/presentation/bloc/delete_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/bloc/customers_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
+import 'package:mc_crud_test/features/update_customer/presentation/bloc/update_customer_bloc.dart';
 import 'package:mc_crud_test/locator.dart';
 
 void main() async {
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<DeleteCustomerBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<UpdateCustomerBloc>(),
         ),
       ],
       child: MaterialApp(
