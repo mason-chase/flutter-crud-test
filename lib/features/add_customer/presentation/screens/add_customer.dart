@@ -61,7 +61,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   controller: lastNameController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    // border: OutlineInputBorder(),
                     labelText: 'Last Name',
                     hintText: 'Enter Your Last Name',
                   ),
@@ -81,7 +80,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   controller: phoneNumberController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone_android),
-                    border: OutlineInputBorder(),
                     labelText: 'Phone Number',
                     hintText: 'Enter Your Phone Number',
                   ),
@@ -95,7 +93,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   controller: emailController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter Your Email',
                   ),
@@ -106,10 +103,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Card(
                 child: TextField(
-                  controller: phoneNumberController,
+                  controller: bankAccountNumberController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.monetization_on),
-                    border: OutlineInputBorder(),
                     labelText: 'Bank Account Number',
                     hintText: 'Enter Your Bank Account Number',
                   ),
@@ -174,7 +170,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
            firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
            lastDate: DateTime(2101)
        );
-
        if(pickedDate != null ){
          print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
@@ -182,7 +177,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
          //You can format date as per your need
 
          setState(() {
-           dateController.text = formattedDate; //set foratted date to TextField value.
+           dateController.text = formattedDate;
          });
        }else{
          print("Date is not selected");

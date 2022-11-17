@@ -28,9 +28,6 @@ class _AllCustomersState extends State<AllCustomers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Customers"),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -43,16 +40,16 @@ class _AllCustomersState extends State<AllCustomers> {
         child: const Icon(Icons.add),
       ),
       body: Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new ExactAssetImage('assets/images/main_bg.jpg'),
-            fit: BoxFit.cover,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage('assets/images/main_bg.png'),
+            fit: BoxFit.fitWidth,
           ),
         ),
-        child: new BackdropFilter(
-          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: new Container(
-            decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: Container(
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
 
         child: SingleChildScrollView(
           child: Column(
@@ -70,9 +67,8 @@ class _AllCustomersState extends State<AllCustomers> {
                   }
                 },
                 builder: (context, state) {
-                  logger.d(state);
                   if (state.getAllCustomersStatus is CustomersLoading) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                   if (state.getAllCustomersStatus is GetAllCustomersCompleted) {
                     GetAllCustomersCompleted getAllCustomersCompleted =

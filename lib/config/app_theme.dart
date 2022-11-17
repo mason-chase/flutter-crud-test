@@ -21,15 +21,18 @@ ThemeData appTheme() {
     //  Text Theme
     textTheme: const TextTheme(
       headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+      headline6: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.italic),
       bodyText1: TextStyle(fontSize: 16.0, fontFamily: 'Hind'),
     ),
 
     // elevatedButtonTheme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(8.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
           ),
           primary: secondaryLightColor,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -57,12 +60,6 @@ ThemeData appTheme() {
     iconTheme: const IconThemeData(
       color: primaryDarkColor,
       size: 20.0,
-      shadows: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 5.0,
-        )
-      ],
     ),
 
     // Button Theme
