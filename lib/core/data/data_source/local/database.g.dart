@@ -146,6 +146,7 @@ class _$CustomerDao extends CustomerDao {
   Future<List<CustomerEntity>> getAll() async {
     return _queryAdapter.queryList('SELECT * FROM CustomerEntity',
         mapper: (Map<String, Object?> row) => CustomerEntity(
+            id: row['id'] as int?,
             firstName: row['firstName'] as String?,
             lastName: row['lastName'] as String?,
             phoneNumber: row['phoneNumber'] as String?,
@@ -158,6 +159,7 @@ class _$CustomerDao extends CustomerDao {
   Future<CustomerEntity?> getCustomer(int customerId) async {
     return _queryAdapter.query('SELECT * FROM CustomerEntity WHERE id =?1',
         mapper: (Map<String, Object?> row) => CustomerEntity(
+            id: row['id'] as int?,
             firstName: row['firstName'] as String?,
             lastName: row['lastName'] as String?,
             phoneNumber: row['phoneNumber'] as String?,

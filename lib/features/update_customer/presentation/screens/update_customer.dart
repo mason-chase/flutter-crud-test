@@ -37,6 +37,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
   @override
   void initState() {
     super.initState();
+    logger.d(widget.customerEntity.id);
     setData();
   }
 
@@ -195,6 +196,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
 
   CustomerEntity setCustomerInfo() {
     return CustomerEntity(
+      id: widget.customerEntity.id,
       firstName: firstNameController.text,
       lastName: lastNameController.text,
       phoneNumber: phoneNumberController.text,

@@ -35,7 +35,7 @@ setup() async {
   locator.registerSingleton<CustomerListRepository>(CustomerListRepositoryImpl(database.customerDao));
   locator.registerSingleton<AddCustomerRepository>(AddCustomerRepositoryImpl(database.customerDao));
   locator.registerSingleton<DeleteCustomerRepository>(DeleteCustomerRepositoryImpl(database.customerDao));
-  locator.registerSingleton<UpdateCustomerRepository>(UpdateCustomerRepositoryImpl(database.customerDao));
+  locator.registerSingleton<UpdateCustomerRepository>(UpdateCustomerRepositoryImpl());
 
   /// Usecase
   locator.registerSingleton<GetCustomerListUseCase>(GetCustomerListUseCase(locator()));

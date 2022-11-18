@@ -1,12 +1,13 @@
 import 'package:floor/floor.dart';
 
-
-@Entity(indices: [Index(value: ["firstName", "lastName", "dateOfBirth", "email"],unique: true)])
+@Entity(indices: [
+  Index(value: ["firstName", "lastName", "dateOfBirth", "email"], unique: true)
+])
 class CustomerEntity {
-
-  @PrimaryKey(autoGenerate: true,)
+  @PrimaryKey(
+    autoGenerate: true,
+  )
   int? id;
-
   String? firstName;
   String? lastName;
   String? phoneNumber;
@@ -14,12 +15,13 @@ class CustomerEntity {
   String? bankAccountNumber;
   String? dateOfBirth;
 
-  CustomerEntity(
-      {this.firstName,
-        this.lastName,
-        this.phoneNumber,
-        this.email,
-        this.bankAccountNumber,
-        this.dateOfBirth,
-     });
+  CustomerEntity({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.phoneNumber,
+    this.email,
+    this.bankAccountNumber,
+    this.dateOfBirth,
+  });
 }
