@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:mc_crud_test/core/utils/app_utils.dart';
-import 'package:mc_crud_test/core/widgets/phone_number_validation.dart';
+import 'package:mc_crud_test/features/customer_list/domain/entity/parsed_phone_number.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/widgets/phone_number_validation.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
 import 'package:mc_crud_test/features/customer_list/presentation/screens/customers.dart';
 import 'package:mc_crud_test/locator.dart';
@@ -24,8 +28,11 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _bankAccountNumberController = TextEditingController();
+  final TextEditingController _bankAccountNumberController =
+      TextEditingController();
   final TextEditingController _dateOfBirthController = TextEditingController();
+
+  Logger logger = Logger(printer: PrettyPrinter());
 
   @override
   void initState() {
@@ -77,19 +84,30 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Card(
-                child: TextFormField(
+                child: TextField(
                   controller: _phoneNumberController,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone_android),
                     labelText: 'Phone Number',
                     hintText: 'Enter Your Phone Number',
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty ||
-                        !locator<AppUtils>().isMobilePhoneNumberValid(value)) {
-                      return 'Enter a valid phone number!';
-                    }
-                    return null;
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: PhoneNumerValidation(),
+                          );
+                        }).then((value) {
+                      setState(() {
+                        dynamic parsedPhoneNumber = json.decode(value);
+                        _phoneNumberController.text = parsedPhoneNumber['national'];
+                      });
+                    });
                   },
                 ),
               ),

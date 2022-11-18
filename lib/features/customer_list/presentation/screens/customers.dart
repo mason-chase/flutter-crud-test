@@ -23,6 +23,7 @@ class _AllCustomersState extends State<AllCustomers> {
   @override
   void initState() {
     super.initState();
+
     BlocProvider.of<CustomerListBloc>(context).add(GetAllCustomersEvent());
   }
 

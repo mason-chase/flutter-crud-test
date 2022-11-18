@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +11,7 @@ import 'package:mc_crud_test/locator.dart';
 
 import '../../../../config/app_theme.dart';
 import '../../../../core/data/data_source/local/customer_entity.dart';
+import '../../../customer_list/presentation/widgets/phone_number_validation.dart';
 
 class UpdateCustomerScreen extends StatefulWidget {
   CustomerEntity customerEntity;
@@ -92,11 +95,29 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
               child: Card(
                 child: TextField(
                   controller: _phoneNumberController,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone_android),
                     labelText: 'Phone Number',
                     hintText: 'Enter Your Phone Number',
                   ),
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: PhoneNumerValidation(),
+                          );
+                        }).then((value) {
+                      setState(() {
+                        dynamic parsedPhoneNumber = json.decode(value);
+                        _phoneNumberController.text = parsedPhoneNumber['national'];
+                      });
+                    });
+                  },
                 ),
               ),
             ),
