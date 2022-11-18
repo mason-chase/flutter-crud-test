@@ -17,10 +17,8 @@ class DeleteCustomerRepositoryImpl extends DeleteCustomerRepository {
   @override
   Future<DataState<int>> deleteCustomer(CustomerEntity customer) async {
     try {
-      logger.d(customer.id);
       var count = await locator<AppDatabase>().database.delete('CustomerEntity',
           where: 'id = ?', whereArgs: [customer.id]);
-      logger.d(count);
       return DataSuccess(count);
     } catch (e) {
       return DataFailed(e.toString());

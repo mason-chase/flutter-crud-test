@@ -1,7 +1,8 @@
-import 'package:email_validator/email_validator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/core/utils/app_utils.dart';
+import 'package:mc_crud_test/core/widgets/phone_number_validation.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
 import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
 import 'package:mc_crud_test/locator.dart';
@@ -168,7 +169,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       padding: const EdgeInsets.all(4.0),
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context, MaterialPageRoute(builder: (context) => PhoneNumerValidation()));
                         },
                         icon: const Icon(Icons.cancel),
                         label: const Text("Cancel"),
@@ -237,9 +240,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   }
 
   String? validateEmail(String? value) {
-    if (EmailValidator.validate(value!))
-      return 'Name must be more than 2 charater';
-    else
+    // if (EmailValidator.validate(value!))
+    //   return 'Name must be more than 2 charater';
+    // else
       return null;
   }
 }

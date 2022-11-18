@@ -169,13 +169,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
-  email_validator:
-    dependency: "direct main"
-    description:
-      name: email_validator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.17"
   equatable:
     dependency: "direct main"
     description:
@@ -244,6 +237,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.1.1"
+  flutter_libphonenumber:
+    dependency: "direct main"
+    description:
+      name: flutter_libphonenumber
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.4"
   flutter_lints:
     dependency: "direct dev"
     description:
