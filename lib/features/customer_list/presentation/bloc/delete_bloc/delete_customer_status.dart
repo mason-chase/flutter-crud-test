@@ -1,7 +1,6 @@
 
 import 'package:equatable/equatable.dart';
 
-import '../../../../../core/data/data_source/local/customer_entity.dart';
 
 abstract class DeleteCustomerStatus extends Equatable {}
 

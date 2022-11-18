@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 const Color primaryDarkColor = Color.fromARGB(255, 89, 85, 77);
 const Color secondaryLightColor = Color.fromARGB(255, 33, 226, 218);
-const Color secondaryDarkColor = const Color.fromARGB(255, 191, 184, 170);
+const Color secondaryDarkColor = Color.fromARGB(255, 191, 184, 170);
 Color shadowColor = Colors.grey.shade700;
 
 ThemeData appTheme() {
@@ -35,8 +35,8 @@ ThemeData appTheme() {
             borderRadius: BorderRadius.circular(8.0),
           ),
           primary: secondaryLightColor,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal)),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal)),
     ),
 
     // Card Theme
@@ -45,7 +45,7 @@ ThemeData appTheme() {
       elevation: 0,
       shadowColor: shadowColor,
       shape: RoundedRectangleBorder(
-          side: const BorderSide(color: secondaryLightColor, width: 1.0),
+          side: const BorderSide(width: 1.0),
           borderRadius: BorderRadius.circular(4.0)),
     ),
 
@@ -64,34 +64,29 @@ ThemeData appTheme() {
 
     // Button Theme
     // buttonColor: Color.fromARGB(255, 191, 179, 164),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       buttonColor: secondaryLightColor,
       shape: RoundedRectangleBorder(),
       textTheme: ButtonTextTheme.primary,
     ),
 
-    // progressIndicatorTheme
-    progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: secondaryLightColor,
-      circularTrackColor: secondaryLightColor,
-    ),
 
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(fontSize: 14,),
       errorStyle: TextStyle(
-          color: primaryDarkColor, fontWeight: FontWeight.bold, fontSize: 14.0),
-      border: UnderlineInputBorder(
-        borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
-      ),
-      errorBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
-      ),
-      focusedErrorBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
-      ),
+          color: Colors.red, fontWeight: FontWeight.bold, fontSize: 14.0),
+      // border: UnderlineInputBorder(
+      //   borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
+      // ),
+      // focusedBorder: UnderlineInputBorder(
+      //   borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
+      // ),
+      // errorBorder: UnderlineInputBorder(
+      //   borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
+      // ),
+      // focusedErrorBorder: UnderlineInputBorder(
+      //   borderSide: BorderSide(color: primaryDarkColor, width: 1.0),
+      // ),
     ),
   );
 }

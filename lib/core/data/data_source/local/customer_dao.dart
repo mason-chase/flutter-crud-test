@@ -4,6 +4,7 @@ import 'customer_entity.dart';
 
 @dao
 abstract class CustomerDao {
+
   @insert
   Future<void> insertCustomer(CustomerEntity customer);
 
@@ -13,9 +14,4 @@ abstract class CustomerDao {
   @Query("SELECT * FROM CustomerEntity WHERE id =:customerId")
   Future<CustomerEntity?> getCustomer(int customerId);
 
-  @Query("DELETE from CustomerEntity WHERE email = :email")
-  Future<int?> deleteCustomer(String email);
-
-  @update
-  Future<int> updateCustomer(CustomerEntity customer);
 }

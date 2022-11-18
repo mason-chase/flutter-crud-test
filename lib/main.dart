@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/config/app_theme.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/bloc/delete_bloc/delete_customer_bloc.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/bloc/customer_list_bloc/customers_bloc.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/bloc/delete_bloc/delete_customer_bloc.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/bloc/customer_list_bloc/customers_bloc.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/screens/customers.dart';
 import 'package:mc_crud_test/features/update_customer/presentation/bloc/update_customer_bloc.dart';
 import 'package:mc_crud_test/locator.dart';
 

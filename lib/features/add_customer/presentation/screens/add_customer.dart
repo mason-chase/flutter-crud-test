@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/core/utils/app_utils.dart';
 import 'package:mc_crud_test/core/widgets/phone_number_validation.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/bloc/add_customer_bloc.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/screens/customers.dart';
 import 'package:mc_crud_test/locator.dart';
 
 import '../../../../config/app_theme.dart';
@@ -21,16 +20,16 @@ class AddCustomerScreen extends StatefulWidget {
 class _AddCustomerScreenState extends State<AddCustomerScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController bankAccountNumberController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _bankAccountNumberController = TextEditingController();
+  final TextEditingController _dateOfBirthController = TextEditingController();
 
   @override
   void initState() {
-    dateController.text = "";
+    _dateOfBirthController.text = "";
     super.initState();
   }
 
@@ -49,7 +48,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
               padding: const EdgeInsets.all(4.0),
               child: Card(
                 child: TextField(
-                  controller: firstNameController,
+                  controller: _firstNameController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     labelText: 'First Name',
@@ -62,7 +61,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
               padding: const EdgeInsets.all(4.0),
               child: Card(
                 child: TextField(
-                  controller: lastNameController,
+                  controller: _lastNameController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     labelText: 'Last Name',
@@ -79,7 +78,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
               padding: const EdgeInsets.all(4.0),
               child: Card(
                 child: TextFormField(
-                  controller: phoneNumberController,
+                  controller: _phoneNumberController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone_android),
                     labelText: 'Phone Number',
@@ -103,17 +102,14 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     padding: const EdgeInsets.all(4.0),
                     child: Card(
                       child: TextFormField(
-                        controller: emailController,
-                        // validator: validateEmail,
+                        controller: _emailController,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           labelText: 'Email',
                           hintText: 'Enter Your Email',
                         ),
                         keyboardType: TextInputType.emailAddress,
-                        onFieldSubmitted: (value) {
-                          //Validator
-                        },
+                        onFieldSubmitted: (value) {},
                         validator: (value) {
                           if (value!.isEmpty ||
                               !locator<AppUtils>().isEmailValid(value)) {
@@ -128,20 +124,20 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     padding: const EdgeInsets.all(4.0),
                     child: Card(
                       child: TextFormField(
-                        controller: bankAccountNumberController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.monetization_on),
-                          labelText: 'Bank Account Number',
-                          hintText: 'Enter Your Bank Account Number',
-                        ),
-                          onFieldSubmitted: (value){},
+                          controller: _bankAccountNumberController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.monetization_on),
+                            labelText: 'Bank Account Number',
+                            hintText: 'Enter Your Bank Account Number',
+                          ),
+                          onFieldSubmitted: (value) {},
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Enter a valid account number!';
                             }
                             return null;
-                          }
-                      ),
+                          }),
                     ),
                   ),
                 ],
@@ -156,7 +152,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         _submit();
-
                       },
                       icon: const Icon(Icons.save),
                       label: const Text("Save"),
@@ -169,9 +164,12 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       padding: const EdgeInsets.all(4.0),
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          // Navigator.pop(context);
-                          Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) => PhoneNumerValidation()));
+                          Navigator.pop(context);
+                          // Navigator.pushReplacement(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             const PhoneNumerValidation()));
                         },
                         icon: const Icon(Icons.cancel),
                         label: const Text("Cancel"),
@@ -190,7 +188,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
 
   Widget datePickerWidget() {
     return TextField(
-      controller: dateController,
+      controller: _dateOfBirthController,
       decoration: const InputDecoration(
           prefixIcon: Icon(Icons.calendar_today), labelText: "Enter Date"),
       readOnly: true,
@@ -199,16 +197,22 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime(1900),
-            //DateTime.now() - not to allow to choose before today.
             lastDate: DateTime(2101));
         if (pickedDate != null) {
           String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
 
           setState(() {
-            dateController.text = formattedDate;
+            _dateOfBirthController.text = formattedDate;
           });
         } else {
-          print("Date is not selected");
+          final snackBar = SnackBar(
+            content: const Text('Date is not selected.'),
+            action: SnackBarAction(
+              label: 'Error',
+              onPressed: () {},
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
     );
@@ -216,15 +220,14 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
 
   CustomerEntity setCustomerInfo() {
     return CustomerEntity(
-      firstName: firstNameController.text,
-      lastName: lastNameController.text,
-      phoneNumber: phoneNumberController.text,
-      email: emailController.text,
-      dateOfBirth: dateController.text,
-      bankAccountNumber: bankAccountNumberController.text,
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      phoneNumber: _phoneNumberController.text,
+      email: _emailController.text,
+      dateOfBirth: _dateOfBirthController.text,
+      bankAccountNumber: _bankAccountNumberController.text,
     );
   }
-
 
   void _submit() {
     final isValid = _formKey.currentState!.validate();
@@ -233,16 +236,24 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
     } else {
       BlocProvider.of<AddCustomerBloc>(context)
           .add(NewCustomerEvent(setCustomerInfo()));
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AllCustomers()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const AllCustomers()));
     }
     _formKey.currentState!.save();
   }
 
-  String? validateEmail(String? value) {
-    // if (EmailValidator.validate(value!))
-    //   return 'Name must be more than 2 charater';
-    // else
-      return null;
+  @override
+  void dispose() {
+    _disposeTextController();
+    super.dispose();
+  }
+
+  _disposeTextController() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneNumberController.dispose();
+    _emailController.dispose();
+    _bankAccountNumberController.dispose();
+    _dateOfBirthController.dispose();
   }
 }

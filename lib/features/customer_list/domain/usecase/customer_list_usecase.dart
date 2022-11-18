@@ -1,4 +1,4 @@
-import 'package:mc_crud_test/features/get_customers/domain/repository/customer_list_repository.dart';
+import 'package:mc_crud_test/features/customer_list/domain/repository/customer_list_repository.dart';
 
 import '../../../../core/data/data_source/local/customer_entity.dart';
 import '../../../../core/resources/data_state.dart';

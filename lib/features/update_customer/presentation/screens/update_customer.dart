@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:mc_crud_test/core/utils/app_utils.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/screens/customers.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/screens/customers.dart';
 import 'package:mc_crud_test/features/update_customer/presentation/bloc/update_customer_bloc.dart';
 import 'package:mc_crud_test/locator.dart';
 
@@ -23,12 +21,15 @@ class UpdateCustomerScreen extends StatefulWidget {
 }
 
 class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController bankAccountNumberController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _bankAccountNumberController =
+      TextEditingController();
+  final TextEditingController _dateOfBirthController = TextEditingController();
 
   AppUtils appUtils = locator<AppUtils>();
   List<String> date = [];
@@ -37,7 +38,6 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
   @override
   void initState() {
     super.initState();
-    logger.d(widget.customerEntity.id);
     setData();
   }
 
@@ -61,7 +61,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
               padding: const EdgeInsets.all(4.0),
               child: Card(
                 child: TextField(
-                  controller: firstNameController,
+                  controller: _firstNameController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     labelText: 'First Name',
@@ -74,7 +74,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
               padding: const EdgeInsets.all(4.0),
               child: Card(
                 child: TextField(
-                  controller: lastNameController,
+                  controller: _lastNameController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     labelText: 'Last Name',
@@ -91,7 +91,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
               padding: const EdgeInsets.all(4.0),
               child: Card(
                 child: TextField(
-                  controller: phoneNumberController,
+                  controller: _phoneNumberController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone_android),
                     labelText: 'Phone Number',
@@ -100,30 +100,38 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                child: TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    labelText: 'Email',
-                    hintText: 'Enter Your Email',
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Card(
+                      child: TextField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          labelText: 'Email',
+                          hintText: 'Enter Your Email',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                child: TextField(
-                  controller: bankAccountNumberController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.monetization_on),
-                    labelText: 'Bank Account Number',
-                    hintText: 'Enter Your Bank Account Number',
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Card(
+                      child: TextField(
+                        controller: _bankAccountNumberController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.monetization_on),
+                          labelText: 'Bank Account Number',
+                          hintText: 'Enter Your Bank Account Number',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             Row(
@@ -134,12 +142,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
                     padding: const EdgeInsets.all(4.0),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        BlocProvider.of<UpdateCustomerBloc>(context)
-                            .add(UpdateCustomerEvent(setCustomerInfo()));
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllCustomers()));
+                        _submit();
                       },
                       icon: const Icon(Icons.save),
                       label: const Text("Save"),
@@ -171,21 +174,22 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
 
   Widget datePickerWidget() {
     return TextField(
-      controller: dateController,
+      controller: _dateOfBirthController,
       decoration: const InputDecoration(
           prefixIcon: Icon(Icons.calendar_today), labelText: "Enter Date"),
       readOnly: true,
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
             context: context,
-            initialDate: DateTime.utc(int.parse(date[0]),int.parse(date[1]), int.parse(date[2])),
+            initialDate: DateTime.utc(
+                int.parse(date[0]), int.parse(date[1]), int.parse(date[2])),
             firstDate: DateTime(1900),
             lastDate: DateTime(2101));
         if (pickedDate != null) {
           String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
 
           setState(() {
-            dateController.text = formattedDate;
+            _dateOfBirthController.text = formattedDate;
           });
         } else {
           print("Date is not selected");
@@ -194,27 +198,54 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
     );
   }
 
+  void _submit() {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    } else {
+      BlocProvider.of<UpdateCustomerBloc>(context)
+          .add(UpdateCustomerEvent(setCustomerInfo()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const AllCustomers()));
+    }
+    _formKey.currentState!.save();
+  }
+
   CustomerEntity setCustomerInfo() {
     return CustomerEntity(
       id: widget.customerEntity.id,
-      firstName: firstNameController.text,
-      lastName: lastNameController.text,
-      phoneNumber: phoneNumberController.text,
-      email: emailController.text,
-      dateOfBirth: dateController.text,
-      bankAccountNumber: bankAccountNumberController.text,
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      phoneNumber: _phoneNumberController.text,
+      email: _emailController.text,
+      dateOfBirth: _dateOfBirthController.text,
+      bankAccountNumber: _bankAccountNumberController.text,
     );
   }
 
   setData() {
-    firstNameController.text = widget.customerEntity.firstName!;
-    lastNameController.text = widget.customerEntity.lastName!;
-    emailController.text = widget.customerEntity.email!;
-    bankAccountNumberController.text = widget.customerEntity.bankAccountNumber!;
-    phoneNumberController.text = widget.customerEntity.phoneNumber!;
-    dateController.text = widget.customerEntity.dateOfBirth!;
+    _firstNameController.text = widget.customerEntity.firstName!;
+    _lastNameController.text = widget.customerEntity.lastName!;
+    _emailController.text = widget.customerEntity.email!;
+    _bankAccountNumberController.text =
+        widget.customerEntity.bankAccountNumber!;
+    _phoneNumberController.text = widget.customerEntity.phoneNumber!;
+    _dateOfBirthController.text = widget.customerEntity.dateOfBirth!;
     date = appUtils.splitDate(widget.customerEntity.dateOfBirth!);
   }
 
+  @override
+  void dispose() {
+    _disposeTextController();
+    super.dispose();
+  }
 
+  _disposeTextController() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneNumberController.dispose();
+    _emailController.dispose();
+    _bankAccountNumberController.dispose();
+    _dateOfBirthController.dispose();
+  }
 }

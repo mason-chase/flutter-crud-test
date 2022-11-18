@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:logger/logger.dart';
 import 'package:mc_crud_test/core/data/data_source/local/customer_entity.dart';
-import 'package:mc_crud_test/features/get_customers/domain/usecase/delete_customer_usecase.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/bloc/delete_bloc/delete_customer_status.dart';
+import 'package:mc_crud_test/features/customer_list/domain/usecase/delete_customer_usecase.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/bloc/delete_bloc/delete_customer_status.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../core/resources/data_state.dart';

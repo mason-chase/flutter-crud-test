@@ -2,13 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:mc_crud_test/features/add_customer/presentation/screens/add_customer.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/bloc/customer_list_bloc/customers_bloc.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/bloc/customer_list_bloc/customers_status.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/widgets/empty_list.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/widgets/error_loading_data.dart';
-import 'package:mc_crud_test/features/get_customers/presentation/widgets/loading_data.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/bloc/customer_list_bloc/customers_bloc.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/bloc/customer_list_bloc/customers_status.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/widgets/empty_list.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/widgets/error_loading_data.dart';
+import 'package:mc_crud_test/features/customer_list/presentation/widgets/loading_data.dart';
 
 import '../widgets/customer_list.dart';
 
@@ -20,7 +19,6 @@ class AllCustomers extends StatefulWidget {
 }
 
 class _AllCustomersState extends State<AllCustomers> {
-  Logger logger = Logger(printer: PrettyPrinter());
 
   @override
   void initState() {
@@ -36,7 +34,7 @@ class _AllCustomersState extends State<AllCustomers> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddCustomerScreen(),
+              builder: (context) => const AddCustomerScreen(),
             ),
           );
         },
