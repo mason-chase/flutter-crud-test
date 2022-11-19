@@ -253,7 +253,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       return;
     } else {
       BlocProvider.of<AddCustomerBloc>(context)
-          .add(NewCustomerEvent(setCustomerInfo()));
+          .add(AddCustomerEvent(setCustomerInfo()));
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const AllCustomers()));
     }

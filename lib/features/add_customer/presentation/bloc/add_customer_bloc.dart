@@ -16,7 +16,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
 
   AddCustomerUseCase addCustomerUseCase;
   AddCustomerBloc(this.addCustomerUseCase) : super(AddCustomerState(addCustomerStatus: AddCustomerInitial())) {
-    on<NewCustomerEvent>((event, emit) async {
+    on<AddCustomerEvent>((event, emit) async {
       emit(state.copyWith(newCustomerStatus: AddCustomerLoading()));
       DataState dataState =
           await addCustomerUseCase(event.customerEntity);

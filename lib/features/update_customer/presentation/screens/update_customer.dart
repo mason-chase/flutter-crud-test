@@ -109,7 +109,7 @@ class _UpdateCustomerScreenState extends State<UpdateCustomerScreen> {
                           return Padding(
                             padding: EdgeInsets.only(
                                 bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: PhoneNumerValidation(),
+                            child: PhoneNumerValidation(phoneNumber: widget.customerEntity.phoneNumber!,),
                           );
                         }).then((value) {
                       setState(() {

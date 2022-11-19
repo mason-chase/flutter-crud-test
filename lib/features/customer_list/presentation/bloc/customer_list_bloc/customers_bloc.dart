@@ -16,7 +16,7 @@ class CustomerListBloc extends Bloc<CustomersEvent, CustomersState> {
 
 
   CustomerListBloc(this.getCustomerListUseCase) : super(CustomersState(getAllCustomersStatus: CustomersLoading())) {
-    on<GetAllCustomersEvent>((event, emit) async {
+    on<CustomersEvent>((event, emit) async {
       emit(state.copyWith(newListStatus: CustomersLoading()));
 
       DataState dataState = await getCustomerListUseCase(NoParams());

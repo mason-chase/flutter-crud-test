@@ -86,7 +86,7 @@ class CustomerList extends StatelessWidget {
                           BlocProvider.of<DeleteCustomerBloc>(context).add(
                               DeleteCustomerEvent(customerList[index]));
                           BlocProvider.of<CustomerListBloc>(context)
-                              .add(GetAllCustomersEvent());
+                              .add(CustomersEvent());
                         },
                       ),
                     ),

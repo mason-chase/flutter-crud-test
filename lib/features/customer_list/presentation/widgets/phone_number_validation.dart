@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
-import 'package:logger/logger.dart';
-import 'package:mc_crud_test/features/customer_list/domain/entity/parsed_phone_number.dart';
 
 class PhoneNumerValidation extends StatefulWidget {
-  const PhoneNumerValidation({Key? key}) : super(key: key);
+  String phoneNumber;
+
+  PhoneNumerValidation({this.phoneNumber = "", Key? key}) : super(key: key);
 
   @override
   State<PhoneNumerValidation> createState() => _PhoneNumerValidationState();
@@ -19,10 +19,12 @@ class _PhoneNumerValidationState extends State<PhoneNumerValidation> {
 
   final manualFormatController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
+    if (widget.phoneNumber != "") {
+      phoneController.text = widget.phoneNumber;
+    }
     updatePlaceholderHint();
   }
 
@@ -199,6 +201,7 @@ class _PhoneNumerValidationState extends State<PhoneNumerValidation> {
     );
   }
 
+
   validatePhoneNumber() async {
     try {
       final res = await FlutterLibphonenumber().parse(
@@ -217,5 +220,4 @@ class _PhoneNumerValidationState extends State<PhoneNumerValidation> {
       });
     }
   }
-
 }
