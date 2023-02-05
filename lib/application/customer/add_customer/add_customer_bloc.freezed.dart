@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AddCustomerEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -27,12 +27,12 @@ mixin _$AddCustomerEvent {
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -40,12 +40,12 @@ mixin _$AddCustomerEvent {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -53,7 +53,7 @@ mixin _$AddCustomerEvent {
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -137,7 +137,7 @@ abstract class _$$_AddCustomerEventInitialCustomerCopyWith<$Res> {
           $Res Function(_$_AddCustomerEventInitialCustomer) then) =
       __$$_AddCustomerEventInitialCustomerCopyWithImpl<$Res>;
   @useResult
-  $Res call({CustomerEntity initialCustomer});
+  $Res call({CustomerEntity? initialCustomer});
 }
 
 /// @nodoc
@@ -153,13 +153,13 @@ class __$$_AddCustomerEventInitialCustomerCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? initialCustomer = null,
+    Object? initialCustomer = freezed,
   }) {
     return _then(_$_AddCustomerEventInitialCustomer(
-      null == initialCustomer
+      freezed == initialCustomer
           ? _value.initialCustomer
           : initialCustomer // ignore: cast_nullable_to_non_nullable
-              as CustomerEntity,
+              as CustomerEntity?,
     ));
   }
 }
@@ -171,7 +171,7 @@ class _$_AddCustomerEventInitialCustomer
   const _$_AddCustomerEventInitialCustomer(this.initialCustomer);
 
   @override
-  final CustomerEntity initialCustomer;
+  final CustomerEntity? initialCustomer;
 
   @override
   String toString() {
@@ -201,7 +201,7 @@ class _$_AddCustomerEventInitialCustomer
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -210,7 +210,7 @@ class _$_AddCustomerEventInitialCustomer
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return initialCustomer(this.initialCustomer);
   }
@@ -218,7 +218,7 @@ class _$_AddCustomerEventInitialCustomer
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -226,7 +226,7 @@ class _$_AddCustomerEventInitialCustomer
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return initialCustomer?.call(this.initialCustomer);
   }
@@ -234,7 +234,7 @@ class _$_AddCustomerEventInitialCustomer
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -242,7 +242,7 @@ class _$_AddCustomerEventInitialCustomer
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (initialCustomer != null) {
@@ -319,10 +319,10 @@ class _$_AddCustomerEventInitialCustomer
 
 abstract class _AddCustomerEventInitialCustomer implements AddCustomerEvent {
   const factory _AddCustomerEventInitialCustomer(
-          final CustomerEntity initialCustomer) =
+          final CustomerEntity? initialCustomer) =
       _$_AddCustomerEventInitialCustomer;
 
-  CustomerEntity get initialCustomer;
+  CustomerEntity? get initialCustomer;
   @JsonKey(ignore: true)
   _$$_AddCustomerEventInitialCustomerCopyWith<
           _$_AddCustomerEventInitialCustomer>
@@ -400,7 +400,7 @@ class _$_AddCustomerEventFirstNameChanged
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -409,7 +409,7 @@ class _$_AddCustomerEventFirstNameChanged
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return firstNameChanged(firstName);
   }
@@ -417,7 +417,7 @@ class _$_AddCustomerEventFirstNameChanged
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -425,7 +425,7 @@ class _$_AddCustomerEventFirstNameChanged
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return firstNameChanged?.call(firstName);
   }
@@ -433,7 +433,7 @@ class _$_AddCustomerEventFirstNameChanged
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -441,7 +441,7 @@ class _$_AddCustomerEventFirstNameChanged
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (firstNameChanged != null) {
@@ -598,7 +598,7 @@ class _$_AddCustomerEventLastNameChanged
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -607,7 +607,7 @@ class _$_AddCustomerEventLastNameChanged
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return lastNameChanged(lastName);
   }
@@ -615,7 +615,7 @@ class _$_AddCustomerEventLastNameChanged
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -623,7 +623,7 @@ class _$_AddCustomerEventLastNameChanged
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return lastNameChanged?.call(lastName);
   }
@@ -631,7 +631,7 @@ class _$_AddCustomerEventLastNameChanged
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -639,7 +639,7 @@ class _$_AddCustomerEventLastNameChanged
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (lastNameChanged != null) {
@@ -796,7 +796,7 @@ class _$_AddCustomerEventDateOfBirthChanged
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -805,7 +805,7 @@ class _$_AddCustomerEventDateOfBirthChanged
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return dateOfBirthChanged(dateOfBirth);
   }
@@ -813,7 +813,7 @@ class _$_AddCustomerEventDateOfBirthChanged
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -821,7 +821,7 @@ class _$_AddCustomerEventDateOfBirthChanged
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return dateOfBirthChanged?.call(dateOfBirth);
   }
@@ -829,7 +829,7 @@ class _$_AddCustomerEventDateOfBirthChanged
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -837,7 +837,7 @@ class _$_AddCustomerEventDateOfBirthChanged
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (dateOfBirthChanged != null) {
@@ -994,7 +994,7 @@ class _$_AddCustomerEventPhoneNumberChanged
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -1003,7 +1003,7 @@ class _$_AddCustomerEventPhoneNumberChanged
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return phoneNumberChanged(phoneNumber);
   }
@@ -1011,7 +1011,7 @@ class _$_AddCustomerEventPhoneNumberChanged
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1019,7 +1019,7 @@ class _$_AddCustomerEventPhoneNumberChanged
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return phoneNumberChanged?.call(phoneNumber);
   }
@@ -1027,7 +1027,7 @@ class _$_AddCustomerEventPhoneNumberChanged
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1035,7 +1035,7 @@ class _$_AddCustomerEventPhoneNumberChanged
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (phoneNumberChanged != null) {
@@ -1189,7 +1189,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -1198,7 +1198,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return emailChanged(email);
   }
@@ -1206,7 +1206,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1214,7 +1214,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return emailChanged?.call(email);
   }
@@ -1222,7 +1222,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1230,7 +1230,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -1386,7 +1386,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -1395,7 +1395,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return bankAccountNumberChanged(bankAccountNumber);
   }
@@ -1403,7 +1403,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1411,7 +1411,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return bankAccountNumberChanged?.call(bankAccountNumber);
   }
@@ -1419,7 +1419,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1427,7 +1427,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (bankAccountNumberChanged != null) {
@@ -1553,7 +1553,7 @@ class _$_AddCustomer implements _AddCustomer {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -1562,7 +1562,7 @@ class _$_AddCustomer implements _AddCustomer {
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
     return addCustomer();
   }
@@ -1570,7 +1570,7 @@ class _$_AddCustomer implements _AddCustomer {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1578,7 +1578,7 @@ class _$_AddCustomer implements _AddCustomer {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
     return addCustomer?.call();
   }
@@ -1586,7 +1586,7 @@ class _$_AddCustomer implements _AddCustomer {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1594,7 +1594,7 @@ class _$_AddCustomer implements _AddCustomer {
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (addCustomer != null) {
@@ -1678,6 +1678,8 @@ abstract class _$$_UpdateCustomerCopyWith<$Res> {
   factory _$$_UpdateCustomerCopyWith(
           _$_UpdateCustomer value, $Res Function(_$_UpdateCustomer) then) =
       __$$_UpdateCustomerCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int customerId});
 }
 
 /// @nodoc
@@ -1687,31 +1689,56 @@ class __$$_UpdateCustomerCopyWithImpl<$Res>
   __$$_UpdateCustomerCopyWithImpl(
       _$_UpdateCustomer _value, $Res Function(_$_UpdateCustomer) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? customerId = null,
+  }) {
+    return _then(_$_UpdateCustomer(
+      customerId: null == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_UpdateCustomer implements _UpdateCustomer {
-  const _$_UpdateCustomer();
+  const _$_UpdateCustomer({required this.customerId});
+
+  @override
+  final int customerId;
 
   @override
   String toString() {
-    return 'AddCustomerEvent.updateCustomer()';
+    return 'AddCustomerEvent.updateCustomer(customerId: $customerId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UpdateCustomer);
+        (other.runtimeType == runtimeType &&
+            other is _$_UpdateCustomer &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, customerId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UpdateCustomerCopyWith<_$_UpdateCustomer> get copyWith =>
+      __$$_UpdateCustomerCopyWithImpl<_$_UpdateCustomer>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CustomerEntity initialCustomer) initialCustomer,
+    required TResult Function(CustomerEntity? initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
     required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
@@ -1720,15 +1747,15 @@ class _$_UpdateCustomer implements _UpdateCustomer {
     required TResult Function(String bankAccountNumber)
         bankAccountNumberChanged,
     required TResult Function() addCustomer,
-    required TResult Function() updateCustomer,
+    required TResult Function(int customerId) updateCustomer,
   }) {
-    return updateCustomer();
+    return updateCustomer(customerId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult? Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
     TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1736,15 +1763,15 @@ class _$_UpdateCustomer implements _UpdateCustomer {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult? Function()? addCustomer,
-    TResult? Function()? updateCustomer,
+    TResult? Function(int customerId)? updateCustomer,
   }) {
-    return updateCustomer?.call();
+    return updateCustomer?.call(customerId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CustomerEntity initialCustomer)? initialCustomer,
+    TResult Function(CustomerEntity? initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
     TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
@@ -1752,11 +1779,11 @@ class _$_UpdateCustomer implements _UpdateCustomer {
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
     TResult Function()? addCustomer,
-    TResult Function()? updateCustomer,
+    TResult Function(int customerId)? updateCustomer,
     required TResult orElse(),
   }) {
     if (updateCustomer != null) {
-      return updateCustomer();
+      return updateCustomer(customerId);
     }
     return orElse();
   }
@@ -1828,7 +1855,13 @@ class _$_UpdateCustomer implements _UpdateCustomer {
 }
 
 abstract class _UpdateCustomer implements AddCustomerEvent {
-  const factory _UpdateCustomer() = _$_UpdateCustomer;
+  const factory _UpdateCustomer({required final int customerId}) =
+      _$_UpdateCustomer;
+
+  int get customerId;
+  @JsonKey(ignore: true)
+  _$$_UpdateCustomerCopyWith<_$_UpdateCustomer> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

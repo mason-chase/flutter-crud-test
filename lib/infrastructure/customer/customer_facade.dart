@@ -27,14 +27,7 @@ class CustomerFacade implements ICustomerFacade {
 
   @override
   Future<Either<CoreFailure, Unit>> addCustomer(AddCustomerState customer) async {
-    final CustomerEntity customerDto = CustomerEntity(
-      firstName: customer.firstName.getOrCrash().trim(),
-      lastName: customer.lastName.getOrCrash().trim(),
-      phoneNumber: customer.phoneNumber.getOrCrash().trim(),
-      email: customer.email.getOrCrash().trim(),
-      bankAccountNumber: customer.bankAccountNumber.getOrCrash().trim(),
-      dateOfBirth: customer.dateOfBirth.getOrCrash().trim(),
-    );
+    final CustomerEntity customerDto = CustomerEntity.fromState(customer);
     try {
       await _dataBase.customerDao.insertCustomer(customerDto);
       return right(unit);
@@ -59,12 +52,12 @@ class CustomerFacade implements ICustomerFacade {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> updateCustomer(CustomerEntity customer) async{
+  Future<Either<CoreFailure, Unit>> updateCustomer(CustomerEntity customer) async {
     try {
       await _dataBase.customerDao.updateCustomer(customer);
       return right(unit);
     } on DatabaseException catch (_) {
-      return left(const CoreFailure.failure(errorMessage: "Customer can't be deleted"));
+      return left(const CoreFailure.failure(errorMessage: "Customer can't be updated"));
     } catch (e) {
       return left(CoreFailure.failure(errorMessage: e.toString()));
     }

@@ -102,7 +102,7 @@ class BankAccountNumber extends ValueObject<String> {
     return BankAccountNumber._(validateBankAccountNumber(input.trim()));
   }
 
-  String? get bankAccountNumberError => value.fold(
+  String? get bankAccountError => value.fold(
         (failure) => failure.maybeMap(
           invalidBankAccountNumber: (_) => "Your bank account is invalid",
           orElse: () => null,

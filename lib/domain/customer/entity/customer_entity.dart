@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+import 'package:mc_crud_test/application/customer/add_customer/add_customer_bloc.dart';
 import 'package:mc_crud_test/infrastructure/database/database.dart';
 
 @Entity(tableName: AppDatabase.customerTable, indices: [
@@ -30,4 +31,16 @@ class CustomerEntity {
     required this.bankAccountNumber,
     required this.dateOfBirth,
   });
+
+  factory CustomerEntity.fromState(AddCustomerState customerState, {int? id}) {
+    return CustomerEntity(
+      id: id,
+      firstName: customerState.firstName.getOrCrash().trim(),
+      lastName: customerState.lastName.getOrCrash().trim(),
+      phoneNumber: customerState.phoneNumber.getOrCrash().trim(),
+      email: customerState.email.getOrCrash().trim(),
+      bankAccountNumber: customerState.bankAccountNumber.getOrCrash().trim(),
+      dateOfBirth: customerState.dateOfBirth.getOrCrash().trim(),
+    );
+  }
 }

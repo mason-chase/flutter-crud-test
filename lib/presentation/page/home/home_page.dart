@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mc_crud_test/application/core/core_state.dart';
 import 'package:mc_crud_test/application/customer/get_all_customer/get_all_customer_cubit.dart';
 import 'package:mc_crud_test/domain/customer/entity/customer_entity.dart';
-import 'package:mc_crud_test/injection.dart';
 import 'package:mc_crud_test/presentation/page/home/widget/customer_list_body.dart';
 import 'package:mc_crud_test/presentation/routing/routing.dart';
 import 'package:mc_crud_test/presentation/theme/icony.dart';

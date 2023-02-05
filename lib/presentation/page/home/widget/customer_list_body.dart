@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mc_crud_test/domain/customer/entity/customer_entity.dart';
 import 'package:mc_crud_test/presentation/page/home/widget/customer_list_item.dart';
 import 'package:mc_crud_test/presentation/theme/icony.dart';
@@ -13,6 +14,7 @@ class CustomerListBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return customers.isNotEmpty
         ? ListView.builder(
+            padding: EdgeInsets.only(bottom: 90.h),
             physics: const BouncingScrollPhysics(),
             itemCount: customers.length,
             itemBuilder: (context, index) {

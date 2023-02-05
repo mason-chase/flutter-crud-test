@@ -6,6 +6,7 @@ import 'package:mc_crud_test/domain/customer/i_customer_facade.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mc_crud_test/domain/core/failure/core_failure.dart';
 import 'package:mc_crud_test/domain/core/value_objects.dart';
+import 'package:mc_crud_test/infrastructure/service/time_service.dart';
 
 part 'add_customer_bloc.freezed.dart';
 
@@ -29,7 +30,20 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
     on<_UpdateCustomer>(_onUpdateCustomer);
   }
 
-  void _onInitialCustomer(_AddCustomerEventInitialCustomer event, Emitter<AddCustomerState> emit) {}
+  void _onInitialCustomer(_AddCustomerEventInitialCustomer event, Emitter<AddCustomerState> emit) {
+    if (event.initialCustomer != null) {
+      emit(
+        state.copyWith(
+          firstName: MandatoryValue(event.initialCustomer!.firstName),
+          lastName: MandatoryValue(event.initialCustomer!.lastName),
+          dateOfBirth: MandatoryValue(event.initialCustomer!.dateOfBirth),
+          bankAccountNumber: BankAccountNumber(event.initialCustomer!.bankAccountNumber),
+          email: Email(event.initialCustomer!.email),
+          phoneNumber: PhoneNumber(event.initialCustomer!.phoneNumber),
+        ),
+      );
+    }
+  }
 
   void _onFirstNameChanged(
           _AddCustomerEventFirstNameChanged event, Emitter<AddCustomerState> emit) =>
@@ -50,8 +64,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
 
   void _onDateOfBirthChanged(
       _AddCustomerEventDateOfBirthChanged event, Emitter<AddCustomerState> emit) {
-    final strDateOfBirth =
-        '${event.dateOfBirth.year}-${event.dateOfBirth.month}-${event.dateOfBirth.day}';
+    final strDateOfBirth = TimeService.convertDateTimeToString(event.dateOfBirth);
     emit(
       state.copyWith(
         dateOfBirth: MandatoryValue(strDateOfBirth),
@@ -108,7 +121,29 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
     );
   }
 
-  void _onUpdateCustomer(_UpdateCustomer event, Emitter<AddCustomerState> emit) {}
+  void _onUpdateCustomer(_UpdateCustomer event, Emitter<AddCustomerState> emit) async {
+    Either<CoreFailure, Unit>? failureOrSuccess;
+
+    if (isValidState()) {
+      emit(
+        state.copyWith(
+          isSubmitting: true,
+          updateCustomerFailureOrSuccess: none(),
+        ),
+      );
+
+      final CustomerEntity customerDto = CustomerEntity.fromState(state, id: event.customerId);
+      failureOrSuccess = await _customerFacade.updateCustomer(customerDto);
+    }
+
+    emit(
+      state.copyWith(
+        isSubmitting: false,
+        showErrorMessages: true,
+        updateCustomerFailureOrSuccess: optionOf<Either<CoreFailure, Unit>>(failureOrSuccess),
+      ),
+    );
+  }
 
   bool isValidState() =>
       state.firstName.isValid() &&
@@ -117,4 +152,12 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
       state.phoneNumber.isValid() &&
       state.email.isValid() &&
       state.bankAccountNumber.isValid();
+
+  bool isChangeCustomerData(CustomerEntity initialCustomer) =>
+      initialCustomer.firstName != state.firstName.getOrElse('') ||
+      initialCustomer.lastName != state.lastName.getOrElse('') ||
+      initialCustomer.dateOfBirth != state.dateOfBirth.getOrElse('') ||
+      initialCustomer.bankAccountNumber != state.bankAccountNumber.getOrElse('') ||
+      initialCustomer.email != state.email.getOrElse('') ||
+      initialCustomer.phoneNumber != state.phoneNumber.getOrElse('');
 }

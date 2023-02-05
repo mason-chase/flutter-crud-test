@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hero_button/hero_button.dart';
 import 'package:mc_crud_test/application/core/core_state.dart';
 import 'package:mc_crud_test/application/customer/delete_customer/delete_customer_cubit.dart';
 import 'package:mc_crud_test/application/customer/get_all_customer/get_all_customer_cubit.dart';
 import 'package:mc_crud_test/domain/customer/entity/customer_entity.dart';
+import 'package:mc_crud_test/presentation/routing/routing.dart';
 import 'package:mc_crud_test/presentation/theme/colory.dart';
 import 'package:mc_crud_test/presentation/theme/icony.dart';
 import 'package:mc_crud_test/presentation/theme/theme_config.dart';
@@ -32,7 +34,7 @@ class CustomerListItem extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: ThemeConfig.appHorizontalPadding.w,
-          vertical: ThemeConfig.appVerticalPadding.h,
+          vertical: 6.h,
         ),
         child: Dismissible(
           key: Key(customer.id!.toString()),
@@ -50,7 +52,7 @@ class CustomerListItem extends StatelessWidget {
             ),
           ),
           child: HeroButton(
-            onPressed: () {},
+            onPressed: () => context.push(Routing.addCustomerPage, extra: customer),
             height: double.infinity,
             buttonColor: Colors.white,
             padding: EdgeInsets.all(20.r),

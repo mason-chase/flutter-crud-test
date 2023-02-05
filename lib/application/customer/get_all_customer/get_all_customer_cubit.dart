@@ -18,7 +18,7 @@ class GetAllCustomerCubit extends Cubit<CoreState<List<CustomerEntity>>> {
     emit(
       res.fold(
         (failure) => CoreState.fetchDataFailure(dataFailure: failure),
-        (data) => CoreState.fetchDataSuccessfully(data: data),
+        (data) => CoreState.fetchDataSuccessfully(data: data.reversed.toList()),
       ),
     );
   }

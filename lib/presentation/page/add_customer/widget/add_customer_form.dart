@@ -2,19 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mc_crud_test/application/customer/add_customer/add_customer_bloc.dart';
-import 'package:mc_crud_test/application/customer/get_all_customer/get_all_customer_cubit.dart';
 import 'package:mc_crud_test/domain/core/value_objects.dart';
-import 'package:mc_crud_test/domain/shared/enum/flush_bar_type_enum.dart';
-import 'package:mc_crud_test/injection.dart';
+import 'package:mc_crud_test/domain/customer/entity/customer_entity.dart';
+import 'package:mc_crud_test/presentation/page/add_customer/widget/add_update_customer_listener.dart';
 import 'package:mc_crud_test/presentation/widget/date_selector.dart';
-import 'package:mc_crud_test/presentation/widget/flushybar.dart';
 import 'package:mc_crud_test/presentation/widget/text_field/custom_form_text_field.dart';
 import 'package:mc_crud_test/presentation/widget/text_field/custom_text_field_formatter.dart';
 
 class AddCustomerForm extends StatefulWidget {
-  const AddCustomerForm({Key? key}) : super(key: key);
+  final CustomerEntity? initialCustomer;
+
+  const AddCustomerForm({Key? key, required this.initialCustomer}) : super(key: key);
 
   @override
   State<AddCustomerForm> createState() => _AddCustomerFormState();
@@ -40,31 +39,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddCustomerBloc, AddCustomerState>(
-      listenWhen: (p, c) => p.addCustomerFailureOrSuccess != c.addCustomerFailureOrSuccess,
-      listener: (context, state) {
-        state.addCustomerFailureOrSuccess.fold(
-          () {},
-          (data) => data.fold(
-            (failure) => getIt<FlushyBar>().showFlushyBar(
-              context: context,
-              title: failure.errorMessage,
-              flushBarType: FlushBarType.error,
-            ),
-            (success) {
-              getIt<FlushyBar>().showFlushyBar(
-                context: context,
-                title: "Customer successfully added.",
-                flushBarType: FlushBarType.success,
-                onActionAfterDismiss: () {
-                  context.read<GetAllCustomerCubit>().getAllCustomer();
-                  context.pop();
-                },
-              );
-            },
-          ),
-        );
-      },
+    return AddUpdateCustomerListener(
       child: Column(
         children: [
           BlocBuilder<AddCustomerBloc, AddCustomerState>(
@@ -79,6 +54,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                       onChange: (value) => context.read<AddCustomerBloc>().add(
                             AddCustomerEvent.firstNameChanged(value),
                           ),
+                      initialValue: widget.initialCustomer?.firstName,
                       title: 'First name',
                       currentFocusNode: _focusNodes[0],
                       nextFocusNode: _focusNodes[1],
@@ -92,6 +68,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                       onChange: (value) => context.read<AddCustomerBloc>().add(
                             AddCustomerEvent.lastNameChanged(value),
                           ),
+                      initialValue: widget.initialCustomer?.lastName,
                       title: 'Last name',
                       maxLength: MandatoryValue.maxLength,
                       currentFocusNode: _focusNodes[1],
@@ -105,6 +82,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                       onChange: (value) => context.read<AddCustomerBloc>().add(
                             AddCustomerEvent.phoneNumberChanged(value),
                           ),
+                      initialValue: widget.initialCustomer?.phoneNumber,
                       title: 'Phone number',
                       textInputType: TextInputType.phone,
                       currentFocusNode: _focusNodes[2],
@@ -116,6 +94,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                       onChange: (value) => context.read<AddCustomerBloc>().add(
                             AddCustomerEvent.emailChanged(value),
                           ),
+                      initialValue: widget.initialCustomer?.email,
                       title: 'Email',
                       textInputType: TextInputType.emailAddress,
                       currentFocusNode: _focusNodes[3],
@@ -126,22 +105,19 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                       onChange: (value) => context.read<AddCustomerBloc>().add(
                             AddCustomerEvent.bankAccountNumberChanged(value),
                           ),
+                      initialValue: widget.initialCustomer?.bankAccountNumber,
                       title: 'Bank account number',
                       textInputType: TextInputType.number,
-                      maxLength: 19,
                       currentFocusNode: _focusNodes[4],
+                      maxLength: 19,
                       inputFormatter: [
-                        LengthLimitingTextInputFormatter(19),
                         FilteringTextInputFormatter.digitsOnly,
                         CardNumberTextFieldFormatter()
                       ],
-                      validator: (_) => context
-                          .read<AddCustomerBloc>()
-                          .state
-                          .bankAccountNumber
-                          .bankAccountNumberError,
+                      validator: (_) =>
+                          context.read<AddCustomerBloc>().state.bankAccountNumber.bankAccountError,
                     ),
-                    const DateSelector(),
+                    DateSelector(initialDateTime: widget.initialCustomer?.dateOfBirth),
                   ],
                 ),
               );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mc_crud_test/domain/customer/entity/customer_entity.dart';
 import 'package:mc_crud_test/presentation/page/add_customer/add_customer_page.dart';
 import 'package:mc_crud_test/presentation/page/home/home_page.dart';
 import 'package:mc_crud_test/presentation/page/splash/splash_page.dart';
@@ -28,7 +29,9 @@ class Routing {
       _buildRoute(
         path: addCustomerPage,
         name: addCustomerPage,
-        page: (BuildContext context, GoRouterState state) => const AddCustomerPage(),
+        page: (BuildContext context, GoRouterState state) => AddCustomerPage(
+          initialCustomer: state.extra as CustomerEntity?,
+        ),
       ),
     ],
   );

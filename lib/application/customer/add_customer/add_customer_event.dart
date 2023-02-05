@@ -2,7 +2,7 @@ part of 'add_customer_bloc.dart';
 
 @freezed
 class AddCustomerEvent with _$AddCustomerEvent {
-  const factory AddCustomerEvent.initialCustomer(CustomerEntity initialCustomer) =
+  const factory AddCustomerEvent.initialCustomer(CustomerEntity? initialCustomer) =
       _AddCustomerEventInitialCustomer;
 
   const factory AddCustomerEvent.firstNameChanged(String firstName) =
@@ -24,5 +24,5 @@ class AddCustomerEvent with _$AddCustomerEvent {
 
   const factory AddCustomerEvent.addCustomer() = _AddCustomer;
 
-  const factory AddCustomerEvent.updateCustomer() = _UpdateCustomer;
+  const factory AddCustomerEvent.updateCustomer({required int customerId}) = _UpdateCustomer;
 }
