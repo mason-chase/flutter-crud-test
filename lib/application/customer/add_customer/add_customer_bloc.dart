@@ -49,13 +49,16 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
       );
 
   void _onDateOfBirthChanged(
-          _AddCustomerEventDateOfBirthChanged event, Emitter<AddCustomerState> emit) =>
-      emit(
-        state.copyWith(
-          dateOfBirth: MandatoryValue(event.dateOfBirth),
-          addCustomerFailureOrSuccess: none(),
-        ),
-      );
+      _AddCustomerEventDateOfBirthChanged event, Emitter<AddCustomerState> emit) {
+    final strDateOfBirth =
+        '${event.dateOfBirth.year}-${event.dateOfBirth.month}-${event.dateOfBirth.day}';
+    emit(
+      state.copyWith(
+        dateOfBirth: MandatoryValue(strDateOfBirth),
+        addCustomerFailureOrSuccess: none(),
+      ),
+    );
+  }
 
   void _onPhoneNumberChanged(
           _AddCustomerEventPhoneNumberChanged event, Emitter<AddCustomerState> emit) =>

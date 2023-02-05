@@ -12,6 +12,7 @@ class AddCustomerState with _$AddCustomerState {
     required bool isSubmitting,
     required bool showErrorMessages,
     required Option<Either<CoreFailure, Unit>> addCustomerFailureOrSuccess,
+    required Option<Either<CoreFailure, Unit>> updateCustomerFailureOrSuccess,
   }) = _AddCustomerState;
 
   factory AddCustomerState.initial() => AddCustomerState(
@@ -24,5 +25,6 @@ class AddCustomerState with _$AddCustomerState {
         isSubmitting: false,
         showErrorMessages: false,
         addCustomerFailureOrSuccess: none(),
+        updateCustomerFailureOrSuccess: none(),
       );
 }

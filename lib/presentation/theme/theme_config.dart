@@ -109,7 +109,6 @@ class ThemeConfig {
 
   ThemeData themeData() => ThemeData(
         fontFamily: poppinsFontFamily,
-        useMaterial3: true,
         primarySwatch: _primarySwatch,
         primaryColor: _primaryColor,
         appBarTheme: const AppBarTheme(

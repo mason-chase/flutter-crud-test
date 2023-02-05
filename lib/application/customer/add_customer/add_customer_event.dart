@@ -11,7 +11,7 @@ class AddCustomerEvent with _$AddCustomerEvent {
   const factory AddCustomerEvent.lastNameChanged(String lastName) =
       _AddCustomerEventLastNameChanged;
 
-  const factory AddCustomerEvent.dateOfBirthChanged(String dateOfBirth) =
+  const factory AddCustomerEvent.dateOfBirthChanged(DateTime dateOfBirth) =
       _AddCustomerEventDateOfBirthChanged;
 
   const factory AddCustomerEvent.phoneNumberChanged(String phoneNumber) =

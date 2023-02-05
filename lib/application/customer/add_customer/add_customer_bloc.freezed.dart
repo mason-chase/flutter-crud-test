@@ -21,7 +21,7 @@ mixin _$AddCustomerEvent {
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -35,7 +35,7 @@ mixin _$AddCustomerEvent {
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -48,7 +48,7 @@ mixin _$AddCustomerEvent {
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -204,7 +204,7 @@ class _$_AddCustomerEventInitialCustomer
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -221,7 +221,7 @@ class _$_AddCustomerEventInitialCustomer
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -237,7 +237,7 @@ class _$_AddCustomerEventInitialCustomer
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -403,7 +403,7 @@ class _$_AddCustomerEventFirstNameChanged
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -420,7 +420,7 @@ class _$_AddCustomerEventFirstNameChanged
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -436,7 +436,7 @@ class _$_AddCustomerEventFirstNameChanged
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -601,7 +601,7 @@ class _$_AddCustomerEventLastNameChanged
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -618,7 +618,7 @@ class _$_AddCustomerEventLastNameChanged
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -634,7 +634,7 @@ class _$_AddCustomerEventLastNameChanged
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -732,7 +732,7 @@ abstract class _$$_AddCustomerEventDateOfBirthChangedCopyWith<$Res> {
           $Res Function(_$_AddCustomerEventDateOfBirthChanged) then) =
       __$$_AddCustomerEventDateOfBirthChangedCopyWithImpl<$Res>;
   @useResult
-  $Res call({String dateOfBirth});
+  $Res call({DateTime dateOfBirth});
 }
 
 /// @nodoc
@@ -754,7 +754,7 @@ class __$$_AddCustomerEventDateOfBirthChangedCopyWithImpl<$Res>
       null == dateOfBirth
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
     ));
   }
 }
@@ -766,7 +766,7 @@ class _$_AddCustomerEventDateOfBirthChanged
   const _$_AddCustomerEventDateOfBirthChanged(this.dateOfBirth);
 
   @override
-  final String dateOfBirth;
+  final DateTime dateOfBirth;
 
   @override
   String toString() {
@@ -799,7 +799,7 @@ class _$_AddCustomerEventDateOfBirthChanged
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -816,7 +816,7 @@ class _$_AddCustomerEventDateOfBirthChanged
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -832,7 +832,7 @@ class _$_AddCustomerEventDateOfBirthChanged
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -913,10 +913,10 @@ class _$_AddCustomerEventDateOfBirthChanged
 }
 
 abstract class _AddCustomerEventDateOfBirthChanged implements AddCustomerEvent {
-  const factory _AddCustomerEventDateOfBirthChanged(final String dateOfBirth) =
-      _$_AddCustomerEventDateOfBirthChanged;
+  const factory _AddCustomerEventDateOfBirthChanged(
+      final DateTime dateOfBirth) = _$_AddCustomerEventDateOfBirthChanged;
 
-  String get dateOfBirth;
+  DateTime get dateOfBirth;
   @JsonKey(ignore: true)
   _$$_AddCustomerEventDateOfBirthChangedCopyWith<
           _$_AddCustomerEventDateOfBirthChanged>
@@ -997,7 +997,7 @@ class _$_AddCustomerEventPhoneNumberChanged
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -1014,7 +1014,7 @@ class _$_AddCustomerEventPhoneNumberChanged
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1030,7 +1030,7 @@ class _$_AddCustomerEventPhoneNumberChanged
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1192,7 +1192,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -1209,7 +1209,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1225,7 +1225,7 @@ class _$_AddCustomerEventEmailChanged implements _AddCustomerEventEmailChanged {
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1389,7 +1389,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -1406,7 +1406,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1422,7 +1422,7 @@ class _$_AddCustomerEventBankAccountNumberChanged
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1556,7 +1556,7 @@ class _$_AddCustomer implements _AddCustomer {
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -1573,7 +1573,7 @@ class _$_AddCustomer implements _AddCustomer {
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1589,7 +1589,7 @@ class _$_AddCustomer implements _AddCustomer {
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1714,7 +1714,7 @@ class _$_UpdateCustomer implements _UpdateCustomer {
     required TResult Function(CustomerEntity initialCustomer) initialCustomer,
     required TResult Function(String firstName) firstNameChanged,
     required TResult Function(String lastName) lastNameChanged,
-    required TResult Function(String dateOfBirth) dateOfBirthChanged,
+    required TResult Function(DateTime dateOfBirth) dateOfBirthChanged,
     required TResult Function(String phoneNumber) phoneNumberChanged,
     required TResult Function(String email) emailChanged,
     required TResult Function(String bankAccountNumber)
@@ -1731,7 +1731,7 @@ class _$_UpdateCustomer implements _UpdateCustomer {
     TResult? Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult? Function(String firstName)? firstNameChanged,
     TResult? Function(String lastName)? lastNameChanged,
-    TResult? Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult? Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult? Function(String phoneNumber)? phoneNumberChanged,
     TResult? Function(String email)? emailChanged,
     TResult? Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1747,7 +1747,7 @@ class _$_UpdateCustomer implements _UpdateCustomer {
     TResult Function(CustomerEntity initialCustomer)? initialCustomer,
     TResult Function(String firstName)? firstNameChanged,
     TResult Function(String lastName)? lastNameChanged,
-    TResult Function(String dateOfBirth)? dateOfBirthChanged,
+    TResult Function(DateTime dateOfBirth)? dateOfBirthChanged,
     TResult Function(String phoneNumber)? phoneNumberChanged,
     TResult Function(String email)? emailChanged,
     TResult Function(String bankAccountNumber)? bankAccountNumberChanged,
@@ -1843,6 +1843,8 @@ mixin _$AddCustomerState {
   bool get showErrorMessages => throw _privateConstructorUsedError;
   Option<Either<CoreFailure, Unit>> get addCustomerFailureOrSuccess =>
       throw _privateConstructorUsedError;
+  Option<Either<CoreFailure, Unit>> get updateCustomerFailureOrSuccess =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddCustomerStateCopyWith<AddCustomerState> get copyWith =>
@@ -1864,7 +1866,8 @@ abstract class $AddCustomerStateCopyWith<$Res> {
       Email email,
       bool isSubmitting,
       bool showErrorMessages,
-      Option<Either<CoreFailure, Unit>> addCustomerFailureOrSuccess});
+      Option<Either<CoreFailure, Unit>> addCustomerFailureOrSuccess,
+      Option<Either<CoreFailure, Unit>> updateCustomerFailureOrSuccess});
 }
 
 /// @nodoc
@@ -1889,6 +1892,7 @@ class _$AddCustomerStateCopyWithImpl<$Res, $Val extends AddCustomerState>
     Object? isSubmitting = null,
     Object? showErrorMessages = null,
     Object? addCustomerFailureOrSuccess = null,
+    Object? updateCustomerFailureOrSuccess = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -1927,6 +1931,10 @@ class _$AddCustomerStateCopyWithImpl<$Res, $Val extends AddCustomerState>
           ? _value.addCustomerFailureOrSuccess
           : addCustomerFailureOrSuccess // ignore: cast_nullable_to_non_nullable
               as Option<Either<CoreFailure, Unit>>,
+      updateCustomerFailureOrSuccess: null == updateCustomerFailureOrSuccess
+          ? _value.updateCustomerFailureOrSuccess
+          : updateCustomerFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<CoreFailure, Unit>>,
     ) as $Val);
   }
 }
@@ -1948,7 +1956,8 @@ abstract class _$$_AddCustomerStateCopyWith<$Res>
       Email email,
       bool isSubmitting,
       bool showErrorMessages,
-      Option<Either<CoreFailure, Unit>> addCustomerFailureOrSuccess});
+      Option<Either<CoreFailure, Unit>> addCustomerFailureOrSuccess,
+      Option<Either<CoreFailure, Unit>> updateCustomerFailureOrSuccess});
 }
 
 /// @nodoc
@@ -1971,6 +1980,7 @@ class __$$_AddCustomerStateCopyWithImpl<$Res>
     Object? isSubmitting = null,
     Object? showErrorMessages = null,
     Object? addCustomerFailureOrSuccess = null,
+    Object? updateCustomerFailureOrSuccess = null,
   }) {
     return _then(_$_AddCustomerState(
       firstName: null == firstName
@@ -2009,6 +2019,10 @@ class __$$_AddCustomerStateCopyWithImpl<$Res>
           ? _value.addCustomerFailureOrSuccess
           : addCustomerFailureOrSuccess // ignore: cast_nullable_to_non_nullable
               as Option<Either<CoreFailure, Unit>>,
+      updateCustomerFailureOrSuccess: null == updateCustomerFailureOrSuccess
+          ? _value.updateCustomerFailureOrSuccess
+          : updateCustomerFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<CoreFailure, Unit>>,
     ));
   }
 }
@@ -2025,7 +2039,8 @@ class _$_AddCustomerState implements _AddCustomerState {
       required this.email,
       required this.isSubmitting,
       required this.showErrorMessages,
-      required this.addCustomerFailureOrSuccess});
+      required this.addCustomerFailureOrSuccess,
+      required this.updateCustomerFailureOrSuccess});
 
   @override
   final MandatoryValue firstName;
@@ -2045,10 +2060,12 @@ class _$_AddCustomerState implements _AddCustomerState {
   final bool showErrorMessages;
   @override
   final Option<Either<CoreFailure, Unit>> addCustomerFailureOrSuccess;
+  @override
+  final Option<Either<CoreFailure, Unit>> updateCustomerFailureOrSuccess;
 
   @override
   String toString() {
-    return 'AddCustomerState(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, bankAccountNumber: $bankAccountNumber, phoneNumber: $phoneNumber, email: $email, isSubmitting: $isSubmitting, showErrorMessages: $showErrorMessages, addCustomerFailureOrSuccess: $addCustomerFailureOrSuccess)';
+    return 'AddCustomerState(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, bankAccountNumber: $bankAccountNumber, phoneNumber: $phoneNumber, email: $email, isSubmitting: $isSubmitting, showErrorMessages: $showErrorMessages, addCustomerFailureOrSuccess: $addCustomerFailureOrSuccess, updateCustomerFailureOrSuccess: $updateCustomerFailureOrSuccess)';
   }
 
   @override
@@ -2074,7 +2091,11 @@ class _$_AddCustomerState implements _AddCustomerState {
             (identical(other.addCustomerFailureOrSuccess,
                     addCustomerFailureOrSuccess) ||
                 other.addCustomerFailureOrSuccess ==
-                    addCustomerFailureOrSuccess));
+                    addCustomerFailureOrSuccess) &&
+            (identical(other.updateCustomerFailureOrSuccess,
+                    updateCustomerFailureOrSuccess) ||
+                other.updateCustomerFailureOrSuccess ==
+                    updateCustomerFailureOrSuccess));
   }
 
   @override
@@ -2088,7 +2109,8 @@ class _$_AddCustomerState implements _AddCustomerState {
       email,
       isSubmitting,
       showErrorMessages,
-      addCustomerFailureOrSuccess);
+      addCustomerFailureOrSuccess,
+      updateCustomerFailureOrSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -2108,7 +2130,9 @@ abstract class _AddCustomerState implements AddCustomerState {
       required final bool isSubmitting,
       required final bool showErrorMessages,
       required final Option<Either<CoreFailure, Unit>>
-          addCustomerFailureOrSuccess}) = _$_AddCustomerState;
+          addCustomerFailureOrSuccess,
+      required final Option<Either<CoreFailure, Unit>>
+          updateCustomerFailureOrSuccess}) = _$_AddCustomerState;
 
   @override
   MandatoryValue get firstName;
@@ -2128,6 +2152,8 @@ abstract class _AddCustomerState implements AddCustomerState {
   bool get showErrorMessages;
   @override
   Option<Either<CoreFailure, Unit>> get addCustomerFailureOrSuccess;
+  @override
+  Option<Either<CoreFailure, Unit>> get updateCustomerFailureOrSuccess;
   @override
   @JsonKey(ignore: true)
   _$$_AddCustomerStateCopyWith<_$_AddCustomerState> get copyWith =>
