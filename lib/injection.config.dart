@@ -10,9 +10,11 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:mc_crud_test/application/customer/add_customer/add_customer_bloc.dart'
     as _i10;
+import 'package:mc_crud_test/application/customer/get_all_customer/get_all_customer_cubit.dart'
+    as _i11;
 import 'package:mc_crud_test/domain/customer/i_customer_facade.dart' as _i5;
 import 'package:mc_crud_test/infrastructure/core/injectable_module.dart'
-    as _i11;
+    as _i12;
 import 'package:mc_crud_test/infrastructure/customer/customer_facade.dart'
     as _i6;
 import 'package:mc_crud_test/infrastructure/database/database.dart' as _i7;
@@ -43,8 +45,10 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i9.ThemeConfig>(() => _i9.ThemeConfig());
     gh.factory<_i10.AddCustomerBloc>(
         () => _i10.AddCustomerBloc(gh<_i5.ICustomerFacade>()));
+    gh.factory<_i11.GetAllCustomerCubit>(
+        () => _i11.GetAllCustomerCubit(gh<_i5.ICustomerFacade>()));
     return this;
   }
 }
 
-class _$InjectableModule extends _i11.InjectableModule {}
+class _$InjectableModule extends _i12.InjectableModule {}

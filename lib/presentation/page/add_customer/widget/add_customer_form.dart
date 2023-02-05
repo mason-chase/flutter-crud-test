@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mc_crud_test/application/customer/add_customer/add_customer_bloc.dart';
+import 'package:mc_crud_test/application/customer/get_all_customer/get_all_customer_cubit.dart';
 import 'package:mc_crud_test/domain/core/value_objects.dart';
 import 'package:mc_crud_test/domain/shared/enum/flush_bar_type_enum.dart';
 import 'package:mc_crud_test/injection.dart';
@@ -55,7 +56,10 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                 context: context,
                 title: "Customer successfully added.",
                 flushBarType: FlushBarType.success,
-                onActionAfterDismiss: () => context.pop(),
+                onActionAfterDismiss: () {
+                  context.read<GetAllCustomerCubit>().getAllCustomer();
+                  context.pop();
+                },
               );
             },
           ),

@@ -10,5 +10,5 @@ abstract class ICustomerFacade {
 
   Future<Either<CoreFailure, Unit>> updateCustomer(CustomerEntity customer);
 
-  Future<Either<CoreFailure, Unit>> deleteCustomer();
+  Future<Either<CoreFailure, Unit>> deleteCustomer(CustomerEntity customer);
 }

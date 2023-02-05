@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mc_crud_test/presentation/theme/colory.dart';
 
 class CustomAppBarTitle extends StatelessWidget {
@@ -22,10 +21,10 @@ class CustomAppBarTitle extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineLarge,
       );
     } else if (icon != null) {
-      return SvgPicture.asset(
+      return Image.asset(
         icon!,
         color: iconColor ?? Colory.primaryColor.shade400,
-        height: kToolbarHeight / 2.5,
+        height: kToolbarHeight ,
       );
     }
     return const SizedBox.shrink();

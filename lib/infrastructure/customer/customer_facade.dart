@@ -28,12 +28,12 @@ class CustomerFacade implements ICustomerFacade {
   @override
   Future<Either<CoreFailure, Unit>> addCustomer(AddCustomerState customer) async {
     final CustomerEntity customerDto = CustomerEntity(
-      firstName: customer.firstName.getOrCrash(),
-      lastName: customer.lastName.getOrCrash(),
-      phoneNumber: customer.phoneNumber.getOrCrash(),
-      email: customer.email.getOrCrash(),
-      bankAccountNumber: customer.bankAccountNumber.getOrCrash(),
-      dateOfBirth: customer.dateOfBirth.getOrCrash(),
+      firstName: customer.firstName.getOrCrash().trim(),
+      lastName: customer.lastName.getOrCrash().trim(),
+      phoneNumber: customer.phoneNumber.getOrCrash().trim(),
+      email: customer.email.getOrCrash().trim(),
+      bankAccountNumber: customer.bankAccountNumber.getOrCrash().trim(),
+      dateOfBirth: customer.dateOfBirth.getOrCrash().trim(),
     );
     try {
       await _dataBase.customerDao.insertCustomer(customerDto);
@@ -47,9 +47,15 @@ class CustomerFacade implements ICustomerFacade {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> deleteCustomer() {
-    // TODO: implement deleteCustomer
-    throw UnimplementedError();
+  Future<Either<CoreFailure, Unit>> deleteCustomer(CustomerEntity customer) async {
+    try {
+      await _dataBase.customerDao.deleteCustomer(customer);
+      return right(unit);
+    } on DatabaseException catch (_) {
+      return left(const CoreFailure.failure(errorMessage: "Customer can't be deleted"));
+    } catch (e) {
+      return left(CoreFailure.failure(errorMessage: e.toString()));
+    }
   }
 
   @override

@@ -9,4 +9,7 @@ abstract class CustomerDao {
 
   @Insert(onConflict: OnConflictStrategy.fail)
   Future<void> insertCustomer(CustomerEntity customer);
+
+  @delete
+  Future<void> deleteCustomer(CustomerEntity customer);
 }
