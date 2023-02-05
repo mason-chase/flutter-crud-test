@@ -23,7 +23,6 @@ mixin _$ValueFailure<T> {
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function(T failedValue) invalidPhoneNumber,
     required TResult Function(T failedValue) invalidEmail,
-    required TResult Function(T failedValue) invalidOtpCode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,7 +31,6 @@ mixin _$ValueFailure<T> {
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function(T failedValue)? invalidPhoneNumber,
     TResult? Function(T failedValue)? invalidEmail,
-    TResult? Function(T failedValue)? invalidOtpCode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,7 +39,6 @@ mixin _$ValueFailure<T> {
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function(T failedValue)? invalidPhoneNumber,
     TResult Function(T failedValue)? invalidEmail,
-    TResult Function(T failedValue)? invalidOtpCode,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,7 +48,6 @@ mixin _$ValueFailure<T> {
     required TResult Function(ExceedingLength<T> value) exceedingLength,
     required TResult Function(InvalidPhoneNumber<T> value) invalidPhoneNumber,
     required TResult Function(InvalidEmail<T> value) invalidEmail,
-    required TResult Function(InvalidOtpCode<T> value) invalidOtpCode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,7 +56,6 @@ mixin _$ValueFailure<T> {
     TResult? Function(ExceedingLength<T> value)? exceedingLength,
     TResult? Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult? Function(InvalidEmail<T> value)? invalidEmail,
-    TResult? Function(InvalidOtpCode<T> value)? invalidOtpCode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,7 +64,6 @@ mixin _$ValueFailure<T> {
     TResult Function(ExceedingLength<T> value)? exceedingLength,
     TResult Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult Function(InvalidEmail<T> value)? invalidEmail,
-    TResult Function(InvalidOtpCode<T> value)? invalidOtpCode,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -192,7 +186,6 @@ class _$EmptyField<T> with DiagnosticableTreeMixin implements EmptyField<T> {
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function(T failedValue) invalidPhoneNumber,
     required TResult Function(T failedValue) invalidEmail,
-    required TResult Function(T failedValue) invalidOtpCode,
   }) {
     return emptyField(failedValue);
   }
@@ -204,7 +197,6 @@ class _$EmptyField<T> with DiagnosticableTreeMixin implements EmptyField<T> {
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function(T failedValue)? invalidPhoneNumber,
     TResult? Function(T failedValue)? invalidEmail,
-    TResult? Function(T failedValue)? invalidOtpCode,
   }) {
     return emptyField?.call(failedValue);
   }
@@ -216,7 +208,6 @@ class _$EmptyField<T> with DiagnosticableTreeMixin implements EmptyField<T> {
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function(T failedValue)? invalidPhoneNumber,
     TResult Function(T failedValue)? invalidEmail,
-    TResult Function(T failedValue)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (emptyField != null) {
@@ -232,7 +223,6 @@ class _$EmptyField<T> with DiagnosticableTreeMixin implements EmptyField<T> {
     required TResult Function(ExceedingLength<T> value) exceedingLength,
     required TResult Function(InvalidPhoneNumber<T> value) invalidPhoneNumber,
     required TResult Function(InvalidEmail<T> value) invalidEmail,
-    required TResult Function(InvalidOtpCode<T> value) invalidOtpCode,
   }) {
     return emptyField(this);
   }
@@ -244,7 +234,6 @@ class _$EmptyField<T> with DiagnosticableTreeMixin implements EmptyField<T> {
     TResult? Function(ExceedingLength<T> value)? exceedingLength,
     TResult? Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult? Function(InvalidEmail<T> value)? invalidEmail,
-    TResult? Function(InvalidOtpCode<T> value)? invalidOtpCode,
   }) {
     return emptyField?.call(this);
   }
@@ -256,7 +245,6 @@ class _$EmptyField<T> with DiagnosticableTreeMixin implements EmptyField<T> {
     TResult Function(ExceedingLength<T> value)? exceedingLength,
     TResult Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult Function(InvalidEmail<T> value)? invalidEmail,
-    TResult Function(InvalidOtpCode<T> value)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (emptyField != null) {
@@ -369,7 +357,6 @@ class _$ExceedingLength<T>
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function(T failedValue) invalidPhoneNumber,
     required TResult Function(T failedValue) invalidEmail,
-    required TResult Function(T failedValue) invalidOtpCode,
   }) {
     return exceedingLength(failedValue, max);
   }
@@ -381,7 +368,6 @@ class _$ExceedingLength<T>
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function(T failedValue)? invalidPhoneNumber,
     TResult? Function(T failedValue)? invalidEmail,
-    TResult? Function(T failedValue)? invalidOtpCode,
   }) {
     return exceedingLength?.call(failedValue, max);
   }
@@ -393,7 +379,6 @@ class _$ExceedingLength<T>
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function(T failedValue)? invalidPhoneNumber,
     TResult Function(T failedValue)? invalidEmail,
-    TResult Function(T failedValue)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (exceedingLength != null) {
@@ -409,7 +394,6 @@ class _$ExceedingLength<T>
     required TResult Function(ExceedingLength<T> value) exceedingLength,
     required TResult Function(InvalidPhoneNumber<T> value) invalidPhoneNumber,
     required TResult Function(InvalidEmail<T> value) invalidEmail,
-    required TResult Function(InvalidOtpCode<T> value) invalidOtpCode,
   }) {
     return exceedingLength(this);
   }
@@ -421,7 +405,6 @@ class _$ExceedingLength<T>
     TResult? Function(ExceedingLength<T> value)? exceedingLength,
     TResult? Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult? Function(InvalidEmail<T> value)? invalidEmail,
-    TResult? Function(InvalidOtpCode<T> value)? invalidOtpCode,
   }) {
     return exceedingLength?.call(this);
   }
@@ -433,7 +416,6 @@ class _$ExceedingLength<T>
     TResult Function(ExceedingLength<T> value)? exceedingLength,
     TResult Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult Function(InvalidEmail<T> value)? invalidEmail,
-    TResult Function(InvalidOtpCode<T> value)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (exceedingLength != null) {
@@ -540,7 +522,6 @@ class _$InvalidPhoneNumber<T>
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function(T failedValue) invalidPhoneNumber,
     required TResult Function(T failedValue) invalidEmail,
-    required TResult Function(T failedValue) invalidOtpCode,
   }) {
     return invalidPhoneNumber(failedValue);
   }
@@ -552,7 +533,6 @@ class _$InvalidPhoneNumber<T>
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function(T failedValue)? invalidPhoneNumber,
     TResult? Function(T failedValue)? invalidEmail,
-    TResult? Function(T failedValue)? invalidOtpCode,
   }) {
     return invalidPhoneNumber?.call(failedValue);
   }
@@ -564,7 +544,6 @@ class _$InvalidPhoneNumber<T>
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function(T failedValue)? invalidPhoneNumber,
     TResult Function(T failedValue)? invalidEmail,
-    TResult Function(T failedValue)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (invalidPhoneNumber != null) {
@@ -580,7 +559,6 @@ class _$InvalidPhoneNumber<T>
     required TResult Function(ExceedingLength<T> value) exceedingLength,
     required TResult Function(InvalidPhoneNumber<T> value) invalidPhoneNumber,
     required TResult Function(InvalidEmail<T> value) invalidEmail,
-    required TResult Function(InvalidOtpCode<T> value) invalidOtpCode,
   }) {
     return invalidPhoneNumber(this);
   }
@@ -592,7 +570,6 @@ class _$InvalidPhoneNumber<T>
     TResult? Function(ExceedingLength<T> value)? exceedingLength,
     TResult? Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult? Function(InvalidEmail<T> value)? invalidEmail,
-    TResult? Function(InvalidOtpCode<T> value)? invalidOtpCode,
   }) {
     return invalidPhoneNumber?.call(this);
   }
@@ -604,7 +581,6 @@ class _$InvalidPhoneNumber<T>
     TResult Function(ExceedingLength<T> value)? exceedingLength,
     TResult Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult Function(InvalidEmail<T> value)? invalidEmail,
-    TResult Function(InvalidOtpCode<T> value)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (invalidPhoneNumber != null) {
@@ -708,7 +684,6 @@ class _$InvalidEmail<T>
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function(T failedValue) invalidPhoneNumber,
     required TResult Function(T failedValue) invalidEmail,
-    required TResult Function(T failedValue) invalidOtpCode,
   }) {
     return invalidEmail(failedValue);
   }
@@ -720,7 +695,6 @@ class _$InvalidEmail<T>
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function(T failedValue)? invalidPhoneNumber,
     TResult? Function(T failedValue)? invalidEmail,
-    TResult? Function(T failedValue)? invalidOtpCode,
   }) {
     return invalidEmail?.call(failedValue);
   }
@@ -732,7 +706,6 @@ class _$InvalidEmail<T>
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function(T failedValue)? invalidPhoneNumber,
     TResult Function(T failedValue)? invalidEmail,
-    TResult Function(T failedValue)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (invalidEmail != null) {
@@ -748,7 +721,6 @@ class _$InvalidEmail<T>
     required TResult Function(ExceedingLength<T> value) exceedingLength,
     required TResult Function(InvalidPhoneNumber<T> value) invalidPhoneNumber,
     required TResult Function(InvalidEmail<T> value) invalidEmail,
-    required TResult Function(InvalidOtpCode<T> value) invalidOtpCode,
   }) {
     return invalidEmail(this);
   }
@@ -760,7 +732,6 @@ class _$InvalidEmail<T>
     TResult? Function(ExceedingLength<T> value)? exceedingLength,
     TResult? Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult? Function(InvalidEmail<T> value)? invalidEmail,
-    TResult? Function(InvalidOtpCode<T> value)? invalidOtpCode,
   }) {
     return invalidEmail?.call(this);
   }
@@ -772,7 +743,6 @@ class _$InvalidEmail<T>
     TResult Function(ExceedingLength<T> value)? exceedingLength,
     TResult Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
     TResult Function(InvalidEmail<T> value)? invalidEmail,
-    TResult Function(InvalidOtpCode<T> value)? invalidOtpCode,
     required TResult orElse(),
   }) {
     if (invalidEmail != null) {
@@ -791,173 +761,5 @@ abstract class InvalidEmail<T> implements ValueFailure<T> {
   @override
   @JsonKey(ignore: true)
   _$$InvalidEmailCopyWith<T, _$InvalidEmail<T>> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$InvalidOtpCodeCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
-  factory _$$InvalidOtpCodeCopyWith(
-          _$InvalidOtpCode<T> value, $Res Function(_$InvalidOtpCode<T>) then) =
-      __$$InvalidOtpCodeCopyWithImpl<T, $Res>;
-  @override
-  @useResult
-  $Res call({T failedValue});
-}
-
-/// @nodoc
-class __$$InvalidOtpCodeCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res, _$InvalidOtpCode<T>>
-    implements _$$InvalidOtpCodeCopyWith<T, $Res> {
-  __$$InvalidOtpCodeCopyWithImpl(
-      _$InvalidOtpCode<T> _value, $Res Function(_$InvalidOtpCode<T>) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? failedValue = freezed,
-  }) {
-    return _then(_$InvalidOtpCode<T>(
-      failedValue: freezed == failedValue
-          ? _value.failedValue
-          : failedValue // ignore: cast_nullable_to_non_nullable
-              as T,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$InvalidOtpCode<T>
-    with DiagnosticableTreeMixin
-    implements InvalidOtpCode<T> {
-  const _$InvalidOtpCode({required this.failedValue});
-
-  @override
-  final T failedValue;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ValueFailure<$T>.invalidOtpCode(failedValue: $failedValue)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ValueFailure<$T>.invalidOtpCode'))
-      ..add(DiagnosticsProperty('failedValue', failedValue));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InvalidOtpCode<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InvalidOtpCodeCopyWith<T, _$InvalidOtpCode<T>> get copyWith =>
-      __$$InvalidOtpCodeCopyWithImpl<T, _$InvalidOtpCode<T>>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(T failedValue) emptyField,
-    required TResult Function(T failedValue, int max) exceedingLength,
-    required TResult Function(T failedValue) invalidPhoneNumber,
-    required TResult Function(T failedValue) invalidEmail,
-    required TResult Function(T failedValue) invalidOtpCode,
-  }) {
-    return invalidOtpCode(failedValue);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(T failedValue)? emptyField,
-    TResult? Function(T failedValue, int max)? exceedingLength,
-    TResult? Function(T failedValue)? invalidPhoneNumber,
-    TResult? Function(T failedValue)? invalidEmail,
-    TResult? Function(T failedValue)? invalidOtpCode,
-  }) {
-    return invalidOtpCode?.call(failedValue);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T failedValue)? emptyField,
-    TResult Function(T failedValue, int max)? exceedingLength,
-    TResult Function(T failedValue)? invalidPhoneNumber,
-    TResult Function(T failedValue)? invalidEmail,
-    TResult Function(T failedValue)? invalidOtpCode,
-    required TResult orElse(),
-  }) {
-    if (invalidOtpCode != null) {
-      return invalidOtpCode(failedValue);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(EmptyField<T> value) emptyField,
-    required TResult Function(ExceedingLength<T> value) exceedingLength,
-    required TResult Function(InvalidPhoneNumber<T> value) invalidPhoneNumber,
-    required TResult Function(InvalidEmail<T> value) invalidEmail,
-    required TResult Function(InvalidOtpCode<T> value) invalidOtpCode,
-  }) {
-    return invalidOtpCode(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(EmptyField<T> value)? emptyField,
-    TResult? Function(ExceedingLength<T> value)? exceedingLength,
-    TResult? Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
-    TResult? Function(InvalidEmail<T> value)? invalidEmail,
-    TResult? Function(InvalidOtpCode<T> value)? invalidOtpCode,
-  }) {
-    return invalidOtpCode?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(EmptyField<T> value)? emptyField,
-    TResult Function(ExceedingLength<T> value)? exceedingLength,
-    TResult Function(InvalidPhoneNumber<T> value)? invalidPhoneNumber,
-    TResult Function(InvalidEmail<T> value)? invalidEmail,
-    TResult Function(InvalidOtpCode<T> value)? invalidOtpCode,
-    required TResult orElse(),
-  }) {
-    if (invalidOtpCode != null) {
-      return invalidOtpCode(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class InvalidOtpCode<T> implements ValueFailure<T> {
-  const factory InvalidOtpCode({required final T failedValue}) =
-      _$InvalidOtpCode<T>;
-
-  @override
-  T get failedValue;
-  @override
-  @JsonKey(ignore: true)
-  _$$InvalidOtpCodeCopyWith<T, _$InvalidOtpCode<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
