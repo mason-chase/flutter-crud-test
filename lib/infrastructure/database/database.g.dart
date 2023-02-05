@@ -120,6 +120,19 @@ class _$CustomerDao extends CustomerDao {
                   'bankAccountNumber': item.bankAccountNumber,
                   'dateOfBirth': item.dateOfBirth
                 }),
+        _customerEntityUpdateAdapter = UpdateAdapter(
+            database,
+            'customer',
+            ['id'],
+            (CustomerEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'firstName': item.firstName,
+                  'lastName': item.lastName,
+                  'phoneNumber': item.phoneNumber,
+                  'email': item.email,
+                  'bankAccountNumber': item.bankAccountNumber,
+                  'dateOfBirth': item.dateOfBirth
+                }),
         _customerEntityDeletionAdapter = DeletionAdapter(
             database,
             'customer',
@@ -142,6 +155,8 @@ class _$CustomerDao extends CustomerDao {
 
   final InsertionAdapter<CustomerEntity> _customerEntityInsertionAdapter;
 
+  final UpdateAdapter<CustomerEntity> _customerEntityUpdateAdapter;
+
   final DeletionAdapter<CustomerEntity> _customerEntityDeletionAdapter;
 
   @override
@@ -160,6 +175,12 @@ class _$CustomerDao extends CustomerDao {
   @override
   Future<void> insertCustomer(CustomerEntity customer) async {
     await _customerEntityInsertionAdapter.insert(
+        customer, OnConflictStrategy.fail);
+  }
+
+  @override
+  Future<void> updateCustomer(CustomerEntity customer) async {
+    await _customerEntityUpdateAdapter.update(
         customer, OnConflictStrategy.fail);
   }
 

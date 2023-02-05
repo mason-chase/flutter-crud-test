@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mc_crud_test/application/customer/delete_customer/delete_customer_cubit.dart';
 import 'package:mc_crud_test/application/customer/get_all_customer/get_all_customer_cubit.dart';
 import 'package:mc_crud_test/presentation/routing/routing.dart';
 import 'package:mc_crud_test/presentation/theme/theme_config.dart';
@@ -12,8 +13,15 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<GetAllCustomerCubit>()..getAllCustomer(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<GetAllCustomerCubit>()..getAllCustomer(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<DeleteCustomerCubit>(),
+        ),
+      ],
       child: ScreenUtilInit(
         builder: (ctx, child) => MaterialApp.router(
           debugShowCheckedModeBanner: false,

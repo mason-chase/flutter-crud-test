@@ -59,8 +59,14 @@ class CustomerFacade implements ICustomerFacade {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> updateCustomer(CustomerEntity customer) {
-    // TODO: implement updateCustomer
-    throw UnimplementedError();
+  Future<Either<CoreFailure, Unit>> updateCustomer(CustomerEntity customer) async{
+    try {
+      await _dataBase.customerDao.updateCustomer(customer);
+      return right(unit);
+    } on DatabaseException catch (_) {
+      return left(const CoreFailure.failure(errorMessage: "Customer can't be deleted"));
+    } catch (e) {
+      return left(CoreFailure.failure(errorMessage: e.toString()));
+    }
   }
 }
