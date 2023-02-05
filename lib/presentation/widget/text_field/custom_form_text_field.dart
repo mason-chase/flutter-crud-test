@@ -92,7 +92,7 @@ class _CustomFormTextFieldState extends State<CustomFormTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: widget.outterPadding ?? EdgeInsets.symmetric(vertical: 16.h, horizontal: 1.w),
+      padding: widget.outterPadding ?? EdgeInsets.symmetric(vertical: 12.h, horizontal: 1.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

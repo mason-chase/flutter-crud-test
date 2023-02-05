@@ -6,21 +6,23 @@ import 'package:mc_crud_test/infrastructure/database/database.dart';
     "firstName",
     "lastName",
     "dateOfBirth",
+  ], unique: true),
+  Index(value: [
     "email",
-  ], unique: true)
+  ], unique: true),
 ])
 class CustomerEntity {
   @PrimaryKey(autoGenerate: true)
-  int id;
-  String firstName;
-  String lastName;
-  String phoneNumber;
-  String email;
-  String bankAccountNumber;
-  String dateOfBirth;
+  final int? id;
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
+  final String email;
+  final String bankAccountNumber;
+  final String dateOfBirth;
 
   CustomerEntity({
-    required this.id,
+    this.id,
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,

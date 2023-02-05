@@ -92,6 +92,25 @@ class Email extends ValueObject<String> {
       );
 }
 
+class BankAccountNumber extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  const BankAccountNumber._(this.value);
+
+  factory BankAccountNumber(String input) {
+    return BankAccountNumber._(validateBankAccountNumber(input.trim()));
+  }
+
+  String? get bankAccountNumberError => value.fold(
+        (failure) => failure.maybeMap(
+          invalidBankAccountNumber: (_) => "Your bank account is invalid",
+          orElse: () => null,
+        ),
+        (_) => null,
+      );
+}
+
 class MandatoryValue extends ValueObject<String> {
   static const maxLength = 50;
   @override
@@ -110,8 +129,9 @@ class MandatoryValue extends ValueObject<String> {
 
   String? mandatoryValueError({required String fieldName}) => value.fold(
         (f) => f.maybeMap(
-          emptyField: (_) => "$fieldName not be empty",
-          exceedingLength: (exceedingLength) => "$fieldName must have $exceedingLength charectar",
+          emptyField: (_) => "$fieldName must have a value",
+          exceedingLength: (exceedingLength) =>
+              "$fieldName must have less than $exceedingLength charectar",
           orElse: () => null,
         ),
         (_) => null,

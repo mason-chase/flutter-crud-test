@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mc_crud_test/infrastructure/database/database.dart';
-import 'package:mc_crud_test/injection.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mc_crud_test/presentation/routing/routing.dart';
 import 'package:mc_crud_test/presentation/theme/icony.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () =>context.push(Routing.addCustomerPage),
         child: SvgPicture.asset(
           Icony.addPerson,
           color: Colors.white,

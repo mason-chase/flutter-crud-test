@@ -20,6 +20,14 @@ Either<ValueFailure<String>, String> validateMaxStringLength(String input,
   }
 }
 
+Either<ValueFailure<String>, String> validateBankAccountNumber(String input) {
+  final trimmedBankAccount = input.replaceAll("-", "");
+  if (trimmedBankAccount.length != 16) {
+    return left(ValueFailure.invalidBankAccountNumber(failedValue: input));
+  }
+  return right(input);
+}
+
 Either<ValueFailure<String>, String> validateEmailAddress(String input) {
   const emailRegex = r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
   if (input.isNotEmpty && RegExp(emailRegex).hasMatch(input)) {

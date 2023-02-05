@@ -1835,8 +1835,8 @@ abstract class _UpdateCustomer implements AddCustomerEvent {
 mixin _$AddCustomerState {
   MandatoryValue get firstName => throw _privateConstructorUsedError;
   MandatoryValue get lastName => throw _privateConstructorUsedError;
-  MandatoryValue get bankAccountNumber => throw _privateConstructorUsedError;
   MandatoryValue get dateOfBirth => throw _privateConstructorUsedError;
+  BankAccountNumber get bankAccountNumber => throw _privateConstructorUsedError;
   PhoneNumber get phoneNumber => throw _privateConstructorUsedError;
   Email get email => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
@@ -1858,8 +1858,8 @@ abstract class $AddCustomerStateCopyWith<$Res> {
   $Res call(
       {MandatoryValue firstName,
       MandatoryValue lastName,
-      MandatoryValue bankAccountNumber,
       MandatoryValue dateOfBirth,
+      BankAccountNumber bankAccountNumber,
       PhoneNumber phoneNumber,
       Email email,
       bool isSubmitting,
@@ -1882,8 +1882,8 @@ class _$AddCustomerStateCopyWithImpl<$Res, $Val extends AddCustomerState>
   $Res call({
     Object? firstName = null,
     Object? lastName = null,
-    Object? bankAccountNumber = null,
     Object? dateOfBirth = null,
+    Object? bankAccountNumber = null,
     Object? phoneNumber = null,
     Object? email = null,
     Object? isSubmitting = null,
@@ -1899,14 +1899,14 @@ class _$AddCustomerStateCopyWithImpl<$Res, $Val extends AddCustomerState>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as MandatoryValue,
-      bankAccountNumber: null == bankAccountNumber
-          ? _value.bankAccountNumber
-          : bankAccountNumber // ignore: cast_nullable_to_non_nullable
-              as MandatoryValue,
       dateOfBirth: null == dateOfBirth
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
               as MandatoryValue,
+      bankAccountNumber: null == bankAccountNumber
+          ? _value.bankAccountNumber
+          : bankAccountNumber // ignore: cast_nullable_to_non_nullable
+              as BankAccountNumber,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -1942,8 +1942,8 @@ abstract class _$$_AddCustomerStateCopyWith<$Res>
   $Res call(
       {MandatoryValue firstName,
       MandatoryValue lastName,
-      MandatoryValue bankAccountNumber,
       MandatoryValue dateOfBirth,
+      BankAccountNumber bankAccountNumber,
       PhoneNumber phoneNumber,
       Email email,
       bool isSubmitting,
@@ -1964,8 +1964,8 @@ class __$$_AddCustomerStateCopyWithImpl<$Res>
   $Res call({
     Object? firstName = null,
     Object? lastName = null,
-    Object? bankAccountNumber = null,
     Object? dateOfBirth = null,
+    Object? bankAccountNumber = null,
     Object? phoneNumber = null,
     Object? email = null,
     Object? isSubmitting = null,
@@ -1981,14 +1981,14 @@ class __$$_AddCustomerStateCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as MandatoryValue,
-      bankAccountNumber: null == bankAccountNumber
-          ? _value.bankAccountNumber
-          : bankAccountNumber // ignore: cast_nullable_to_non_nullable
-              as MandatoryValue,
       dateOfBirth: null == dateOfBirth
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
               as MandatoryValue,
+      bankAccountNumber: null == bankAccountNumber
+          ? _value.bankAccountNumber
+          : bankAccountNumber // ignore: cast_nullable_to_non_nullable
+              as BankAccountNumber,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -2019,8 +2019,8 @@ class _$_AddCustomerState implements _AddCustomerState {
   const _$_AddCustomerState(
       {required this.firstName,
       required this.lastName,
-      required this.bankAccountNumber,
       required this.dateOfBirth,
+      required this.bankAccountNumber,
       required this.phoneNumber,
       required this.email,
       required this.isSubmitting,
@@ -2032,9 +2032,9 @@ class _$_AddCustomerState implements _AddCustomerState {
   @override
   final MandatoryValue lastName;
   @override
-  final MandatoryValue bankAccountNumber;
-  @override
   final MandatoryValue dateOfBirth;
+  @override
+  final BankAccountNumber bankAccountNumber;
   @override
   final PhoneNumber phoneNumber;
   @override
@@ -2048,7 +2048,7 @@ class _$_AddCustomerState implements _AddCustomerState {
 
   @override
   String toString() {
-    return 'AddCustomerState(firstName: $firstName, lastName: $lastName, bankAccountNumber: $bankAccountNumber, dateOfBirth: $dateOfBirth, phoneNumber: $phoneNumber, email: $email, isSubmitting: $isSubmitting, showErrorMessages: $showErrorMessages, addCustomerFailureOrSuccess: $addCustomerFailureOrSuccess)';
+    return 'AddCustomerState(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, bankAccountNumber: $bankAccountNumber, phoneNumber: $phoneNumber, email: $email, isSubmitting: $isSubmitting, showErrorMessages: $showErrorMessages, addCustomerFailureOrSuccess: $addCustomerFailureOrSuccess)';
   }
 
   @override
@@ -2060,10 +2060,10 @@ class _$_AddCustomerState implements _AddCustomerState {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.bankAccountNumber, bankAccountNumber) ||
-                other.bankAccountNumber == bankAccountNumber) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
                 other.dateOfBirth == dateOfBirth) &&
+            (identical(other.bankAccountNumber, bankAccountNumber) ||
+                other.bankAccountNumber == bankAccountNumber) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.email, email) || other.email == email) &&
@@ -2082,8 +2082,8 @@ class _$_AddCustomerState implements _AddCustomerState {
       runtimeType,
       firstName,
       lastName,
-      bankAccountNumber,
       dateOfBirth,
+      bankAccountNumber,
       phoneNumber,
       email,
       isSubmitting,
@@ -2101,8 +2101,8 @@ abstract class _AddCustomerState implements AddCustomerState {
   const factory _AddCustomerState(
       {required final MandatoryValue firstName,
       required final MandatoryValue lastName,
-      required final MandatoryValue bankAccountNumber,
       required final MandatoryValue dateOfBirth,
+      required final BankAccountNumber bankAccountNumber,
       required final PhoneNumber phoneNumber,
       required final Email email,
       required final bool isSubmitting,
@@ -2115,9 +2115,9 @@ abstract class _AddCustomerState implements AddCustomerState {
   @override
   MandatoryValue get lastName;
   @override
-  MandatoryValue get bankAccountNumber;
-  @override
   MandatoryValue get dateOfBirth;
+  @override
+  BankAccountNumber get bankAccountNumber;
   @override
   PhoneNumber get phoneNumber;
   @override

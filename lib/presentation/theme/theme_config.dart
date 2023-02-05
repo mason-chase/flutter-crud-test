@@ -6,6 +6,10 @@ import 'package:mc_crud_test/presentation/theme/colory.dart';
 
 @lazySingleton
 class ThemeConfig {
+  static const double appHorizontalPadding = 16.0;
+  static const double appVerticalPadding = 30.0;
+  static const double appBorderRadius = 32.0;
+
   static const poppinsFontFamily = 'poppins';
 
   TextTheme get _poppinsTextTheme => TextTheme(

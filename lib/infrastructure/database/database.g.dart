@@ -85,9 +85,11 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `customer` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `email` TEXT NOT NULL, `bankAccountNumber` TEXT NOT NULL, `dateOfBirth` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `customer` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `email` TEXT NOT NULL, `bankAccountNumber` TEXT NOT NULL, `dateOfBirth` TEXT NOT NULL)');
         await database.execute(
-            'CREATE UNIQUE INDEX `index_customer_firstName_lastName_dateOfBirth_email` ON `customer` (`firstName`, `lastName`, `dateOfBirth`, `email`)');
+            'CREATE UNIQUE INDEX `index_customer_firstName_lastName_dateOfBirth` ON `customer` (`firstName`, `lastName`, `dateOfBirth`)');
+        await database.execute(
+            'CREATE UNIQUE INDEX `index_customer_email` ON `customer` (`email`)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -131,7 +133,7 @@ class _$CustomerDao extends CustomerDao {
   Future<List<CustomerEntity>> getAllCustomer() async {
     return _queryAdapter.queryList('SELECT * FROM customer',
         mapper: (Map<String, Object?> row) => CustomerEntity(
-            id: row['id'] as int,
+            id: row['id'] as int?,
             firstName: row['firstName'] as String,
             lastName: row['lastName'] as String,
             phoneNumber: row['phoneNumber'] as String,
@@ -143,6 +145,6 @@ class _$CustomerDao extends CustomerDao {
   @override
   Future<void> insertCustomer(CustomerEntity customer) async {
     await _customerEntityInsertionAdapter.insert(
-        customer, OnConflictStrategy.abort);
+        customer, OnConflictStrategy.fail);
   }
 }

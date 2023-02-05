@@ -5,8 +5,8 @@ class AddCustomerState with _$AddCustomerState {
   const factory AddCustomerState({
     required MandatoryValue firstName,
     required MandatoryValue lastName,
-    required MandatoryValue bankAccountNumber,
     required MandatoryValue dateOfBirth,
+    required BankAccountNumber bankAccountNumber,
     required PhoneNumber phoneNumber,
     required Email email,
     required bool isSubmitting,
@@ -18,7 +18,7 @@ class AddCustomerState with _$AddCustomerState {
         firstName: MandatoryValue(''),
         lastName: MandatoryValue(''),
         dateOfBirth: MandatoryValue(''),
-        bankAccountNumber: MandatoryValue(''),
+        bankAccountNumber: BankAccountNumber(''),
         phoneNumber: PhoneNumber(''),
         email: Email(''),
         isSubmitting: false,

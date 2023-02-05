@@ -32,22 +32,86 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
   void _onInitialCustomer(_AddCustomerEventInitialCustomer event, Emitter<AddCustomerState> emit) {}
 
   void _onFirstNameChanged(
-      _AddCustomerEventFirstNameChanged event, Emitter<AddCustomerState> emit) {}
+          _AddCustomerEventFirstNameChanged event, Emitter<AddCustomerState> emit) =>
+      emit(
+        state.copyWith(
+          firstName: MandatoryValue(event.firstName),
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
 
-  void _onLastNameChanged(_AddCustomerEventLastNameChanged event, Emitter<AddCustomerState> emit) {}
+  void _onLastNameChanged(_AddCustomerEventLastNameChanged event, Emitter<AddCustomerState> emit) =>
+      emit(
+        state.copyWith(
+          lastName: MandatoryValue(event.lastName),
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
 
   void _onDateOfBirthChanged(
-      _AddCustomerEventDateOfBirthChanged event, Emitter<AddCustomerState> emit) {}
+          _AddCustomerEventDateOfBirthChanged event, Emitter<AddCustomerState> emit) =>
+      emit(
+        state.copyWith(
+          dateOfBirth: MandatoryValue(event.dateOfBirth),
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
 
   void _onPhoneNumberChanged(
-      _AddCustomerEventPhoneNumberChanged event, Emitter<AddCustomerState> emit) {}
+          _AddCustomerEventPhoneNumberChanged event, Emitter<AddCustomerState> emit) =>
+      emit(
+        state.copyWith(
+          phoneNumber: PhoneNumber(event.phoneNumber),
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
 
-  void _onEmailChanged(_AddCustomerEventEmailChanged event, Emitter<AddCustomerState> emit) {}
+  void _onEmailChanged(_AddCustomerEventEmailChanged event, Emitter<AddCustomerState> emit) => emit(
+        state.copyWith(
+          email: Email(event.email),
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
 
   void _onBankAccountNumberChanged(
-      _AddCustomerEventBankAccountNumberChanged event, Emitter<AddCustomerState> emit) {}
+          _AddCustomerEventBankAccountNumberChanged event, Emitter<AddCustomerState> emit) =>
+      emit(
+        state.copyWith(
+          bankAccountNumber: BankAccountNumber(event.bankAccountNumber),
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
 
-  void _onAddCustomer(_AddCustomer event, Emitter<AddCustomerState> emit) {}
+  void _onAddCustomer(_AddCustomer event, Emitter<AddCustomerState> emit) async {
+    Either<CoreFailure, Unit>? failureOrSuccess;
+
+    if (isValidState()) {
+      emit(
+        state.copyWith(
+          isSubmitting: true,
+          addCustomerFailureOrSuccess: none(),
+        ),
+      );
+
+      failureOrSuccess = await _customerFacade.addCustomer(state);
+    }
+
+    emit(
+      state.copyWith(
+        isSubmitting: false,
+        showErrorMessages: true,
+        addCustomerFailureOrSuccess: optionOf<Either<CoreFailure, Unit>>(failureOrSuccess),
+      ),
+    );
+  }
 
   void _onUpdateCustomer(_UpdateCustomer event, Emitter<AddCustomerState> emit) {}
+
+  bool isValidState() =>
+      state.firstName.isValid() &&
+      state.lastName.isValid() &&
+      state.dateOfBirth.isValid() &&
+      state.phoneNumber.isValid() &&
+      state.email.isValid() &&
+      state.bankAccountNumber.isValid();
 }
