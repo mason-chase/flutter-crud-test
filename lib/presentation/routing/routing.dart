@@ -8,10 +8,11 @@ import 'package:mc_crud_test/presentation/page/splash/splash_page.dart';
 
 @LazySingleton()
 class Routing {
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   static const String splashPage = '/';
   static const String homePage = '/home';
   static const String addCustomerPage = '/addCustomer';
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   late final GoRouter router = GoRouter(
     navigatorKey: navigatorKey,

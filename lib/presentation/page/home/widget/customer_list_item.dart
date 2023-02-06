@@ -25,17 +25,15 @@ class CustomerListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<DeleteCustomerCubit, CoreState<Unit>>(
-      listener: (context, state) {
-        state.maybeMap(
+      listener: (context, deleteCustomerState) {
+        deleteCustomerState.maybeMap(
           orElse: () {},
           fetchDataSuccessfully: (_) => context.read<GetAllCustomerCubit>().getAllCustomer(),
         );
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: ThemeConfig.appHorizontalPadding.w,
-          vertical: 6.h,
-        ),
+        padding:
+            EdgeInsets.symmetric(horizontal: ThemeConfig.appHorizontalPadding.w, vertical: 6.h),
         child: Dismissible(
           key: Key(customer.id!.toString()),
           direction: DismissDirection.startToEnd,

@@ -70,7 +70,7 @@ class ActionDialog extends StatelessWidget {
             const SizedBox(height: 8),
             if (haveBackButton)
               HeroButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => Navigator.of(context).pop(false),
                 title: "Cancel",
                 childColor: Colory.primaryColor,
                 buttonColor: Colory.primaryColor.shade100,
