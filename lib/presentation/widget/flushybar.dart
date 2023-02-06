@@ -17,7 +17,6 @@ class FlushyBar {
     required String title,
     required FlushBarType flushBarType,
     VoidCallback? onActionAfterDismiss,
-    int showTimeInMilliSecond = 2000,
   }) {
     if (_flushbar.isShowing()) {
       _flushbar.dismiss(context);
@@ -32,7 +31,13 @@ class FlushyBar {
               }
             }
           : null,
-      duration: Duration(milliseconds: showTimeInMilliSecond),
+      duration: Duration(
+        milliseconds: flushBarType.map(
+          success: (_) => 2000,
+          error: (_) => 3500,
+          warning: (_) => 3000,
+        ),
+      ),
       borderRadius: BorderRadius.circular(8.r),
       icon: SvgPicture.asset(flushBarType.icon, color: Colors.white),
       backgroundColor: flushBarType.color,

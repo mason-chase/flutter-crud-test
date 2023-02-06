@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mc_crud_test/domain/customer/entity/customer_entity.dart';
 import 'package:mc_crud_test/presentation/page/home/widget/customer_list_item.dart';
 import 'package:mc_crud_test/presentation/theme/icony.dart';
+import 'package:mc_crud_test/presentation/widget/animated_listview_builder.dart';
 import 'package:mc_crud_test/presentation/widget/show_status.dart';
 
 class CustomerListBody extends StatelessWidget {
@@ -13,11 +14,11 @@ class CustomerListBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return customers.isNotEmpty
-        ? ListView.builder(
+        ? AnimatedListViewBuilder(
             padding: EdgeInsets.only(bottom: 90.h),
-            physics: const BouncingScrollPhysics(),
             itemCount: customers.length,
-            itemBuilder: (context, index) {
+            animationDirection: ListItemAnimationDirection.vertical,
+            itemBuilder: (index) {
               final customer = customers[index];
               return CustomerListItem(customer: customer);
             },
