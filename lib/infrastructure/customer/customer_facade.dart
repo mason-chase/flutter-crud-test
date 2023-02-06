@@ -27,7 +27,7 @@ class CustomerFacade implements ICustomerFacade {
 
   @override
   Future<Either<CoreFailure, Unit>> addCustomer(AddCustomerState customer) async {
-    final CustomerEntity customerDto = CustomerEntity.fromState(customer);
+    final CustomerEntity customerDto = CustomerEntity.fromCustomerState(customer);
     try {
       await _dataBase.customerDao.insertCustomer(customerDto);
       return right(unit);
@@ -57,7 +57,9 @@ class CustomerFacade implements ICustomerFacade {
       await _dataBase.customerDao.updateCustomer(customer);
       return right(unit);
     } on DatabaseException catch (_) {
-      return left(const CoreFailure.failure(errorMessage: "Customer can't be updated"));
+      return left(const CoreFailure.failure(
+          errorMessage:
+              "The customer cannot be updated because there is a customer with this information"));
     } catch (e) {
       return left(CoreFailure.failure(errorMessage: e.toString()));
     }

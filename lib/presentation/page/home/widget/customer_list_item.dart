@@ -94,7 +94,7 @@ class CustomerListItem extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () => context.push(Routing.addCustomerPage, extra: customer),
                           child: SvgPicture.asset(
                             Icony.edit,
                             color: Colory.neutralColor.shade400,

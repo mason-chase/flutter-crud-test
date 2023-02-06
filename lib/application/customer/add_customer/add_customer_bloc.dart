@@ -132,7 +132,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
         ),
       );
 
-      final CustomerEntity customerDto = CustomerEntity.fromState(state, id: event.customerId);
+      final CustomerEntity customerDto = CustomerEntity.fromCustomerState(state, id: event.customerId);
       failureOrSuccess = await _customerFacade.updateCustomer(customerDto);
     }
 

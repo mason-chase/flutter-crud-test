@@ -32,7 +32,7 @@ class CustomerEntity {
     required this.dateOfBirth,
   });
 
-  factory CustomerEntity.fromState(AddCustomerState customerState, {int? id}) {
+  factory CustomerEntity.fromCustomerState(AddCustomerState customerState, {int? id}) {
     return CustomerEntity(
       id: id,
       firstName: customerState.firstName.getOrCrash().trim(),
