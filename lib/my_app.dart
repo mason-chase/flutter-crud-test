@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
         defaultTransition:
             kIsWeb ? Transition.noTransition : Transition.leftToRightWithFade,
         getPages: TestAppPages.pages,
-        initialRoute: RoutePaths.userListPage,
+        initialRoute: RoutePaths.customerListPage,
       );
 }

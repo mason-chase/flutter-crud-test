@@ -11,7 +11,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(final BuildContext context) => AppBar(
         elevation: 0,
         backgroundColor: Get.theme.colorScheme.primary,
-        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
           _getRouteTitle() ?? '-',

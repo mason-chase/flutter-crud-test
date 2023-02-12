@@ -1,4 +1,5 @@
 class RoutePaths {
-  static const userListPage = '/user-list-page';
+  static const customerListPage = '/';
   static const notFoundPage = '/not-found-page';
+  static const addCustomerPage = '/add-customer-page';
 }

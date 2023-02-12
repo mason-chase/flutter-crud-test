@@ -13,10 +13,13 @@ class MaxWidthWidget extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(final BuildContext context) => ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: maxWidth,
+  Widget build(final BuildContext context) => Align(
+    alignment: Alignment.topCenter,
+    child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: maxWidth,
+          ),
+          child: child,
         ),
-        child: child,
-      );
+  );
 }
