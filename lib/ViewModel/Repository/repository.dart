@@ -19,4 +19,13 @@ class Repository extends DataSource {
 
   @override
   Future<void> closeDatabase() => remoteDataSource.closeDatabase();
+
+  @override
+  Future<Description> deleteCustomer({required int index}) =>
+      remoteDataSource.deleteCustomer(index: index);
+
+  @override
+  Future<Description> updateCustomer(
+          {required int index, required Database database}) =>
+      remoteDataSource.updateCustomer(index: index, database: database);
 }

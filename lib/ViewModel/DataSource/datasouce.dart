@@ -8,6 +8,9 @@ abstract class DataSource {
   Future<Description> addToDatabase({required Database database});
   Future<List<Database>> getCustomerList();
   Future<void> closeDatabase();
+  Future<Description> updateCustomer(
+      {required int index, required Database database});
+  Future<Description> deleteCustomer({required int index});
 }
 
 class RemoteDataSource extends DataSource {
@@ -36,4 +39,13 @@ class RemoteDataSource extends DataSource {
 
   @override
   Future<void> closeDatabase() async => await functions.closeDatabase();
+
+  @override
+  Future<Description> deleteCustomer({required int index}) async =>
+      await functions.deleteCustomer(index: index);
+
+  @override
+  Future<Description> updateCustomer(
+          {required int index, required Database database}) async =>
+      functions.updateCustomer(database: database, index: index);
 }

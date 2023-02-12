@@ -5,7 +5,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
-
 class Functions {
   String boxName = "AmirBox";
 
@@ -27,6 +26,13 @@ class Functions {
     for (var element in box.values.toList()) {
       database.add(element);
     }
+    return database;
+  }
+
+  Future<Database?> getCustomer({required int index}) async {
+    await openBox();
+    final box = Hive.box<Database>(boxName);
+    final Database? database = box.getAt(index);
     return database;
   }
 
@@ -107,4 +113,62 @@ class Functions {
     }
   }
 
+  Future<Description> updateCustomer(
+      {required Database database, required int index}) async {
+    final savedDatabase = await getCustomer(index: index);
+    if (savedDatabase != null) {
+      final String bankNumber = database.bankAccountNumber;
+      final String phoneNumber = database.phoneNumber;
+      final String email = database.email;
+      final firstDescription = await validateion(
+          phoneNumber: phoneNumber, email: email, bankNumber: bankNumber);
+      if (firstDescription.isValid) {
+        final savedDatabaseList = await getDatabase();
+        for (var element in savedDatabaseList) {
+          if (element.firstName == database.firstName) {
+            return Description(
+                isValid: false, description: "This name is already registered");
+          } else if (element.lastName == database.lastName) {
+            return Description(
+                isValid: false,
+                description: "This surname is already registered");
+          } else if (element.phoneNumber == database.phoneNumber) {
+            return Description(
+                isValid: false,
+                description: "This Phone number is already registered");
+          } else if (element.email == database.email) {
+            return Description(
+                isValid: false,
+                description: "This email is already registered");
+          } else if (element.bankAccountNumber == database.bankAccountNumber) {
+            return Description(
+                isValid: false,
+                description: "This Bank number is already registered");
+          } else if (element.dateOfBirth == database.dateOfBirth) {
+            return Description(
+                isValid: false,
+                description: "This Date of birth is already registered");
+          }
+        }
+
+        final box = Hive.box<Database>(boxName);
+        await box.putAt(index, database);
+        return Description(
+            isValid: true, description: "Customer updated successfully");
+      } else {
+        return Description(
+            isValid: false, description: firstDescription.description);
+      }
+    } else {
+      return Description(isValid: false, description: "Customer not found");
+    }
+  }
+
+  Future<Description> deleteCustomer({required int index}) async {
+    await openBox();
+    final box = Hive.box<Database>(boxName);
+    await box.deleteAt(index);
+    return Description(
+        isValid: true, description: "Customer deleted successfully");
+  }
 }
