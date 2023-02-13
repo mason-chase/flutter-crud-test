@@ -60,4 +60,15 @@ class CustomerRepositoryImpl extends CustomerRepository {
       return left(e as Exception);
     }
   }
+
+  @override
+  Future<Either<Exception, String>> deleteCustomer(final String id) async {
+    try {
+      final result = await _dataSource.deleteCustomer(id);
+
+      return right(result);
+    } catch (e) {
+      return left(e as Exception);
+    }
+  }
 }

@@ -90,7 +90,7 @@ class AdvanceListViewState<T> extends State<AdvanceListView<T>> {
       controller: _effectiveScrollController,
       thickness: 6.0,
       radius: const Radius.circular(20),
-      isAlwaysShown: true,
+      thumbVisibility: true,
       child: result,
     );
 

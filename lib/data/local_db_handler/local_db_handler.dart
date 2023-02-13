@@ -2,7 +2,6 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../shared_library/infrastructure/utils/failure.dart';
 import '../dtos/customer/customer_dto.dart';
 
 class LocalDbHandler {
@@ -32,7 +31,7 @@ class LocalDbHandler {
       final item = await customersBox.get(id);
       return Map<String, dynamic>.from(item);
     } on Exception {
-      throw Failure.somethingWentWrong();
+      throw Exception('Something wen wrong');
     }
   }
 
@@ -87,7 +86,20 @@ class LocalDbHandler {
       final Map<String, dynamic> items = await customersBox.getAllValues();
       return items;
     } on Exception {
-      throw Failure.somethingWentWrong();
+      throw Exception('Something went wrong');
+    }
+  }
+
+  Future<String> deleteCustomer(final String id) async {
+    try {
+      final customerBox = await _openCustomersBox();
+
+      await customerBox.delete(id);
+      return id;
+    } catch (e) {
+      throw Exception(
+        'Something went wrong',
+      );
     }
   }
 }

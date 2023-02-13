@@ -11,4 +11,6 @@ abstract class CustomerRepository {
   Future<Either<Exception, CustomerEntity>> editCustomer(final CustomerDto dto);
 
   Future<Either<Exception, CustomerEntity>> getCustomerById(final String id);
+
+  Future<Either<Exception, String>> deleteCustomer(final String id);
 }

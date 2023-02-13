@@ -32,6 +32,16 @@ class LocalDbDataSource {
     }
   }
 
+  Future<String> deleteCustomer(final String id) async {
+    try {
+      final result = await _localDbHandler.deleteCustomer(id);
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<List<CustomerDto>> getAllCustomers() async {
     try {
       final Map<String, dynamic> items =

@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../data/repositories_impl/customer_repository_impl.dart';
-import '../../../shared_library/infrastructure/utils/failure.dart';
 import '../../entities/customer_entity.dart';
 import '../use_case.dart';
 
