@@ -5,7 +5,7 @@ import '../../models/advanced_search_type_enum.dart';
 import '../../models/advanced_search_view_model.dart';
 import '../../views/advance_list_view.dart';
 
-class PaginationList<T> {
+class PaginationListHandler<T> {
   RxList<AdvancedSearchViewModel> filterChipsList =
       <AdvancedSearchViewModel>[].obs;
 
@@ -17,7 +17,7 @@ class PaginationList<T> {
   GlobalKey<AdvanceListViewState<T>> key = GlobalKey<AdvanceListViewState<T>>();
   int limit;
 
-  PaginationList({this.limit = 15}) {
+  PaginationListHandler({this.limit = 15}) {
     filterChipsList.add(AdvancedSearchViewModel(
       type: AdvancedSearchType.limit,
       key: 'limit',

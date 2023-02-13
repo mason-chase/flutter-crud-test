@@ -11,4 +11,19 @@ class LocalDbDataSource {
       rethrow;
     }
   }
+
+  Future<List<CustomerDto>> getAllCustomers() async {
+    try {
+      final Map<String, dynamic> items =
+          await _localDbHandler.getAllCustomers();
+      final List<CustomerDto> finalItems = [];
+      items.forEach((final key, final value) {
+        finalItems.add(CustomerDto.fromMap(value));
+      });
+
+      return finalItems;
+    } on Exception {
+      rethrow;
+    }
+  }
 }

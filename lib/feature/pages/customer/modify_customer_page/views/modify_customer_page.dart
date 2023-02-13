@@ -27,18 +27,21 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
                     Utils.mediumVerticalSpace,
                     TextFormField(
                       validator: Utils.validateText,
+                      controller: controller.firstNameController,
                       decoration: ThemeUtils.textFormFieldDecoration(
                           label: 'First Name'),
                     ),
                     Utils.mediumVerticalSpace,
                     TextFormField(
                       validator: Utils.validateText,
+                      controller: controller.lastNameController,
                       decoration: ThemeUtils.textFormFieldDecoration(
                           label: 'Last Name'),
                     ),
                     Utils.mediumVerticalSpace,
                     TextFormField(
                       validator: Utils.validateMobile,
+                      controller: controller.mobileNumberController,
                       keyboardType: TextInputType.number,
                       decoration: ThemeUtils.textFormFieldDecoration(
                           label: 'Mobile Number'),
@@ -46,6 +49,7 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
                     Utils.mediumVerticalSpace,
                     TextFormField(
                       validator: Utils.validateEmail,
+                      controller: controller.emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: ThemeUtils.textFormFieldDecoration(
                           label: 'Email Address'),
@@ -54,6 +58,7 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
                     TextFormField(
                       validator: Utils.validateBankAccountNumber,
                       keyboardType: TextInputType.number,
+                      controller: controller.accountNumberController,
                       decoration: ThemeUtils.textFormFieldDecoration(
                           label: 'Bank Account Number'),
                     ),

@@ -20,11 +20,10 @@ class CustomerEntity {
   });
 
   factory CustomerEntity.fromDto({
-    required final String id,
     required final CustomerDto dto,
   }) =>
       CustomerEntity(
-        id: id,
+        id: dto.id!,
         firstName: dto.firstName,
         lastName: dto.lastName,
         dateOfBirth: dto.dateOfBirth,

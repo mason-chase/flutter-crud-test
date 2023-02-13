@@ -20,6 +20,7 @@ class TestAppThemeData {
   static final Color successColor = Colors.green.shade500;
   static const Color infoColor = Colors.teal;
   static const Color backgroundColor = Colors.white;
+  static final Color cardColor = Colors.grey.shade200;
   static const Color warningColor = Color(0xFFffc107);
   static const Color textColor = Colors.black;
   static final Color dangerColor = Colors.red.withOpacity(.8);

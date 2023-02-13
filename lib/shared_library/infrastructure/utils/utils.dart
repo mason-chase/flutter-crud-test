@@ -8,6 +8,9 @@ class Utils {
   static const double normalRadius = 8;
   static Size appBarSize = const Size.fromHeight(50);
 
+  static const double smallSize=15;
+  static const double mediumSize=20;
+  static const double largeSize=30;
   static const double tinySpace = 2;
   static const double smallSpace = 4;
   static const double mediumSpace = 8;
@@ -37,6 +40,9 @@ class Utils {
   static const giantPadding = EdgeInsetsDirectional.all(giantSpace);
 
   static late Fluttertoast toast;
+
+  static String displayDateFromUtc(final String utc) =>
+      DateTime.parse(utc).toLocal().toString().split(' ').first;
 
   static void errorToast({required final String message}) =>
       Fluttertoast.showToast(

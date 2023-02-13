@@ -12,7 +12,8 @@ class AddCustomerController extends ModifyCustomerBaseController {
   Future<void> modifyCustomer() async {
     if (formKey.currentState!.validate()) {
       if (selectedDate != null) {
-        final exceptionOrResult = await _addCustomerUseCase.call(_addDto());
+        final exceptionOrResult =
+            await _addCustomerUseCase.call(params: _addDto());
 
         exceptionOrResult.fold(
           (final failure) => Utils.errorToast(message: failure.exception),
@@ -29,7 +30,7 @@ class AddCustomerController extends ModifyCustomerBaseController {
   CustomerDto _addDto() => CustomerDto(
         firstName: firstNameController.text,
         lastName: lastNameController.text,
-        dateOfBirth: selectedDate!.toUtc().toIso8601String(),
+        dateOfBirth: selectedDate!.toUtc().toString(),
         phoneNumber: mobileNumberController.text,
         email: emailController.text,
         bankAccountNumber: accountNumberController.text,

@@ -13,10 +13,10 @@ class LocalDbHandler {
         {customers},
       );
 
-  Future<CollectionBox<Map>> _openCustomersBox() async {
+  Future<CollectionBox> _openCustomersBox() async {
     final collection = await _openOrCreateDb();
 
-    return collection.openBox<Map>(customers);
+    return collection.openBox(customers);
   }
 
   Future<String> addCustomer(final CustomerDto dto) async {
@@ -25,10 +25,21 @@ class LocalDbHandler {
       final customersBox = await _openCustomersBox();
       await customersBox.put(
         uuid,
-        dto.toMap(),
+        dto.toMap(uuid),
       );
 
       return uuid;
+    } on Exception catch (e) {
+      throw Failure.somethingWentWrong();
+    }
+  }
+
+  Future<Map<String, dynamic>> getAllCustomers() async {
+    try {
+      final customersBox = await _openCustomersBox();
+
+      final Map<String, dynamic> items = await customersBox.getAllValues();
+      return items;
     } on Exception catch (e) {
       throw Failure.somethingWentWrong();
     }

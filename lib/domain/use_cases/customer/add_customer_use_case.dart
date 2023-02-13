@@ -11,6 +11,6 @@ class AddCustomerUseCase extends UseCase<CustomerEntity, CustomerDto> {
   final CustomerRepository _repository = CustomerRepositoryImpl();
 
   @override
-  Future<Either<Failure, CustomerEntity>> call(final CustomerDto params) =>
-      _repository.addCustomer(params);
+  Future<Either<Failure, CustomerEntity>> call({final CustomerDto? params}) =>
+      _repository.addCustomer(params!);
 }

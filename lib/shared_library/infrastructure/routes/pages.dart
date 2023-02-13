@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../feature/pages/customer/customer_list_page/bindings/customer_list_bindings.dart';
 import '../../../feature/pages/customer/customer_list_page/views/customer_list_page.dart';
 import '../../../feature/pages/customer/modify_customer_page/bindings/add_customer_bindings.dart';
 import '../../../feature/pages/customer/modify_customer_page/controllers/add_customer_controller.dart';
@@ -10,6 +11,7 @@ import 'route_paths.dart';
 class TestAppPages {
   static final pages = [
     GetPage(
+      binding: CustomerListBindings(),
       name: RoutePaths.customerListPage,
       page: CustomerListPage.new,
       children: [
