@@ -6,8 +6,9 @@ class LocalDbDataSource {
 
   Future<String> addCustomer(final CustomerDto dto) {
     try {
-      return _localDbHandler.addCustomer(dto);
-    } on Exception {
+      final result = _localDbHandler.addCustomer(dto);
+      return result;
+    } catch (e) {
       rethrow;
     }
   }
@@ -18,7 +19,7 @@ class LocalDbDataSource {
           await _localDbHandler.getAllCustomers();
       final List<CustomerDto> finalItems = [];
       items.forEach((final key, final value) {
-        finalItems.add(CustomerDto.fromMap(value));
+        finalItems.add(CustomerDto.fromMap(Map<String, dynamic>.from(value)));
       });
 
       return finalItems;

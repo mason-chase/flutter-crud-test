@@ -28,7 +28,7 @@ class CustomerListPage extends GetView<CustomerListController> {
           onOptionsTap: () {},
           item: item,
         ),
-        onRefreshData: controller.refreshStepOperations,
+        onRefreshData: controller.refreshCustomers,
         items: controller.paginationList.list,
         key: controller.paginationList.key,
         hasMoreData: controller.paginationList.hasMoreData.value,

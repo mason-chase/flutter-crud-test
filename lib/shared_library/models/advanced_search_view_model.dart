@@ -9,11 +9,11 @@ class AdvancedSearchViewModel {
   bool? show;
 
   AdvancedSearchViewModel({
-    final this.key,
-    final this.text,
-    final this.startValue,
-    final this.endValue,
-    final this.type,
-    final this.show,
+    this.key,
+    this.text,
+    this.startValue,
+    this.endValue,
+    this.type,
+    this.show,
   });
 }

@@ -9,6 +9,6 @@ class GetAllCustomersUseCase extends UseCase<List<CustomerEntity>, int> {
   final CustomerRepositoryImpl _repositoryImpl = CustomerRepositoryImpl();
 
   @override
-  Future<Either<Failure, List<CustomerEntity>>> call({final int? params}) =>
+  Future<Either<Exception, List<CustomerEntity>>> call({final int? params}) =>
       _repositoryImpl.getAllCustomers();
 }

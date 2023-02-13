@@ -30,7 +30,7 @@ class CustomerListController extends GetxController {
     );
   }
 
-  Future<void> refreshStepOperations() async {
+  Future<void> refreshCustomers() async {
     resetCustomerList();
     await getAllCustomers();
   }

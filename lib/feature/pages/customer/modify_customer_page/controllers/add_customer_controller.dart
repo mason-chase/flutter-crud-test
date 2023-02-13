@@ -16,7 +16,7 @@ class AddCustomerController extends ModifyCustomerBaseController {
             await _addCustomerUseCase.call(params: _addDto());
 
         exceptionOrResult.fold(
-          (final failure) => Utils.errorToast(message: failure.exception),
+          (final failure) => Utils.errorToast(message: failure.toString()),
           (final result) {
             Get.back(result: result);
           },

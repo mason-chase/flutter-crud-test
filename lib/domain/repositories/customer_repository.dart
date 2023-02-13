@@ -5,7 +5,7 @@ import '../../shared_library/infrastructure/utils/failure.dart';
 import '../entities/customer_entity.dart';
 
 abstract class CustomerRepository {
-  Future<Either<Failure, CustomerEntity>> addCustomer(final CustomerDto dto);
+  Future<Either<Exception, CustomerEntity>> addCustomer(final CustomerDto dto);
 
-  Future<Either<Failure, List<CustomerEntity>>> getAllCustomers();
+  Future<Either<Exception, List<CustomerEntity>>> getAllCustomers();
 }

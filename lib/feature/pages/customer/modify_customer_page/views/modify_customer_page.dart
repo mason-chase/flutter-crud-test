@@ -25,43 +25,15 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
                 child: Column(
                   children: [
                     Utils.mediumVerticalSpace,
-                    TextFormField(
-                      validator: Utils.validateText,
-                      controller: controller.firstNameController,
-                      decoration: ThemeUtils.textFormFieldDecoration(
-                          label: 'First Name'),
-                    ),
+                    _firstName(),
                     Utils.mediumVerticalSpace,
-                    TextFormField(
-                      validator: Utils.validateText,
-                      controller: controller.lastNameController,
-                      decoration: ThemeUtils.textFormFieldDecoration(
-                          label: 'Last Name'),
-                    ),
+                    _lastName(),
                     Utils.mediumVerticalSpace,
-                    TextFormField(
-                      validator: Utils.validateMobile,
-                      controller: controller.mobileNumberController,
-                      keyboardType: TextInputType.number,
-                      decoration: ThemeUtils.textFormFieldDecoration(
-                          label: 'Mobile Number'),
-                    ),
+                    _mobileNumber(),
                     Utils.mediumVerticalSpace,
-                    TextFormField(
-                      validator: Utils.validateEmail,
-                      controller: controller.emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: ThemeUtils.textFormFieldDecoration(
-                          label: 'Email Address'),
-                    ),
+                    _email(),
                     Utils.mediumVerticalSpace,
-                    TextFormField(
-                      validator: Utils.validateBankAccountNumber,
-                      keyboardType: TextInputType.number,
-                      controller: controller.accountNumberController,
-                      decoration: ThemeUtils.textFormFieldDecoration(
-                          label: 'Bank Account Number'),
-                    ),
+                    _accountNumber(),
                     Utils.mediumVerticalSpace,
                     SelectDateWidget(
                       onDateSelected: (final value) {
@@ -69,15 +41,52 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
                       },
                     ),
                     Utils.mediumVerticalSpace,
-                    FillButton(
-                      onPressed: controller.modifyCustomer,
-                      title: 'Submit',
-                    ),
+                    _submit(),
                   ],
                 ),
               ),
             ),
           ),
         ),
+      );
+
+  Widget _submit() => FillButton(
+        onPressed: controller.modifyCustomer,
+        title: 'Submit',
+      );
+
+  Widget _accountNumber() => TextFormField(
+        validator: Utils.validateBankAccountNumber,
+        keyboardType: TextInputType.number,
+        controller: controller.accountNumberController,
+        decoration:
+            ThemeUtils.textFormFieldDecoration(label: 'Bank Account Number'),
+      );
+
+  Widget _email() => TextFormField(
+        validator: Utils.validateEmail,
+        controller: controller.emailController,
+        keyboardType: TextInputType.emailAddress,
+        decoration: ThemeUtils.textFormFieldDecoration(label: 'Email Address'),
+      );
+
+  Widget _mobileNumber() => TextFormField(
+        validator: Utils.validateMobile,
+        controller: controller.mobileNumberController,
+        maxLength: 11,
+        keyboardType: TextInputType.number,
+        decoration: ThemeUtils.textFormFieldDecoration(label: 'Mobile Number'),
+      );
+
+  Widget _lastName() => TextFormField(
+        validator: Utils.validateText,
+        controller: controller.lastNameController,
+        decoration: ThemeUtils.textFormFieldDecoration(label: 'Last Name'),
+      );
+
+  Widget _firstName() => TextFormField(
+        validator: Utils.validateText,
+        controller: controller.firstNameController,
+        decoration: ThemeUtils.textFormFieldDecoration(label: 'First Name'),
       );
 }
