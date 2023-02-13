@@ -1,5 +1,5 @@
 class CustomerDto {
-   String? id;
+  String? id;
   final String firstName;
   final String lastName;
   final String dateOfBirth;
@@ -27,9 +27,9 @@ class CustomerDto {
         bankAccountNumber: map['bankAccountNumber'],
       );
 
-  Map<String, dynamic> toMap(final String id) => {
+  Map<String, dynamic> toMap({final String? id}) => {
         'firstName': firstName,
-        'id': id,
+        'id': id ?? this.id,
         'lastName': lastName,
         'dateOfBirth': dateOfBirth,
         'phoneNumber': phoneNumber,

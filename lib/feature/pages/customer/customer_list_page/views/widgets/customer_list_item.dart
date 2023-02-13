@@ -54,7 +54,7 @@ class CustomerListItem extends StatelessWidget {
       );
 
   Widget _options() => IconButton(
-        onPressed: () {},
+        onPressed: onOptionsTap,
         icon: const Icon(Icons.more_vert_sharp, size: Utils.mediumSize),
       );
 

@@ -6,6 +6,7 @@ import '../../../../../shared_library/infrastructure/utils/utils.dart';
 import '../../../../../shared_library/views/custom_app_bar.dart';
 import '../../../../../shared_library/views/fill_button.dart';
 import '../../../../../shared_library/views/max_body_widget.dart';
+import '../../../../../shared_library/views/page_status_widget.dart';
 import '../../../../../shared_library/views/select_date_widget.dart';
 import '../controllers/modify_customer_base_controller.dart';
 
@@ -17,32 +18,37 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
   Widget build(final BuildContext context) => Scaffold(
         appBar: const CustomAppBar(),
         body: MaxWidthWidget(
-          child: Padding(
-            padding: Utils.smallPadding,
-            child: SingleChildScrollView(
-              child: Form(
-                key: controller.formKey,
-                child: Column(
-                  children: [
-                    Utils.mediumVerticalSpace,
-                    _firstName(),
-                    Utils.mediumVerticalSpace,
-                    _lastName(),
-                    Utils.mediumVerticalSpace,
-                    _mobileNumber(),
-                    Utils.mediumVerticalSpace,
-                    _email(),
-                    Utils.mediumVerticalSpace,
-                    _accountNumber(),
-                    Utils.mediumVerticalSpace,
-                    SelectDateWidget(
-                      onDateSelected: (final value) {
-                        controller.selectedDate = value;
-                      },
-                    ),
-                    Utils.mediumVerticalSpace,
-                    _submit(),
-                  ],
+          child: PageStatusWidget(
+            onRetry: controller.getCustomerById,
+            statusApi: controller.state,
+            content: Padding(
+              padding: Utils.smallPadding,
+              child: SingleChildScrollView(
+                child: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      Utils.mediumVerticalSpace,
+                      _firstName(),
+                      Utils.mediumVerticalSpace,
+                      _lastName(),
+                      Utils.mediumVerticalSpace,
+                      _mobileNumber(),
+                      Utils.mediumVerticalSpace,
+                      _email(),
+                      Utils.mediumVerticalSpace,
+                      _accountNumber(),
+                      Utils.mediumVerticalSpace,
+                      Obx(() => SelectDateWidget(
+                            selectedDate: controller.selectedDate.value,
+                            onDateSelected: (final value) {
+                              controller.selectedDate.value = value;
+                            },
+                          )),
+                      Utils.mediumVerticalSpace,
+                      _submit(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -50,10 +56,11 @@ class ModifyCustomerPage<T extends ModifyCustomerBaseController>
         ),
       );
 
-  Widget _submit() => FillButton(
+  Widget _submit() => Obx(() => FillButton(
         onPressed: controller.modifyCustomer,
+        loading: controller.isWaiting.value,
         title: 'Submit',
-      );
+      ));
 
   Widget _accountNumber() => TextFormField(
         validator: Utils.validateBankAccountNumber,

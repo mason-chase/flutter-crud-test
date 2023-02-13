@@ -25,6 +25,32 @@ class LocalDbHandler {
     return collection.openBox(customers);
   }
 
+  Future<Map<String, dynamic>> getCustomerById(final String id) async {
+    try {
+      final customersBox = await _openCustomersBox();
+
+      final item = await customersBox.get(id);
+      return Map<String, dynamic>.from(item);
+    } on Exception {
+      throw Failure.somethingWentWrong();
+    }
+  }
+
+  Future<String> editCustomer(final CustomerDto dto) async {
+    try {
+      final customersBox = await _openCustomersBox();
+      await _validateCustomer(dto);
+      await customersBox.put(
+        dto.id!,
+        dto.toMap(),
+      );
+
+      return dto.id!;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<String> addCustomer(final CustomerDto dto) async {
     try {
       final uuid = const Uuid().v1();
@@ -32,7 +58,7 @@ class LocalDbHandler {
       await _validateCustomer(dto);
       await customersBox.put(
         uuid,
-        dto.toMap(uuid),
+        dto.toMap(id: uuid),
       );
 
       return uuid;
@@ -45,10 +71,10 @@ class LocalDbHandler {
     final customersBox = await _openCustomersBox();
     final customers = await customersBox.getAllValues();
     customers.forEach((final key, final value) {
-      if (value['email'] == dto.email) {
+      if (value['id'] != dto.id && value['email'] == dto.email) {
         throw Exception('Email already exists');
       }
-      if (value['phoneNumber'] == dto.phoneNumber) {
+      if (value['id'] != dto.id && value['phoneNumber'] == dto.phoneNumber) {
         throw Exception('Mobile number already exists');
       }
     });
@@ -60,7 +86,7 @@ class LocalDbHandler {
 
       final Map<String, dynamic> items = await customersBox.getAllValues();
       return items;
-    } on Exception catch (e) {
+    } on Exception {
       throw Failure.somethingWentWrong();
     }
   }

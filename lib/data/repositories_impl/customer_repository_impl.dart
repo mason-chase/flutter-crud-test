@@ -16,7 +16,7 @@ class CustomerRepositoryImpl extends CustomerRepository {
       final result = await _dataSource.addCustomer(dto);
       dto.id = result;
       return right(
-        CustomerEntity.fromDto(dto: dto),
+        CustomerMapper.mapDtoToEntity(dto),
       );
     } catch (e) {
       return left(e as Exception);
@@ -31,6 +31,33 @@ class CustomerRepositoryImpl extends CustomerRepository {
       return right(result.map(CustomerMapper.mapDtoToEntity).toList());
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<Either<Exception, CustomerEntity>> editCustomer(
+      final CustomerDto dto) async {
+    try {
+      final result = await _dataSource.editCustomer(dto);
+      dto.id = result;
+      return right(
+        CustomerMapper.mapDtoToEntity(dto),
+      );
+    } catch (e) {
+      return left(e as Exception);
+    }
+  }
+
+  @override
+  Future<Either<Exception, CustomerEntity>> getCustomerById(
+      final String id) async {
+    try {
+      final result = await _dataSource.getCustomerById(id);
+      return right(
+        CustomerMapper.mapDtoToEntity(result),
+      );
+    } catch (e) {
+      return left(e as Exception);
     }
   }
 }

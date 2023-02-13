@@ -25,7 +25,29 @@ class CustomerListPage extends GetView<CustomerListController> {
 
   Widget _customerList() => AdvanceListView<CustomerEntity>(
         itemBuilder: (final _, final item, final __) => CustomerListItem(
-          onOptionsTap: () {},
+          onOptionsTap: () async {
+            await Get.dialog(
+              SimpleDialog(
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      final result = await Get.toNamed(
+                        RoutePaths.editCustomerPage,
+                        parameters: {
+                          'id': item.id,
+                        },
+                      );
+                      if (result != null) {
+                        Utils.successToast(message: 'Successfully edited');
+                        controller.paginationList.key.currentState![1] = result;
+                      }
+                    },
+                    child: const Text('Edit Customer'),
+                  ),
+                ],
+              ),
+            );
+          },
           item: item,
         ),
         onRefreshData: controller.refreshCustomers,
