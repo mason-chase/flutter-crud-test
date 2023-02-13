@@ -101,6 +101,7 @@ class CustomerListPage extends GetView<CustomerListController> {
             },
           );
           if (result != null) {
+            Get.back();
             Utils.successToast(message: 'Successfully edited');
             controller.paginationList.key.currentState![index] = result;
           }

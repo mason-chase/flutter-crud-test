@@ -9,9 +9,7 @@ import '../../../../../shared_library/models/page_status_enum.dart';
 import 'modify_customer_base_controller.dart';
 
 class EditCustomerController extends ModifyCustomerBaseController {
-  final String id;
-
-  EditCustomerController(this.id);
+  final String id = Get.parameters['id']!;
 
   final GetCustomerByIdUseCase _getCustomerByIdUseCase =
       GetCustomerByIdUseCase();

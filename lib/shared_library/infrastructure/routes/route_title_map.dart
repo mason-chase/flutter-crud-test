@@ -5,5 +5,6 @@ class RouteTitleMap {
     RoutePaths.customerListPage: 'Users List',
     RoutePaths.notFoundPage: 'Page Not Found',
     RoutePaths.addCustomerPage: 'Add Customer',
+    RoutePaths.editCustomerPage: 'Edit Customer',
   };
 }

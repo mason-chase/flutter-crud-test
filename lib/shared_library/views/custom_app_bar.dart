@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       );
 
-  String? _getRouteTitle() => RouteTitleMap.titleMap[Get.currentRoute];
+  String? _getRouteTitle() => RouteTitleMap.titleMap[Get.getCurrentRouteKey];
 
   @override
   Size get preferredSize => Utils.appBarSize;
