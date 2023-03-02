@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mc_crud_test/core/services/service_locator.dart';
+import 'package:mc_crud_test/custom_navigator.dart';
 import 'package:mc_crud_test/features/customer/presentation/bloc/customer_bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/bloc/customer_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/features/customer/presentation/pages/add_or_edit_customer_page.dart';
 import 'package:mc_crud_test/features/customer/presentation/widgets/custom_loading.dart';
+import 'package:mc_crud_test/features/customer/presentation/widgets/custom_on_click.dart';
 import '../bloc/customer_state.dart';
 import '../widgets/custom_error.dart';
+import '../widgets/customer_bottom_sheet.dart';
 import '../widgets/customer_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,13 +20,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final CustomerBloc _customerBloc = inject();
-
-  @override
-  void initState() {
-    _customerBloc.add(const CustomerEvent.getCustomers());
-    super.initState();
-  }
+  final CustomerBloc _customerBloc = inject()
+    ..add(const CustomerEvent.getCustomers());
+  late final _customerBottomSheet = CustomerBottomSheet(context);
 
   @override
   void dispose() {
@@ -36,6 +36,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Customers"),
         centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          CustomNavigator.pushNamed(AddOrEditCustomerPage.routeName)
+              .then((value) {
+            _customerBloc.add(const CustomerEvent.getCustomers());
+          });
+        },
+        child: const Icon(Icons.add),
+        tooltip: "Add a new customer",
       ),
       body: BlocProvider(
         create: (context) => _customerBloc,
@@ -58,11 +68,19 @@ class _HomePageState extends State<HomePage> {
                   return ListView.builder(
                     itemCount: data.length,
                     clipBehavior: Clip.hardEdge,
-                    padding: EdgeInsets.zero,
+                    padding: const EdgeInsetsDirectional.only(start: 20),
                     shrinkWrap: false,
                     itemExtent: 200,
                     itemBuilder: (context, index) {
-                      return CustomerItem(model: data.elementAt(index));
+                      return OnClick(
+                          onTap: () {
+                            _customerBottomSheet.show(data[index]).then(
+                                  (value) => _customerBloc.add(
+                                    const CustomerEvent.getCustomers(),
+                                  ),
+                                );
+                          },
+                          child: CustomerItem(model: data.elementAt(index)));
                     },
                   );
                 },
