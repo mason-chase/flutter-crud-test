@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:mc_crud_test/features/customer/domain/entities/customer.dart';
+import 'package:stream_bloc/stream_bloc.dart';
 import '../../domain/usecases/add_customer_usecase.dart';
 import '../../domain/usecases/delete_customer_usecase.dart';
 import '../../domain/usecases/edit_customer_usecase.dart';
@@ -8,7 +8,7 @@ import '../../domain/usecases/get_customers_usecase.dart';
 import 'customer_event.dart';
 import 'customer_state.dart';
 
-class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
+class CustomerBloc extends StreamBloc<CustomerEvent, CustomerState> {
   late final AddCustomerUseCase addCustomer;
   late final DeleteCustomerUseCase deleteCustomer;
   late final EditCustomerUseCase editCustomer;
@@ -28,6 +28,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
         getCustomers = getCustomersUseCase,
         super(const CustomerState.initial(false));
 
+  @override
   Stream<CustomerState> mapEventToStates(CustomerEvent event) => event.when(
         addCustomer: _onAddCustomer,
         deleteCustomer: _onDeleteCustomer,
@@ -47,7 +48,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       );
     } catch (e) {
       if (!isClosed) {
-        CustomerState.error(e.toString(), false);
+        yield CustomerState.error(e.toString(), false);
       }
     }
   }
@@ -63,7 +64,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       );
     } catch (e) {
       if (!isClosed) {
-        CustomerState.error(e.toString(), false);
+        yield CustomerState.error(e.toString(), false);
       }
     }
   }
@@ -79,7 +80,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       );
     } catch (e) {
       if (!isClosed) {
-        CustomerState.error(e.toString(), false);
+        yield CustomerState.error(e.toString(), false);
       }
     }
   }
@@ -95,7 +96,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       );
     } catch (e) {
       if (!isClosed) {
-        CustomerState.error(e.toString(), false);
+        yield CustomerState.error(e.toString(), false);
       }
     }
   }
@@ -111,7 +112,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       );
     } catch (e) {
       if (!isClosed) {
-        CustomerState.error(e.toString(), false);
+        yield CustomerState.error(e.toString(), false);
       }
     }
   }

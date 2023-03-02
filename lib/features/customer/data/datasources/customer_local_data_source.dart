@@ -18,37 +18,45 @@ abstract class CustomerLocalDataSource {
 }
 
 class CustomerLocalDataSourceImpl implements CustomerLocalDataSource {
-  CustomerLocalDataSourceImpl() {
-    _init();
-  }
-
-  late Box<Customer> _box;
+  Box<Customer>? _box;
   final String _key = "customer";
 
-  void _init() async {
-    Hive.registerAdapter(CustomerAdapter());
-
-    _box = await Hive.openBox<Customer>(_key);
+  Future<void> _init() async {
+    if (_box == null) {
+      Hive.registerAdapter(CustomerAdapter());
+      _box = await Hive.openBox<Customer>(_key);
+    }
   }
 
   @override
   Future<Customer> addCustomer(Customer customer) async {
-    await _box.put(customer.email, customer);
+    await _init();
+    await _box?.put(customer.email, customer);
     return customer;
   }
 
   @override
-  Future<void> deleteCustomer(String email) async => await _box.delete(email);
+  Future<void> deleteCustomer(String email) async {
+    await _init();
+    await _box?.delete(email);
+  }
 
   @override
   Future<Customer> editCustomer(Customer customer) async {
-    await _box.put(customer.email, customer);
+    await _init();
+    await _box?.put(customer.email, customer);
     return customer;
   }
 
   @override
-  Future<Customer?> getCustomerById(String id) async => _box.get(id);
+  Future<Customer?> getCustomerById(String id) async {
+    await _init();
+    return _box?.get(id);
+  }
 
   @override
-  Future<List<Customer>> getCustomers() async => _box.values.toList();
+  Future<List<Customer>> getCustomers() async {
+    await _init();
+    return _box!.values.toList();
+  }
 }
