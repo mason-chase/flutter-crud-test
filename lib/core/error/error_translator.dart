@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 /// convert exception to error.
+@lazySingleton
 class ErrorTranslator {
   String call(Object err) {
     if (err is DatabaseException) return _databaseExceptionHandler(err);

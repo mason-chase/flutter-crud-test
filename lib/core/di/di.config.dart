@@ -12,11 +12,15 @@ import '../../features/customer/data/datasource/datasource.dart' as _i3;
 import '../../features/customer/data/datasource/datasource_impl.dart' as _i4;
 import '../../features/customer/data/repository/repository_impl.dart' as _i6;
 import '../../features/customer/domain/repository/repository.dart' as _i5;
-import '../../features/customer/domain/usecases/create_customer.dart' as _i8;
+import '../../features/customer/domain/usecases/create_customer.dart' as _i11;
+import '../../features/customer/domain/usecases/delete_customer.dart' as _i7;
 import '../../features/customer/presentation/controllers/create_customer/cubit.dart'
-    as _i9;
+    as _i12;
+import '../../features/customer/presentation/controllers/delete_customer/cubit.dart'
+    as _i8;
+import '../error/error_translator.dart' as _i9;
 import '../helpers/validator.dart'
-    as _i7; // ignore_for_file: unnecessary_lambdas
+    as _i10; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -33,10 +37,15 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_i3.CustomerDataSource>(() => _i4.CustomerDataSourceIMPL());
   gh.lazySingleton<_i5.CustomerRepository>(
       () => _i6.CustomerRepositoryIMPL(get<_i3.CustomerDataSource>()));
-  gh.lazySingleton<_i7.Validator>(() => _i7.Validator());
-  gh.lazySingleton<_i8.CreateCustomer>(
-      () => _i8.CreateCustomer(get<_i5.CustomerRepository>()));
-  gh.factory<_i9.CreateCustomerCubit>(
-      () => _i9.CreateCustomerCubit(createCustomer: get<_i8.CreateCustomer>()));
+  gh.lazySingleton<_i7.DeleteCustomer>(
+      () => _i7.DeleteCustomer(get<_i5.CustomerRepository>()));
+  gh.factory<_i8.DeleteCustomerCubit>(
+      () => _i8.DeleteCustomerCubit(deleteCustomer: get<_i7.DeleteCustomer>()));
+  gh.lazySingleton<_i9.ErrorTranslator>(() => _i9.ErrorTranslator());
+  gh.lazySingleton<_i10.Validator>(() => _i10.Validator());
+  gh.lazySingleton<_i11.CreateCustomer>(
+      () => _i11.CreateCustomer(get<_i5.CustomerRepository>()));
+  gh.factory<_i12.CreateCustomerCubit>(() =>
+      _i12.CreateCustomerCubit(createCustomer: get<_i11.CreateCustomer>()));
   return get;
 }

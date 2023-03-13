@@ -1,4 +1,6 @@
 import 'package:injectable/injectable.dart';
+import 'package:mc_crud_test/features/customer/domain/entities/delete_customer/params/delete_customer_params.dart';
+import 'package:mc_crud_test/features/customer/domain/entities/delete_customer/response/delete_customer_response.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../../core/constants/constants.dart';
@@ -29,14 +31,15 @@ class CustomerDataSourceIMPL implements CustomerDataSource {
   /// Update Customer
   /// Delete Customer
   @override
-  Future<int> deleteCustomer(String id) async {
+  Future<DeleteCustomerResponse> deleteCustomer(
+      DeleteCustomerParams params) async {
     final Database db = await dbProvider.database;
     final int res = await db.delete(
       Constants.customerTable,
       where: 'id = ?',
-      whereArgs: <String>[id],
+      whereArgs: <String>[params.customerId],
     );
 
-    return res;
+    return DeleteCustomerResponse(res == 1);
   }
 }
