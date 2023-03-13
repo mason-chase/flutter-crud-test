@@ -1,7 +1,11 @@
 import 'package:equatable/equatable.dart';
 
+///
+/// This class use for handle errors.
+/// It contains a string to explain error.
+/// 
 class Failure extends Equatable {
-  final List<dynamic>? errorReason;
+  final String errorReason;
   const Failure(this.errorReason);
 
   @override

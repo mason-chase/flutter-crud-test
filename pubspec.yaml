@@ -11,13 +11,17 @@ dependencies:
     sdk: flutter
   equatable: ^2.0.3
   dartz: ^0.10.1
-  freezed_annotation: ^1.1.0
+  freezed_annotation: ^2.2.0
   json_annotation: ^4.4.0
   injectable: ^1.5.3
   get_it: ^7.2.0
   flutter_bloc: ^8.0.1
-  fluttertoast: ^8.0.9
   cupertino_icons: ^1.0.2
+  path_provider:
+  intl:
+  sqflite:
+  uuid:
+  flutter_libphonenumber:
 
 dev_dependencies:
   flutter_test:
@@ -25,8 +29,9 @@ dev_dependencies:
   json_serializable: ^6.1.5
   build_runner: ^2.1.8
   injectable_generator: ^1.5.3
-  freezed: ^1.1.1
+  freezed: ^2.3.2
   flutter_lints: ^1.0.0
+  floor_generator: ^1.4.1
 
 flutter:
   uses-material-design: true
