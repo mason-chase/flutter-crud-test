@@ -13,7 +13,7 @@ class GetCustomersCubit extends BaseCubit<GetCustomersState> {
 
   final GetCustomers getCustomers;
 
-  Future<void> deleteCustomerF(GetCustomersParams params) async {
+  Future<void> getCustomersF(GetCustomersParams params) async {
     emit(const GetCustomersState.loading());
 
     final result = await getCustomers(params);

@@ -10,18 +10,23 @@ import '../../domain/entities/create_customer/params/create_customer_params.dart
 import '../../domain/entities/create_customer/params/customer/customer.dart';
 import '../controllers/create_customer/cubit.dart';
 import '../controllers/create_customer/state.dart';
-import '../widget/phone_number_validation.dart';
+import 'phone_number_validation.dart';
 
-class NewCustomerPage extends StatefulWidget {
-  const NewCustomerPage({
+class CustomerForm extends StatefulWidget {
+  const CustomerForm({
     Key? key,
+    required this.onSubmitCustomer,
+    this.customer,
   }) : super(key: key);
 
+  final Function(Customer customer) onSubmitCustomer;
+  final Customer? customer;
+
   @override
-  State<NewCustomerPage> createState() => _NewCustomerPageState();
+  State<CustomerForm> createState() => _CustomerFormState();
 }
 
-class _NewCustomerPageState extends State<NewCustomerPage> {
+class _CustomerFormState extends State<CustomerForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late CreateCustomerCubit _createCustomerCubit;
   final TextEditingController firstNameController = TextEditingController(),
@@ -97,7 +102,12 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           listener: (context, state) => state.maybeWhen(
             orElse: () => null,
             error: (failure) => _showSnack(failure.errorReason),
-            done: (response) => _showSnack('Successful!'),
+            done: (response) {
+              _showSnack('Successful!');
+              Navigator.pop(context);
+              widget.onSubmitCustomer(response.customer);
+              return;
+            },
           ),
           builder: (context, state) => ElevatedButton(
             child: const Text('create'),

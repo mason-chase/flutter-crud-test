@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 
 import 'core/di/di.dart';
-import 'features/customer/presentation/pages/new_customer_page.dart';
+import 'features/customer/presentation/pages/customers_page.dart';
 
 void main() async {
   await FlutterLibphonenumber().init();
@@ -15,6 +15,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        home: NewCustomerPage(),
+        home: CustomersPage(),
       );
 }
