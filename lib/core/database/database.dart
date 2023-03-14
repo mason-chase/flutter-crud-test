@@ -46,7 +46,7 @@ class DatabaseProvider {
         firstName TEXT,
         lastName TEXT,
         email TEXT,
-        phoneNumber TEXT,
+        phoneNumber VARCHAR(20),
         bankAccountNumber TEXT,
         dateOfBirth TEXT,
         UNIQUE(email, firstName, lastName, dateOfBirth)
