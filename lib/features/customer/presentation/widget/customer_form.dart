@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:mc_crud_test/features/customer/domain/entities/update_customer/params/update_customer_params.dart';
-import 'package:mc_crud_test/features/customer/presentation/controllers/update_customer/cubit.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/di/di.dart';
-import '../../../../core/helpers/validator.dart';
+import '../../../../core/helpers/utils.dart';
 import '../../../../core/widgets/custom_input.dart';
 import '../../domain/entities/create_customer/params/create_customer_params.dart';
 import '../../domain/entities/create_customer/params/customer/customer.dart';
+import '../../domain/entities/update_customer/params/update_customer_params.dart';
 import '../controllers/create_customer/cubit.dart';
 import '../controllers/create_customer/state.dart';
+import '../controllers/update_customer/cubit.dart';
 import '../controllers/update_customer/state.dart';
 import 'phone_number_validation.dart';
 
@@ -30,9 +30,9 @@ class CustomerForm extends StatefulWidget {
 }
 
 class _CustomerFormState extends State<CustomerForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late CreateCustomerCubit _createCustomerCubit;
   late UpdateCustomerCubit _updateCustomerCubit;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController firstNameController = TextEditingController(),
       lastNameController = TextEditingController(),
       phoneNumberController = TextEditingController(),
@@ -51,53 +51,49 @@ class _CustomerFormState extends State<CustomerForm> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomInput(
-                      controller: firstNameController,
-                      placeholder: 'First name',
-                      validator: _nameValidator,
-                    ),
-                    CustomInput(
-                      controller: lastNameController,
-                      placeholder: 'Last name',
-                      validator: _nameValidator,
-                    ),
-                    CustomInput(
-                      controller: emailController,
-                      placeholder: 'E-mail',
-                      validator: _emailValidator,
-                    ),
-                    CustomInput(
-                      placeholder: 'Phone',
-                      controller: phoneNumberController,
-                      readOnly: true,
-                      onTap: _showPhoneNumbersModal,
-                    ),
-                    CustomInput(
-                      placeholder: 'Bank account number',
-                      controller: bankAccountNumberController,
-                      validator: _bankNumberValidator,
-                    ),
-                    CustomInput(
-                      controller: dateOfBirthController,
-                      placeholder: 'Birth date',
-                      readOnly: true,
-                      onTap: _showDatePicker,
-                    ),
-                    const SizedBox(height: 56),
-                    widget.customer == null ? _createButton() : _updateButton(),
-                  ],
+  Widget build(BuildContext context) => SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomInput(
+                  controller: firstNameController,
+                  placeholder: 'First name',
+                  validator: _nameValidator,
                 ),
-              ),
+                CustomInput(
+                  controller: lastNameController,
+                  placeholder: 'Last name',
+                  validator: _nameValidator,
+                ),
+                CustomInput(
+                  controller: emailController,
+                  placeholder: 'E-mail',
+                  validator: _emailValidator,
+                ),
+                CustomInput(
+                  placeholder: 'Phone',
+                  controller: phoneNumberController,
+                  readOnly: true,
+                  onTap: _showPhoneNumbersModal,
+                ),
+                CustomInput(
+                  placeholder: 'Bank account number',
+                  controller: bankAccountNumberController,
+                  validator: _bankNumberValidator,
+                ),
+                CustomInput(
+                  controller: dateOfBirthController,
+                  placeholder: 'Birth date',
+                  readOnly: true,
+                  onTap: _showDatePicker,
+                ),
+                const SizedBox(height: 56),
+                widget.customer == null ? _createButton() : _updateButton(),
+              ],
             ),
           ),
         ),
@@ -116,9 +112,13 @@ class _CustomerFormState extends State<CustomerForm> {
               return;
             },
           ),
-          builder: (context, state) => ElevatedButton(
-            child: const Text('create'),
-            onPressed: () => _callCreate(context),
+          builder: (context, state) => SizedBox(
+            width: 200,
+            height: 48,
+            child: ElevatedButton(
+              child: const Text('create'),
+              onPressed: () => _callCreate(context),
+            ),
           ),
         ),
       );
@@ -167,7 +167,7 @@ class _CustomerFormState extends State<CustomerForm> {
       );
 
   String? _emailValidator(String? value) {
-    if (value!.isEmpty || !sl<Validator>().isEmailValid(value))
+    if (value!.isEmpty || !sl<Utils>().isEmailValid(value))
       return 'Enter a valid email!';
     return null;
   }
@@ -181,10 +181,6 @@ class _CustomerFormState extends State<CustomerForm> {
     if (value!.isEmpty) return 'Enter a valid Name!';
     return null;
   }
-
-  void _showSnack(String message) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
 
   void _setDefaultValues() {
     firstNameController.text = widget.customer!.firstName;
@@ -208,9 +204,13 @@ class _CustomerFormState extends State<CustomerForm> {
               return;
             },
           ),
-          builder: (context, state) => ElevatedButton(
-            child: const Text('Update'),
-            onPressed: () => _callUpdate(context),
+          builder: (context, state) => SizedBox(
+            width: 200,
+            height: 48,
+            child: ElevatedButton(
+              child: const Text('Update'),
+              onPressed: () => _callUpdate(context),
+            ),
           ),
         ),
       );
@@ -234,4 +234,7 @@ class _CustomerFormState extends State<CustomerForm> {
     }
     _formKey.currentState!.save();
   }
+
+  void _showSnack(String errorReason) =>
+      sl<Utils>().showSnack(context, errorReason);
 }

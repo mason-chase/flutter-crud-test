@@ -25,8 +25,7 @@ import '../../features/customer/presentation/controllers/get_customers/cubit.dar
 import '../../features/customer/presentation/controllers/update_customer/cubit.dart'
     as _i13;
 import '../error/error_translator.dart' as _i9;
-import '../helpers/validator.dart'
-    as _i14; // ignore_for_file: unnecessary_lambdas
+import '../helpers/utils.dart' as _i14; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -56,7 +55,7 @@ _i1.GetIt $initGetIt(
       () => _i12.UpdateCustomer(get<_i5.CustomerRepository>()));
   gh.factory<_i13.UpdateCustomerCubit>(() =>
       _i13.UpdateCustomerCubit(updateCustomer: get<_i12.UpdateCustomer>()));
-  gh.lazySingleton<_i14.Validator>(() => _i14.Validator());
+  gh.lazySingleton<_i14.Utils>(() => _i14.Utils());
   gh.lazySingleton<_i15.CreateCustomer>(
       () => _i15.CreateCustomer(get<_i5.CustomerRepository>()));
   gh.factory<_i16.CreateCustomerCubit>(() =>

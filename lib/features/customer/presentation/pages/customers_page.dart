@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mc_crud_test/features/customer/domain/entities/create_customer/params/customer/customer.dart';
-import 'package:mc_crud_test/features/customer/domain/entities/get_customers/params/get_customers_params.dart';
-import 'package:mc_crud_test/features/customer/presentation/controllers/get_customers/cubit.dart';
-import 'package:mc_crud_test/features/customer/presentation/widget/customer_form.dart';
 
 import '../../../../core/di/di.dart';
+import '../../../../core/helpers/utils.dart';
+import '../../domain/entities/create_customer/params/customer/customer.dart';
+import '../../domain/entities/get_customers/params/get_customers_params.dart';
+import '../controllers/get_customers/cubit.dart';
 import '../controllers/get_customers/state.dart';
-import '../widget/customer.dart';
+import '../widget/customer_form.dart';
+import '../widget/customer_widget.dart';
 
 class CustomersPage extends StatefulWidget {
   const CustomersPage({
@@ -31,42 +32,47 @@ class _CustomersPageState extends State<CustomersPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         floatingActionButton: _newCustomerButton(context),
+        appBar: AppBar(title: const Text('Customers')),
         body: _customerItems(),
       );
 
-  BlocProvider<GetCustomersCubit> _customerItems() {
-    return BlocProvider(
-      create: (context) =>
-          _getCustomersCubit..getCustomersF(GetCustomersParams()),
-      child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
-        listener: (context, state) => state.maybeWhen(
-          orElse: () => null,
-          done: (response) => setState(() => customers = response.customers),
-          error: (failure) => _showSnack(failure.errorReason),
-        ),
-        builder: (context, state) => state.maybeWhen(
-          orElse: () => const SizedBox(),
-          done: (response) => Column(
-            children: [
-              for (Customer customer in customers)
-                CustomerWidget(
-                  customer: customer,
-                  onEdit: _showCustomerForm,
-                  onDeleteCustomer: (customer) => setState(
-                    () => customers.remove(customer),
-                  ),
+  Widget _customerItems() => SafeArea(
+        child: BlocProvider(
+          create: (context) =>
+              _getCustomersCubit..getCustomersF(GetCustomersParams()),
+          child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
+            listener: (context, state) => state.maybeWhen(
+              orElse: () => null,
+              done: (response) =>
+                  setState(() => customers = response.customers),
+              error: (failure) => _showSnack(failure.errorReason),
+            ),
+            builder: (context, state) => state.maybeWhen(
+              orElse: () => const SizedBox(),
+              done: (response) => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (Customer customer in customers)
+                      CustomerWidget(
+                        customer: customer,
+                        onEdit: _showCustomerForm,
+                        onDeleteCustomer: (customer) => setState(
+                          () => customers.remove(customer),
+                        ),
+                      ),
+                  ],
                 ),
-            ],
+              ),
+              error: (failure) => Text(failure.errorReason),
+            ),
           ),
-          error: (failure) => Text(failure.errorReason),
         ),
-      ),
-    );
-  }
-
-  void _showSnack(String message) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
       );
+
+
+  void _showSnack(String errorReason) =>
+      sl<Utils>().showSnack(context, errorReason);
+
 
   Widget _newCustomerButton(BuildContext context) => SizedBox.square(
         dimension: 60,
@@ -82,6 +88,7 @@ class _CustomersPageState extends State<CustomersPage> {
       );
 
   void _showCustomerForm({Customer? customer}) => showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (context) => CustomerForm(
           onSubmitCustomer: (newCustomer) => setState(
