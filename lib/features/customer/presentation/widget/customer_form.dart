@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:mc_crud_test/features/customer/domain/entities/update_customer/params/update_customer_params.dart';
+import 'package:mc_crud_test/features/customer/presentation/controllers/update_customer/cubit.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/di/di.dart';
@@ -10,6 +12,7 @@ import '../../domain/entities/create_customer/params/create_customer_params.dart
 import '../../domain/entities/create_customer/params/customer/customer.dart';
 import '../controllers/create_customer/cubit.dart';
 import '../controllers/create_customer/state.dart';
+import '../controllers/update_customer/state.dart';
 import 'phone_number_validation.dart';
 
 class CustomerForm extends StatefulWidget {
@@ -29,17 +32,21 @@ class CustomerForm extends StatefulWidget {
 class _CustomerFormState extends State<CustomerForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late CreateCustomerCubit _createCustomerCubit;
+  late UpdateCustomerCubit _updateCustomerCubit;
   final TextEditingController firstNameController = TextEditingController(),
       lastNameController = TextEditingController(),
       phoneNumberController = TextEditingController(),
       bankAccountNumberController = TextEditingController(),
       emailController = TextEditingController(),
       dateOfBirthController = TextEditingController();
+
   DateTime? pickedDate;
 
   @override
   void initState() {
     _createCustomerCubit = sl<CreateCustomerCubit>();
+    _updateCustomerCubit = sl<UpdateCustomerCubit>();
+    if (widget.customer != null) _setDefaultValues();
     super.initState();
   }
 
@@ -87,7 +94,7 @@ class _CustomerFormState extends State<CustomerForm> {
                       onTap: _showDatePicker,
                     ),
                     const SizedBox(height: 56),
-                    _createButton(),
+                    widget.customer == null ? _createButton() : _updateButton(),
                   ],
                 ),
               ),
@@ -103,9 +110,9 @@ class _CustomerFormState extends State<CustomerForm> {
             orElse: () => null,
             error: (failure) => _showSnack(failure.errorReason),
             done: (response) {
+              widget.onSubmitCustomer(response.customer);
               _showSnack('Successful!');
               Navigator.pop(context);
-              widget.onSubmitCustomer(response.customer);
               return;
             },
           ),
@@ -178,4 +185,53 @@ class _CustomerFormState extends State<CustomerForm> {
   void _showSnack(String message) => ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
       );
+
+  void _setDefaultValues() {
+    firstNameController.text = widget.customer!.firstName;
+    lastNameController.text = widget.customer!.lastName;
+    phoneNumberController.text = widget.customer!.phoneNumber;
+    bankAccountNumberController.text = widget.customer!.bankAccountNumber;
+    emailController.text = widget.customer!.email;
+    dateOfBirthController.text = widget.customer!.dateOfBirth;
+  }
+
+  Widget _updateButton() => BlocProvider(
+        create: (context) => _updateCustomerCubit,
+        child: BlocConsumer<UpdateCustomerCubit, UpdateCustomerState>(
+          listener: (context, state) => state.maybeWhen(
+            orElse: () => null,
+            error: (failure) => _showSnack(failure.errorReason),
+            done: (response) {
+              widget.onSubmitCustomer(response.customer);
+              _showSnack('Updated!');
+              Navigator.pop(context);
+              return;
+            },
+          ),
+          builder: (context, state) => ElevatedButton(
+            child: const Text('Update'),
+            onPressed: () => _callUpdate(context),
+          ),
+        ),
+      );
+
+  void _callUpdate(BuildContext context) {
+    final validated = _formKey.currentState!.validate();
+    if (validated) {
+      _updateCustomerCubit.updateCustomerF(
+        UpdateCustomerParams(
+          Customer(
+            firstNameController.text,
+            lastNameController.text,
+            emailController.text,
+            phoneNumberController.text,
+            bankAccountNumberController.text,
+            dateOfBirthController.text,
+            widget.customer!.id,
+          ),
+        ),
+      );
+    }
+    _formKey.currentState!.save();
+  }
 }

@@ -10,6 +10,8 @@ import '../../domain/entities/delete_customer/params/delete_customer_params.dart
 import '../../domain/entities/delete_customer/response/delete_customer_response.dart';
 import '../../domain/entities/get_customers/params/get_customers_params.dart';
 import '../../domain/entities/get_customers/response/get_customers_response.dart';
+import '../../domain/entities/update_customer/params/update_customer_params.dart';
+import '../../domain/entities/update_customer/response/update_customer_response.dart';
 import 'datasource.dart';
 
 ///
@@ -30,8 +32,6 @@ class CustomerDataSourceIMPL implements CustomerDataSource {
     return CreateCustomerResponse(params.customer);
   }
 
-  /// Get Customers
-  /// Update Customer
   /// Delete Customer
   @override
   Future<DeleteCustomerResponse> deleteCustomer(
@@ -45,6 +45,7 @@ class CustomerDataSourceIMPL implements CustomerDataSource {
     return DeleteCustomerResponse(res == 1);
   }
 
+  /// Get Customers
   @override
   Future<GetCustomersResponse> getCustomers(GetCustomersParams params) async {
     final Database db = await dbProvider.database;
@@ -54,5 +55,19 @@ class CustomerDataSourceIMPL implements CustomerDataSource {
         ? []
         : res.map((customer) => Customer.fromJson(customer)).toList();
     return GetCustomersResponse(customers);
+  }
+
+  /// Update Customer
+  @override
+  Future<UpdateCustomerResponse> updateCustomer(
+      UpdateCustomerParams params) async {
+    final Database db = await dbProvider.database;
+    await db.update(
+      Constants.customerTable,
+      params.customer.toJson(),
+      where: 'id = ?',
+      whereArgs: <String>[params.customer.id!],
+    );
+    return UpdateCustomerResponse(params.customer);
   }
 }

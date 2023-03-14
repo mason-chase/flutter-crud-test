@@ -88,7 +88,7 @@ class _CustomersPageState extends State<CustomersPage> {
             () => customer != null
 
                 /// update customers list if customer has been updated.
-                ? _updateCustomersList(newCustomer)
+                ? _updateCustomersList(customer, newCustomer)
 
                 /// add new customer to customers list.
                 : customers.add(newCustomer),
@@ -97,5 +97,6 @@ class _CustomersPageState extends State<CustomersPage> {
         ),
       );
 
-  void _updateCustomersList(Customer updatedCustomer) {}
+  void _updateCustomersList(Customer customer, Customer updatedCustomer) =>
+      customers[customers.indexOf(customer)] = updatedCustomer;
 }
