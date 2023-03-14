@@ -51,49 +51,56 @@ class _CustomerFormState extends State<CustomerForm> {
   }
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomInput(
-                  controller: firstNameController,
-                  placeholder: 'First name',
-                  validator: _nameValidator,
+  Widget build(BuildContext context) => Scaffold(
+        body: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 24),
+                    _closeButton(),
+                    const SizedBox(height: 100),
+                    CustomInput(
+                      controller: firstNameController,
+                      placeholder: 'First name',
+                      validator: _nameValidator,
+                    ),
+                    CustomInput(
+                      controller: lastNameController,
+                      placeholder: 'Last name',
+                      validator: _nameValidator,
+                    ),
+                    CustomInput(
+                      controller: emailController,
+                      placeholder: 'E-mail',
+                      validator: _emailValidator,
+                    ),
+                    CustomInput(
+                      placeholder: 'Phone',
+                      controller: phoneNumberController,
+                      readOnly: true,
+                      onTap: _showPhoneNumbersModal,
+                    ),
+                    CustomInput(
+                      placeholder: 'Bank account number',
+                      controller: bankAccountNumberController,
+                      validator: _bankNumberValidator,
+                    ),
+                    CustomInput(
+                      controller: dateOfBirthController,
+                      placeholder: 'Birth date',
+                      readOnly: true,
+                      onTap: _showDatePicker,
+                    ),
+                    const SizedBox(height: 56),
+                    widget.customer == null ? _createButton() : _updateButton(),
+                  ],
                 ),
-                CustomInput(
-                  controller: lastNameController,
-                  placeholder: 'Last name',
-                  validator: _nameValidator,
-                ),
-                CustomInput(
-                  controller: emailController,
-                  placeholder: 'E-mail',
-                  validator: _emailValidator,
-                ),
-                CustomInput(
-                  placeholder: 'Phone',
-                  controller: phoneNumberController,
-                  readOnly: true,
-                  onTap: _showPhoneNumbersModal,
-                ),
-                CustomInput(
-                  placeholder: 'Bank account number',
-                  controller: bankAccountNumberController,
-                  validator: _bankNumberValidator,
-                ),
-                CustomInput(
-                  controller: dateOfBirthController,
-                  placeholder: 'Birth date',
-                  readOnly: true,
-                  onTap: _showDatePicker,
-                ),
-                const SizedBox(height: 56),
-                widget.customer == null ? _createButton() : _updateButton(),
-              ],
+              ),
             ),
           ),
         ),
@@ -237,4 +244,25 @@ class _CustomerFormState extends State<CustomerForm> {
 
   void _showSnack(String errorReason) =>
       sl<Utils>().showSnack(context, errorReason);
+
+  Widget _closeButton() => Align(
+        alignment: Alignment.centerRight,
+        child: SizedBox(
+          width: 48,
+          height: 48,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(EdgeInsets.zero),
+              backgroundColor: MaterialStateProperty.all(Colors.grey),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+            ),
+            onPressed: () => Navigator.pop(context),
+            child: const Icon(Icons.close),
+          ),
+        ),
+      );
 }
