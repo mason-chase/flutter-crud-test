@@ -3,6 +3,8 @@ import 'package:mc_crud_test/core/customer/data/datasource/customer_local_dataso
 import 'package:mc_crud_test/core/customer/data/dto/customer_dto.dart';
 import 'package:mc_crud_test/core/customer/data/repository/customer/customer_repository.dart';
 import 'package:mc_crud_test/core/customer/domain/usecase/customer/add_customer_usecase.dart';
+import 'package:mc_crud_test/core/customer/domain/usecase/customer/delete_customer_usecase.dart';
+import 'package:mc_crud_test/core/customer/domain/usecase/customer/update_customer_usecase.dart';
 import 'package:mc_crud_test/core/error/failures.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mc_crud_test/core/customer/domain/usecase/customer/get_customer_list_usecase.dart';
@@ -10,31 +12,23 @@ import 'package:mc_crud_test/core/customer/domain/repository/interfaces/customer
 import 'package:mockito/annotations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'add_customer_test.mocks.dart';
+import 'delete_customer_test.mocks.dart';
 
 @GenerateMocks([CustomerLocalDataSource])
 void main() {
   late CustomerLocalDataSource mockCustomerLocalDataSource;
-  late AddCustomer usecases;
-  CustomerDTO customerData = CustomerDTO.fromJson({
-    "firstName": "testFirstName1",
-    "lastName": "testLastName1",
-    "dateOfBirth": "010101",
-    "phoneNumber": "1234567890",
-    "email": "test@email.com",
-    "bankAcountNumber": "1234567890"
-  });
+  late DeleteCustomer usecases;
 
   setUp(() {
     mockCustomerLocalDataSource = MockCustomerLocalDataSource();
-    usecases = AddCustomerImpl(mockCustomerLocalDataSource, customerData);
+    usecases = DeleteCustomerImpl(mockCustomerLocalDataSource, 0);
   });
 
-  test("should add customer to customers existing list", () async {
+  test("should delete existing customer", () async {
     const Either<Failure, String> repoResult =
-        Right<Failure, String>("Customer added");
+        Right<Failure, String>("Customer deleted");
 
-    when(mockCustomerLocalDataSource.addCustomer(customerData))
+    when(mockCustomerLocalDataSource.deleteCustomer(index: 0))
         .thenAnswer((_) async => repoResult);
 
     final result = await usecases.execute();
@@ -42,6 +36,6 @@ void main() {
     result.map((r) => print(r));
 
     expect(result, equals(repoResult));
-    verify(mockCustomerLocalDataSource.addCustomer(customerData));
+    verify(mockCustomerLocalDataSource.deleteCustomer(index: 0));
   });
 }

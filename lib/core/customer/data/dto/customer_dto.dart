@@ -1,4 +1,6 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
+
+part 'customer_dto.g.dart';
 
 @HiveType(typeId: 1)
 class CustomerDTO {
@@ -11,7 +13,7 @@ class CustomerDTO {
     this.bankAcountNumber,
   });
 
-@HiveField(0)
+  @HiveField(0)
   String? firstName;
   @HiveField(1)
   String? lastName;

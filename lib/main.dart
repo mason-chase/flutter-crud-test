@@ -4,30 +4,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mc_crud_test/core/customer/data/datasource/customer_local_datasource.dart';
 import 'package:mc_crud_test/core/customer/data/dto/customer_dto.dart';
+import 'package:mc_crud_test/feature/customer/page/customer_list_page.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
+  // Registering the adapter
+  Hive.registerAdapter(CustomerDTOAdapter());
   await Hive.openBox('customerBox');
 
-  CustomerDTO customer = CustomerDTO.fromJson({
-    "firstName": "testFirstName2",
-    "lastName": "testLastName2",
-    "dateOfBirth": "010102",
-    "phoneNumber": "1234567891",
-    "email": "test2@email.com",
-    "bankAcountNumber": "1234567891"
-  });
-
-  late final Box box;
-  box = Hive.box('customerBox');
-
-  await box.add(customer.toJson() ?? {});
-
-  log("box map = ${box.toMap()}");
+  await CustomerLocalDataSource().deleteCustomer(index: 0);
 
   runApp(const MyApp());
 }
@@ -43,11 +33,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text(""),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.light(
+          secondary: Colors.purple,
+          onSecondary: Colors.white,
+        ),
       ),
+      home: CustomerListPage(),
     );
   }
 }

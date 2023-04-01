@@ -123,28 +123,40 @@ class MockCustomerLocalDataSource extends _i1.Mock
         )),
       ) as _i5.Future<_i3.Either<_i6.Failure, String>>);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, String>> updateCustomer(
-          _i7.CustomerDTO? customer) =>
+  _i5.Future<_i3.Either<_i6.Failure, String>> updateCustomer({
+    required _i7.CustomerDTO? customer,
+    required int? index,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCustomer,
-          [customer],
+          [],
+          {
+            #customer: customer,
+            #index: index,
+          },
         ),
         returnValue: _i5.Future<_i3.Either<_i6.Failure, String>>.value(
             _FakeEither_1<_i6.Failure, String>(
           this,
           Invocation.method(
             #updateCustomer,
-            [customer],
+            [],
+            {
+              #customer: customer,
+              #index: index,
+            },
           ),
         )),
       ) as _i5.Future<_i3.Either<_i6.Failure, String>>);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, String>> deleteCustomer() =>
+  _i5.Future<_i3.Either<_i6.Failure, String>> deleteCustomer(
+          {required int? index}) =>
       (super.noSuchMethod(
         Invocation.method(
           #deleteCustomer,
           [],
+          {#index: index},
         ),
         returnValue: _i5.Future<_i3.Either<_i6.Failure, String>>.value(
             _FakeEither_1<_i6.Failure, String>(
@@ -152,6 +164,7 @@ class MockCustomerLocalDataSource extends _i1.Mock
           Invocation.method(
             #deleteCustomer,
             [],
+            {#index: index},
           ),
         )),
       ) as _i5.Future<_i3.Either<_i6.Failure, String>>);

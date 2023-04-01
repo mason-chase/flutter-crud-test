@@ -18,16 +18,14 @@ class CustomerLocalDataSource {
   }
 
   Future<Either<Failure, List<CustomerDTO>>> getCustomerList() async {
-    var pref = await SecureSharedPref.getInstance();
+    late final Box box;
+    box = Hive.box('customerBox');
+    List<CustomerDTO> customersObject = [];
 
     try {
-      List<String> customers =
-          await pref.getStringList(_sharedPrefKeys.customers);
+      Map<dynamic, dynamic> customers = box.toMap();
 
-      List<CustomerDTO> customersObject = [];
-
-      customers.forEach(
-          (_) => customersObject.add(CustomerDTO.fromJson(jsonDecode(_))));
+      customers.values.map((_) => customersObject.add(_));
 
       return Right(customersObject);
     } catch (e) {
@@ -35,62 +33,27 @@ class CustomerLocalDataSource {
     }
   }
 
-  // Future<Either<Failure, String>> addCustomer(CustomerDTO customer) async {
-  //   var pref = await SecureSharedPref.getInstance();
-
-  //   try {
-  //     List<String> customers =
-  //         await pref.getStringList(_sharedPrefKeys.customers);
-
-  //     Iterable<String> reoccurCustomList = [];
-
-  //     if (customers.isNotEmpty) {
-  //       reoccurCustomList = customers.where((element) {
-  //         Map<String, dynamic> customerObject = jsonDecode(element);
-  //         CustomerDTO customerObj = CustomerDTO.fromJson(customerObject);
-
-  //         return customerObj.firstName == customer.firstName ||
-  //             customerObj.lastName == customer.lastName ||
-  //             customerObj.email == customer.email ||
-  //             customerObj.dateOfBirth == customer.dateOfBirth;
-  //       });
-  //     }
-
-  //     if (reoccurCustomList.isEmpty || customers.isEmpty) {
-  //       customers.add(customer.toJson().toString());
-  //       await pref.putStringList(_sharedPrefKeys.customers, customers);
-  //       return const Right("Customer added");
-  //     } else {
-  //       return const Right("Exist in database");
-  //     }
-  //   } catch (e) {
-  //     return const Right("Error in adding customer!");
-  //   }
-  // }
   Future<Either<Failure, String>> addCustomer(CustomerDTO customer) async {
-    var pref = await SecureSharedPref.getInstance();
+    late final Box box;
+    box = Hive.box('customerBox');
+    Iterable<dynamic> reoccurCustomList = [];
 
     try {
-      List<String> customers =
-          await pref.getStringList(_sharedPrefKeys.customers);
-
-      Iterable<String> reoccurCustomList = [];
+      Map<dynamic, dynamic> customers = box.toMap();
 
       if (customers.isNotEmpty) {
-        reoccurCustomList = customers.where((element) {
-          Map<String, dynamic> customerObject = jsonDecode(element);
-          CustomerDTO customerObj = CustomerDTO.fromJson(customerObject);
-
-          return customerObj.firstName == customer.firstName ||
-              customerObj.lastName == customer.lastName ||
-              customerObj.email == customer.email ||
-              customerObj.dateOfBirth == customer.dateOfBirth;
-        });
+        reoccurCustomList = box.toMap().values.where(
+          (element) {
+            return element.firstName == customer.firstName ||
+                element.lastName == customer.lastName ||
+                element.email == customer.email ||
+                element.bankAcountNumber == customer.bankAcountNumber;
+          },
+        );
       }
 
       if (reoccurCustomList.isEmpty || customers.isEmpty) {
-        customers.add(customer.toJson().toString());
-        await pref.putStringList(_sharedPrefKeys.customers, customers);
+        await box.add(customer);
         return const Right("Customer added");
       } else {
         return const Right("Exist in database");
@@ -100,47 +63,30 @@ class CustomerLocalDataSource {
     }
   }
 
-  Future<Either<Failure, String>> updateCustomer(CustomerDTO customer) async {
-    var pref = await SecureSharedPref.getInstance();
+  Future<Either<Failure, String>> updateCustomer(
+      {required CustomerDTO customer, required int index}) async {
+    late final Box box;
+    box = Hive.box('customerBox');
 
     try {
-      List<String> customers =
-          await pref.getStringList(_sharedPrefKeys.customers);
+      box.putAt(index, customer);
 
-      String foundCustomer;
-      foundCustomer = customers.firstWhere(
-        (element) {
-          Map<String, dynamic> customerObject = jsonDecode(element);
-          CustomerDTO customerObj = CustomerDTO.fromJson(customerObject);
-
-          return customerObj.firstName == customer.firstName;
-        },
-      );
-
-      if (foundCustomer.isNotEmpty && foundCustomer.length > 1) {
-        Map<String, dynamic> foundCustomerObj = jsonDecode(foundCustomer);
-
-        foundCustomerObj = customer.toJson() ?? {
-              "firstName": "testFirstName1",
-              "lastName": "testLastName1",
-              "dateOfBirth": "010101",
-              "phoneNumber": "1234567890",
-              "email": "test@email.com",
-              "bankAcountNumber": "1234567890"
-            };
-
-        
-
-        return Right("Updated");
-      } else {
-        return Right("Customer not found!");
-      }
+      return const Right("Customer updated");
     } catch (e) {
       return const Right("Customer not updated!");
     }
   }
 
-  Future<Either<Failure, String>> deleteCustomer() async {
-    throw UnimplementedError();
+  Future<Either<Failure, String>> deleteCustomer({required int index}) async {
+    late final Box box;
+    box = Hive.box('customerBox');
+
+    try {
+      box.deleteAt(index);
+
+      return const Right("Customer deleted");
+    } catch (e) {
+      return const Right("Customer not deleted!");
+    }
   }
 }
