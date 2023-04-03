@@ -26,7 +26,7 @@ void main() {
 
   setUp(() {
     mockCustomerLocalDataSource = MockCustomerLocalDataSource();
-    usecases = GetAllCustomersImpl(mockCustomerLocalDataSource);
+    usecases = GetAllCustomersImpl();
   });
 
   test("should get all customers from the customer repository", () async {

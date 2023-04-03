@@ -28,12 +28,13 @@ void main() {
 
   setUp(() {
     mockCustomerLocalDataSource = MockCustomerLocalDataSource();
-    usecases = UpdateCustomerImpl(mockCustomerLocalDataSource, customerData, 0);
+    usecases = UpdateCustomerImpl(
+        customerData, 0);
   });
 
   test("should update existing customer", () async {
-    const Either<Failure, String> repoResult =
-        Right<Failure, String>("Customer updated");
+    const Either<Failure, CustomerUpdatedStatus> repoResult =
+        Right<Failure, CustomerUpdatedStatus>(CustomerUpdatedStatus.updated);
 
     when(mockCustomerLocalDataSource.updateCustomer(
             customer: customerData, index: 0))
@@ -41,7 +42,7 @@ void main() {
 
     final result = await usecases.execute();
 
-    result.map((r) => print(r));
+    result?.map((r) => print(r));
 
     expect(result, equals(repoResult));
     verify(mockCustomerLocalDataSource.updateCustomer(

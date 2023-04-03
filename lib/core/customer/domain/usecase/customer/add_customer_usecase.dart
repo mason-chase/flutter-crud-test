@@ -6,17 +6,17 @@ import 'package:mc_crud_test/core/customer/domain/repository/interfaces/customer
 import 'package:mc_crud_test/core/error/failures.dart';
 
 abstract class AddCustomer {
-  Future<Either<Failure, String>> execute();
+  Future<Either<Failure, CustomerAddedStatus>> execute();
 }
 
 class AddCustomerImpl implements AddCustomer {
-  final CustomerLocalDataSource customerLocalDataSource;
+  final CustomerLocalDataSource customerLocalDataSource = CustomerLocalDataSource();
   CustomerDTO customerData;
 
-  AddCustomerImpl(this.customerLocalDataSource, this.customerData);
+  AddCustomerImpl(this.customerData);
 
   @override
-  Future<Either<Failure, String>> execute() async {
+  Future<Either<Failure, CustomerAddedStatus>> execute() async {
     var result = await customerLocalDataSource.addCustomer(customerData);
 
     return result;

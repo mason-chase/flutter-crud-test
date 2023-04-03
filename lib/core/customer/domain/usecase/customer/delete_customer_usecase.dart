@@ -6,17 +6,17 @@ import 'package:mc_crud_test/core/customer/domain/repository/interfaces/customer
 import 'package:mc_crud_test/core/error/failures.dart';
 
 abstract class DeleteCustomer {
-  Future<Either<Failure, String>> execute();
+  Future<Either<Failure, CustomerDeletedStatus>> execute();
 }
 
 class DeleteCustomerImpl implements DeleteCustomer {
-  final CustomerLocalDataSource customerLocalDataSource;
+  final CustomerLocalDataSource customerLocalDataSource = CustomerLocalDataSource();
   int index;
 
-  DeleteCustomerImpl(this.customerLocalDataSource, this.index);
+  DeleteCustomerImpl(this.index);
 
   @override
-  Future<Either<Failure, String>> execute() async {
+  Future<Either<Failure, CustomerDeletedStatus>> execute() async {
     var result = await customerLocalDataSource.deleteCustomer(index: index);
 
     return result;

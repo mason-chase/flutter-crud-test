@@ -27,12 +27,12 @@ void main() {
 
   setUp(() {
     mockCustomerLocalDataSource = MockCustomerLocalDataSource();
-    usecases = AddCustomerImpl(mockCustomerLocalDataSource, customerData);
+    usecases = AddCustomerImpl(customerData);
   });
 
   test("should add customer to customers existing list", () async {
-    const Either<Failure, String> repoResult =
-        Right<Failure, String>("Customer added");
+    const Either<Failure, CustomerAddedStatus> repoResult =
+        Right<Failure, CustomerAddedStatus>(CustomerAddedStatus.added);
 
     when(mockCustomerLocalDataSource.addCustomer(customerData))
         .thenAnswer((_) async => repoResult);

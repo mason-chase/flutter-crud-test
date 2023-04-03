@@ -21,12 +21,12 @@ void main() {
 
   setUp(() {
     mockCustomerLocalDataSource = MockCustomerLocalDataSource();
-    usecases = DeleteCustomerImpl(mockCustomerLocalDataSource, 0);
+    usecases = DeleteCustomerImpl(0);
   });
 
   test("should delete existing customer", () async {
-    const Either<Failure, String> repoResult =
-        Right<Failure, String>("Customer deleted");
+    const Either<Failure, CustomerDeletedStatus> repoResult =
+        Right<Failure, CustomerDeletedStatus>(CustomerDeletedStatus.deleted);
 
     when(mockCustomerLocalDataSource.deleteCustomer(index: 0))
         .thenAnswer((_) async => repoResult);

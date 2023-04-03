@@ -7,6 +7,22 @@ import 'package:mc_crud_test/core/customer/data/keys/shared_keys.dart';
 import 'package:mc_crud_test/core/error/failures.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
+enum CustomerAddedStatus {
+  added,
+  exists,
+  error,
+}
+
+enum CustomerUpdatedStatus {
+  updated,
+  error,
+}
+
+enum CustomerDeletedStatus {
+  deleted,
+  error,
+}
+
 class CustomerLocalDataSource {
   CustomerLocalDataSource();
   final SharedPrefKeys _sharedPrefKeys = SharedPrefKeys();
@@ -33,7 +49,7 @@ class CustomerLocalDataSource {
     }
   }
 
-  Future<Either<Failure, String>> addCustomer(CustomerDTO customer) async {
+  Future<Either<Failure, CustomerAddedStatus>> addCustomer(CustomerDTO customer) async {
     late final Box box;
     box = Hive.box('customerBox');
     Iterable<dynamic> reoccurCustomList = [];
@@ -54,16 +70,16 @@ class CustomerLocalDataSource {
 
       if (reoccurCustomList.isEmpty || customers.isEmpty) {
         await box.add(customer);
-        return const Right("Customer added");
+        return const Right(CustomerAddedStatus.added);
       } else {
-        return const Right("Exist in database");
+        return const Right(CustomerAddedStatus.exists);
       }
     } catch (e) {
-      return const Right("Error in adding customer!");
+      return const Right(CustomerAddedStatus.error);
     }
   }
 
-  Future<Either<Failure, String>> updateCustomer(
+  Future<Either<Failure, CustomerUpdatedStatus>> updateCustomer(
       {required CustomerDTO customer, required int index}) async {
     late final Box box;
     box = Hive.box('customerBox');
@@ -71,22 +87,22 @@ class CustomerLocalDataSource {
     try {
       box.putAt(index, customer);
 
-      return const Right("Customer updated");
+      return const Right(CustomerUpdatedStatus.updated);
     } catch (e) {
-      return const Right("Customer not updated!");
+      return const Right(CustomerUpdatedStatus.error);
     }
   }
 
-  Future<Either<Failure, String>> deleteCustomer({required int index}) async {
+  Future<Either<Failure, CustomerDeletedStatus>> deleteCustomer({required int index}) async {
     late final Box box;
     box = Hive.box('customerBox');
 
     try {
       box.deleteAt(index);
 
-      return const Right("Customer deleted");
+      return const Right(CustomerDeletedStatus.deleted);
     } catch (e) {
-      return const Right("Customer not deleted!");
+      return const Right(CustomerDeletedStatus.error);
     }
   }
 }

@@ -6,19 +6,19 @@ import 'package:mc_crud_test/core/customer/domain/repository/interfaces/customer
 import 'package:mc_crud_test/core/error/failures.dart';
 
 abstract class UpdateCustomer {
-  Future<Either<Failure, String>> execute();
+  Future<Either<Failure, CustomerUpdatedStatus>?> execute();
 }
 
 class UpdateCustomerImpl implements UpdateCustomer {
-  final CustomerLocalDataSource customerLocalDataSource;
+  final CustomerLocalDataSource customerLocalDataSource =
+      CustomerLocalDataSource();
   CustomerDTO customerData;
   int index;
 
-  UpdateCustomerImpl(
-      this.customerLocalDataSource, this.customerData, this.index);
+  UpdateCustomerImpl(this.customerData, this.index);
 
   @override
-  Future<Either<Failure, String>> execute() async {
+  Future<Either<Failure, CustomerUpdatedStatus>?> execute() async {
     var result = await customerLocalDataSource.updateCustomer(
         customer: customerData, index: index);
 

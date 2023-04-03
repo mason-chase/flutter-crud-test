@@ -9,9 +9,9 @@ abstract class GetAllCustomers {
 }
 
 class GetAllCustomersImpl implements GetAllCustomers {
-  final CustomerLocalDataSource customerLocalDataSource;
+  CustomerLocalDataSource customerLocalDataSource = CustomerLocalDataSource();
 
-  GetAllCustomersImpl(this.customerLocalDataSource);
+  GetAllCustomersImpl();
 
   @override
   Future<Either<Failure, List<CustomerDTO>>> execute() async {
