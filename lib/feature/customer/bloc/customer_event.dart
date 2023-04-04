@@ -25,6 +25,24 @@ class SelectCustomer extends CustomerEvent {
   List<Object?> get props => [selectedCustomerIndex];
 }
 
+class IsUpdatingCustomer extends CustomerEvent {
+  IsUpdatingCustomer({required this.isUpdatingCustomer});
+
+  final bool isUpdatingCustomer;
+
+  @override
+  List<Object?> get props => [isUpdatingCustomer];
+}
+
+class UpdatingCustomer extends CustomerEvent {
+  UpdatingCustomer({required this.updatingCustomer});
+
+  final CustomerEntity updatingCustomer;
+
+  @override
+  List<Object?> get props => [updatingCustomer];
+}
+
 class UpdateCustomerEvent extends CustomerEvent {
   UpdateCustomerEvent({required this.selectedCustomerIndex, required this.customerData, required this.index});
   final int selectedCustomerIndex;

@@ -21,11 +21,12 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     required this.addCustomerUseCase,
     required this.updateCustomerUseCase,
     required this.deleteCustomerUseCase,
-    this.customerMapper,
   }) : super(const CustomerState()) {
     on<AddCustomer>(_mapAddCustomerEventToState);
     on<GetCustomers>(_mapGetCustomersEventToState);
     on<SelectCustomer>(_mapSelectCustomerEventToState);
+    on<IsUpdatingCustomer>(_mapIsUpdatingCustomerEventToState);
+    on<UpdatingCustomer>(_mapUpdatingCustomerEventToState);
     on<UpdateCustomerEvent>(_mapUpdateCustomerEventToState);
     on<DeleteCustomer>(_mapDeleteCustomerEventToState);
   }
@@ -33,17 +34,25 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
   GetAllCustomersImpl getAllCustomersUseCase;
   UpdateCustomerImpl updateCustomerUseCase;
   DeleteCustomerImpl deleteCustomerUseCase;
-  late final CustomerMapper? customerMapper;
+  CustomerMapper customerMapper = CustomerMapper();
 
-  void _mapAddCustomerEventToState(
+  Future<void> _mapAddCustomerEventToState(
       AddCustomer event, Emitter<CustomerState> emit) async {
     emit(state.copyWith(status: CustomerStatus.loading));
     try {
       addCustomerUseCase.customerData = event.customerData;
-      var customers = await addCustomerUseCase.execute();
-      emit(
-        state.copyWith(status: CustomerStatus.success),
-      );
+      var res = await addCustomerUseCase.execute();
+      CustomerAddedStatus status =
+          res.getOrElse(() => CustomerAddedStatus.error);
+      if (status == CustomerAddedStatus.added) {
+        emit(
+          state.copyWith(status: CustomerStatus.added),
+        );
+      } else {
+        emit(
+          state.copyWith(status: CustomerStatus.error),
+        );
+      }
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print(stacktrace);
@@ -56,11 +65,12 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       GetCustomers event, Emitter<CustomerState> emit) async {
     emit(state.copyWith(status: CustomerStatus.loading));
     try {
-      var customers = await customerMapper?.getAllCustomers();
+      var customers = await customerMapper.getAllCustomers();
+      print(customers.getOrElse(() => []));
       emit(
         state.copyWith(
           status: CustomerStatus.success,
-          customers: customers?.getOrElse(() => []),
+          customers: customers.getOrElse(() => []),
         ),
       );
     } catch (error, stacktrace) {
@@ -81,6 +91,26 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     );
   }
 
+  void _mapIsUpdatingCustomerEventToState(
+      IsUpdatingCustomer event, Emitter<CustomerState> emit) async {
+    emit(
+      state.copyWith(
+        status: CustomerStatus.selected,
+        isUpdating: event.isUpdatingCustomer,
+      ),
+    );
+  }
+
+  void _mapUpdatingCustomerEventToState(
+      UpdatingCustomer event, Emitter<CustomerState> emit) async {
+    emit(
+      state.copyWith(
+        status: CustomerStatus.selected,
+        updatingCustomer: event.updatingCustomer,
+      ),
+    );
+  }
+
   void _mapUpdateCustomerEventToState(
     UpdateCustomerEvent event,
     Emitter<CustomerState> emit,
@@ -89,10 +119,14 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     updateCustomerUseCase.index = event.selectedCustomerIndex;
     emit(state.copyWith(status: CustomerStatus.loading));
     try {
-      await updateCustomerUseCase.execute();
-      emit(
-        state.copyWith(status: CustomerStatus.success),
-      );
+      var res = await updateCustomerUseCase.execute();
+      CustomerUpdatedStatus? status =
+          res?.getOrElse(() => CustomerUpdatedStatus.error);
+      if (status == CustomerUpdatedStatus.updated) {
+        emit(
+          state.copyWith(status: CustomerStatus.updated),
+        );
+      }
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print(stacktrace);
@@ -103,11 +137,25 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
 
   void _mapDeleteCustomerEventToState(
       DeleteCustomer event, Emitter<CustomerState> emit) async {
-    emit(
-      state.copyWith(
-        status: CustomerStatus.selected,
-        selectedCustomerIndex: event.selectedCustomerIndex,
-      ),
-    );
+    deleteCustomerUseCase.index = event.selectedCustomerIndex;
+    var res = await deleteCustomerUseCase.execute();
+    CustomerDeletedStatus status =
+        res.getOrElse(() => CustomerDeletedStatus.error);
+
+    if (status == CustomerDeletedStatus.deleted) {
+      emit(
+        state.copyWith(
+          status: CustomerStatus.deleted,
+          selectedCustomerIndex: event.selectedCustomerIndex,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          status: CustomerStatus.error,
+          selectedCustomerIndex: event.selectedCustomerIndex,
+        ),
+      );
+    }
   }
 }

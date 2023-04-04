@@ -51,22 +51,33 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/list",
-      routes: <String, WidgetBuilder>{
-        '/home': ((context) => HomePage()),
-        '/list': (BuildContext context) => CustomersListPage(),
-        '/add': (BuildContext context) => CustomerAddPage(),
-        '/detail': (BuildContext context) => CustomerDetailPage(),
-      },
-      theme: ThemeData(
-        colorScheme: ColorScheme.light(
-          secondary: Colors.purple,
-          onSecondary: Colors.white,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CustomerBloc>(
+            create: (context) => CustomerBloc(
+                getAllCustomersUseCase: GetAllCustomersImpl(),
+                updateCustomerUseCase:
+                    UpdateCustomerImpl(CustomerDTO.fromJson({}), 0),
+                addCustomerUseCase: AddCustomerImpl(CustomerDTO.fromJson({})),
+                deleteCustomerUseCase: DeleteCustomerImpl(0))
+              ..add(GetCustomers()))
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: <String, WidgetBuilder>{
+          '/home': ((context) => const HomePage()),
+          '/list': (BuildContext context) => const CustomersListPage(),
+          '/add': (BuildContext context) => const CustomerAddPage(),
+          '/detail': (BuildContext context) => CustomerDetailPage(),
+        },
+        theme: ThemeData(
+          colorScheme: const ColorScheme.light(
+            secondary: Colors.purple,
+            onSecondary: Colors.white,
+          ),
         ),
+        home: const HomePage(),
       ),
-      home: HomePage(),
     );
   }
 }

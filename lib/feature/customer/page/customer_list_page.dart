@@ -39,7 +39,10 @@ class _CustomersListPageState extends State<CustomersListPage> {
           );
         },
       ),
-      onRefresh: () => Future.delayed(const Duration(seconds: 2)),
+      onRefresh: () {
+        context.read<CustomerBloc>().add(GetCustomers());
+        return Future.delayed(const Duration(seconds: 2));
+      },
       completeStateDuration: const Duration(seconds: 2),
       child: Scaffold(
         appBar: AppBar(
@@ -61,39 +64,36 @@ class _CustomersListPageState extends State<CustomersListPage> {
             )
           ],
         ),
-        body: Text(""),
-        // body: BlocBuilder<CustomerBloc, CustomerState>(
-        //     buildWhen: (previous, current) =>
-        //         current.status == CustomerStatus.success,
-        //     builder: (context, state) {
-        //       switch (state.status) {
-        //         case CustomerStatus.initial:
-        //           return Center(child: CircularProgressIndicator());
-        //         case CustomerStatus.success:
-        //           return _mainWidget(
-        //             controller: _controller,
-        //             customers: state.customers,
-        //           );
-        //         case CustomerStatus.loading:
-        //           return Center(
-        //             child: CircularProgressIndicator(),
-        //           );
-        //         case CustomerStatus.error:
-        //           return Center(
-        //             child: Text(
-        //               "Error Loading Customers!",
-        //               style: TextStyle(
-        //                   fontWeight: FontWeight.bold,
-        //                   color: Colors.red,
-        //                   fontSize: 18.0),
-        //             ),
-        //           );
-        //         default:
-        //           return Center(
-        //             child: CircularProgressIndicator(),
-        //           );
-        //       }
-        //     }),
+        body:
+            BlocBuilder<CustomerBloc, CustomerState>(builder: (context, state) {
+          switch (state.status) {
+            case CustomerStatus.initial:
+              return Center(child: CircularProgressIndicator());
+            case CustomerStatus.success:
+              return _mainWidget(
+                controller: _controller,
+                customers: state.customers,
+              );
+            case CustomerStatus.loading:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case CustomerStatus.error:
+              return Center(
+                child: Text(
+                  "Error Loading Customers!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                      fontSize: 18.0),
+                ),
+              );
+            default:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        }),
       ),
     );
   }
@@ -124,9 +124,15 @@ class _mainWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
+                  context
+                      .read<CustomerBloc>()
+                      .add(SelectCustomer(selectedCustomerIndex: index));
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return CustomerDetailPage();
+                      return CustomerDetailPage(
+                        customerData: customers[index],
+                        index: index,
+                      );
                     },
                   ));
                 },
@@ -136,40 +142,43 @@ class _mainWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(children: [
                       CustomerInfoWidget(
-                              firstText: "First Name :", infoText: "mohammad")
+                              firstText: "First Name :",
+                              infoText: customers[index].firstName)
                           .info(),
                       SizedBox(
                         height: 8.0,
                       ),
                       CustomerInfoWidget(
-                              firstText: "Last Name :", infoText: "mohammad")
+                              firstText: "Last Name :",
+                              infoText: customers[index].lastName)
                           .info(),
                       SizedBox(
                         height: 8.0,
                       ),
                       CustomerInfoWidget(
                               firstText: "Date Of Birth :",
-                              infoText: "11110001")
+                              infoText: customers[index].dateOfBirth)
                           .info(),
                       SizedBox(
                         height: 8.0,
                       ),
                       CustomerInfoWidget(
-                              firstText: "Phone Number :", infoText: "11110001")
+                              firstText: "Phone Number :",
+                              infoText: customers[index].phoneNumber)
                           .info(),
                       SizedBox(
                         height: 8.0,
                       ),
                       CustomerInfoWidget(
                               firstText: "Email Address :",
-                              infoText: "test@a.com")
+                              infoText: customers[index].email)
                           .info(),
                       SizedBox(
                         height: 8.0,
                       ),
                       CustomerInfoWidget(
                               firstText: "Bank Acount Number :",
-                              infoText: "11110001")
+                              infoText: customers[index].bankAcountNumber)
                           .info(),
                     ]),
                   ),

@@ -40,8 +40,9 @@ class CustomerLocalDataSource {
 
     try {
       Map<dynamic, dynamic> customers = box.toMap();
-
-      customers.values.map((_) => customersObject.add(_));
+      customers.values.forEach((_) {
+        customersObject.add(_);
+      });
 
       return Right(customersObject);
     } catch (e) {
@@ -49,15 +50,20 @@ class CustomerLocalDataSource {
     }
   }
 
-  Future<Either<Failure, CustomerAddedStatus>> addCustomer(CustomerDTO customer) async {
+  Future<Either<Failure, CustomerAddedStatus>> addCustomer(
+      CustomerDTO customer) async {
     late final Box box;
     box = Hive.box('customerBox');
     Iterable<dynamic> reoccurCustomList = [];
 
     try {
+      print("adding");
       Map<dynamic, dynamic> customers = box.toMap();
 
+      print(box.toMap().values.map((e) => print(e.firstName)));
+
       if (customers.isNotEmpty) {
+        print("not empty");
         reoccurCustomList = box.toMap().values.where(
           (element) {
             return element.firstName == customer.firstName ||
@@ -67,7 +73,7 @@ class CustomerLocalDataSource {
           },
         );
       }
-
+      print("empty");
       if (reoccurCustomList.isEmpty || customers.isEmpty) {
         await box.add(customer);
         return const Right(CustomerAddedStatus.added);
@@ -93,7 +99,8 @@ class CustomerLocalDataSource {
     }
   }
 
-  Future<Either<Failure, CustomerDeletedStatus>> deleteCustomer({required int index}) async {
+  Future<Either<Failure, CustomerDeletedStatus>> deleteCustomer(
+      {required int index}) async {
     late final Box box;
     box = Hive.box('customerBox');
 

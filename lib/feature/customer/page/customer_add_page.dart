@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:mc_crud_test/core/customer/data/dto/customer_dto.dart';
+import 'package:mc_crud_test/core/customer/domain/entity/customer_entity.dart';
+import 'package:mc_crud_test/core/customer/domain/usecase/customer/get_customer_list_usecase.dart';
 import 'package:mc_crud_test/feature/customer/bloc/customer_bloc.dart';
 import 'package:mc_crud_test/feature/customer/widget/customer_button_widget.dart';
 
@@ -20,6 +23,24 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _bankAcountNumberController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final countryController = TextEditingController(text: 'United States');
+
+  /// Used to format numbers as mobile or land line
+  var _globalPhoneType = PhoneNumberType.mobile;
+
+  /// Use international or national phone format
+  var _globalPhoneFormat = PhoneNumberFormat.international;
+
+  /// Current selected country
+  var _currentSelectedCountry = const CountryWithPhoneCode.us();
+
+  var _placeholderHint = '';
+
+  var _inputContainsCountryCode = true;
+
+  var _shouldKeepCursorAtEndOfInput = true;
+  bool isUpdating = false;
+  CustomerEntity? updatingCustomer;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -36,8 +57,59 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
     }
   }
 
-  void submitCustomer() async {
+  Future<void> submitCustomer() async {
     CustomerDTO customerData;
+    if (!isUpdating) {
+      customerData = CustomerDTO(
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          dateOfBirth: _dateOfBirthController.text,
+          phoneNumber: _phoneNumberController.text,
+          email: _emailController.text,
+          bankAcountNumber: _bankAcountNumberController.text);
+      context.read<CustomerBloc>().add(AddCustomer(customerData: customerData));
+    } else {
+      int index = context.read<CustomerBloc>().state.selectedCustomerIndex;
+      customerData = CustomerDTO(
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          dateOfBirth: _dateOfBirthController.text,
+          phoneNumber: _phoneNumberController.text,
+          email: _emailController.text,
+          bankAcountNumber: _bankAcountNumberController.text);
+      context.read<CustomerBloc>().add(UpdateCustomerEvent(
+          customerData: customerData,
+          index: index,
+          selectedCustomerIndex: index));
+    }
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration(microseconds: 30), () {
+      // context.read<CustomerBloc>().emit(CustomerState(
+      //       customers: [],
+      //     ));
+      isUpdating = context.read<CustomerBloc>().state.isUpdating;
+      updatingCustomer = context.read<CustomerBloc>().state.updatingCusomer;
+      if (isUpdating) {
+        _firstNameController.text = updatingCustomer?.firstName ?? "";
+        _lastNameController.text = updatingCustomer?.lastName ?? "";
+        _dateOfBirthController.text = updatingCustomer?.dateOfBirth ?? "";
+        _phoneNumberController.text = updatingCustomer?.phoneNumber ?? "";
+        _emailController.text = updatingCustomer?.email ?? "";
+        _bankAcountNumberController.text =
+            updatingCustomer?.bankAcountNumber ?? "";
+      }
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    context.read<CustomerBloc>().add(GetCustomers());
+    super.dispose();
   }
 
   @override
@@ -52,39 +124,40 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
           child: Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: BlocBuilder<CustomerBloc, CustomerState>(
-          
-          builder: (context, state) {
-            switch (state.status) {
-              case CustomerStatus.initial:
-                return BlocProvider.value(
-                  value: context.read<CustomerBloc>(),
-                  child: _mainWidget(),
-                );
-              case CustomerStatus.success:
-                return _mainWidget();
-              case CustomerStatus.loading:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              case CustomerStatus.error:
-                return Center(
-                  child: Text(
-                    "Error Loading Customers!",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                        fontSize: 18.0),
-                  ),
-                );
-              default:
-                return _mainWidget();
-            }
-          }),
+      body: BlocBuilder<CustomerBloc, CustomerState>(builder: (context, state) {
+        if (state.status == CustomerStatus.added) {
+          context.read<CustomerBloc>().add(GetCustomers());
+          Navigator.of(context).pop();
+        }
+        switch (state.status) {
+          case CustomerStatus.initial:
+            return _mainWidget(state.status);
+          case CustomerStatus.loading:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          case CustomerStatus.added:
+            return _mainWidget(state.status);
+          case CustomerStatus.error:
+            Future.delayed(Duration(microseconds: 500), () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.purple,
+                content: Text('Customer exists and/or error in adding'),
+              ));
+              context.read<CustomerBloc>().emit(
+                    state.copyWith(status: CustomerStatus.initial),
+                  );
+            });
+
+            return _mainWidget(state.status);
+          default:
+            return _mainWidget(state.status);
+        }
+      }),
     );
   }
 
-  Widget _mainWidget() {
+  Widget _mainWidget(CustomerStatus status) {
     return Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -109,10 +182,16 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
+                TextFormField(
                   controller: _lastNameController,
                   decoration: InputDecoration(
                       labelText: "Last Name", border: OutlineInputBorder()),
+                  validator: ((value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter last name";
+                    }
+                    return null;
+                  }),
                 ),
                 SizedBox(
                   height: 8.0,
@@ -121,7 +200,7 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
                   onTap: () async {
                     await _selectDate(context);
                   },
-                  child: TextField(
+                  child: TextFormField(
                     controller: _dateOfBirthController,
                     readOnly: true,
                     decoration: InputDecoration(
@@ -130,42 +209,121 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
                       border: OutlineInputBorder(),
                       disabledBorder: OutlineInputBorder(),
                     ),
+                    validator: ((value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please select date of birth";
+                      }
+                      return null;
+                    }),
                   ),
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
+                TextFormField(
                   controller: _phoneNumberController,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       labelText: "Phone Number", border: OutlineInputBorder()),
+                  validator: ((value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter phone number";
+                    }
+                    return null;
+                  }),
+                  inputFormatters: [
+                    LibPhonenumberTextFormatter(
+                      phoneNumberType: _globalPhoneType,
+                      phoneNumberFormat: _globalPhoneFormat,
+                      country: _currentSelectedCountry,
+                      inputContainsCountryCode: _inputContainsCountryCode,
+                      shouldKeepCursorAtEndOfInput:
+                          _shouldKeepCursorAtEndOfInput,
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
+                TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       labelText: "Email Address", border: OutlineInputBorder()),
+                  validator: ((value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter email address";
+                    }
+                    if (!value.contains("@") || !value.contains(".")) {
+                      return "Please enter valid email address";
+                    }
+                    return null;
+                  }),
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
+                TextFormField(
                   controller: _bankAcountNumberController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: "Bank Acount Number",
                       border: OutlineInputBorder()),
+                  validator: ((value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter bank acount number";
+                    }
+                    return null;
+                  }),
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
                 Container(
                     height: 60.0,
-                    child: CustomerButtonWidget(onPressed: () {}, text: "ADD")
+                    child: CustomerButtonWidget(
+                            onPressed: () async {
+                              bool error = false;
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              Future.delayed(Duration(microseconds: 30),
+                                  () async {
+                                try {
+                                  await parse(
+                                    _phoneNumberController.text,
+                                    region: _currentSelectedCountry.countryCode,
+                                  );
+                                  error = false;
+                                } catch (e) {
+                                  error = true;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    backgroundColor: Colors.purple,
+                                    content:
+                                        Text('Please enter valid phone number'),
+                                  ));
+                                }
+                              });
+                              if (error == false) {
+                                if (_dateOfBirthController.text.isEmpty) {
+                                  error = true;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    backgroundColor: Colors.purple,
+                                    content:
+                                        Text('Please select date of birth'),
+                                  ));
+                                } else {
+                                  error = false;
+                                }
+                              }
+                              if (!error) {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  await submitCustomer();
+                                }
+                              }
+                            },
+                            text: isUpdating ? "UPDATE" : "ADD")
                         .button()),
               ],
             ),

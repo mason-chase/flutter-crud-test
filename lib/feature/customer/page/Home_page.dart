@@ -14,31 +14,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider(
-              create: (context) => AddCustomerImpl(CustomerDTO.fromJson({})),
-            ),
-            RepositoryProvider(
-              create: (context) => GetAllCustomersImpl(),
-            ),
-            RepositoryProvider(
-                create: (context) =>
-                    UpdateCustomerImpl(CustomerDTO.fromJson({}), 0)),
-            RepositoryProvider(create: (context) => DeleteCustomerImpl(0)),
-          ],
-          child: BlocProvider<CustomerBloc>(
-            create: (context) {
-              return CustomerBloc(
-                  getAllCustomersUseCase: GetAllCustomersImpl(),
-                  addCustomerUseCase: AddCustomerImpl(CustomerDTO.fromJson({})),
-                  updateCustomerUseCase:
-                      UpdateCustomerImpl(CustomerDTO.fromJson({}), 0),
-                  deleteCustomerUseCase: DeleteCustomerImpl(0));
-            },
-            child: CustomersListPage(),
-          )),
-    );
+    return BlocBuilder<CustomerBloc, CustomerState>(
+        buildWhen: (prev, curr) => curr.status == CustomerStatus.success,
+        builder: (contextt, state) {
+          return const CustomersListPage();
+        });
   }
 }

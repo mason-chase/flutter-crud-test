@@ -12,24 +12,24 @@ class CustomerMapper {
     this.customerEntity,
     this.customerDTO,
     this.addCustomerUseCase,
-    this.getAllCustomersUseCase,
     this.updateCustomerUseCase,
     this.deleteCustomerUseCase,
   });
   final CustomerEntity? customerEntity;
   final CustomerDTO? customerDTO;
   final AddCustomerImpl? addCustomerUseCase;
-  final GetAllCustomers? getAllCustomersUseCase;
+  final GetAllCustomersImpl getAllCustomersUseCase = GetAllCustomersImpl();
   final UpdateCustomer? updateCustomerUseCase;
   final DeleteCustomer? deleteCustomerUseCase;
 
   Future<Either<Failure, List<CustomerEntity>>> getAllCustomers() async {
     try {
-      var customers = await getAllCustomersUseCase?.execute();
-      List<CustomerDTO>? customerList = customers?.getOrElse(() => []);
+      var customers = await getAllCustomersUseCase.execute();
+      List<CustomerDTO>? customerList = customers.getOrElse(() => []);
 
       List<CustomerEntity> customersEntityList = [];
-      customerList?.map((customer) {
+      print("lenght = ${customerList.length}");
+      customerList.forEach((customer) {
         customersEntityList.add(CustomerEntity(
             firstName: customer.firstName ?? "",
             lastName: customer.lastName ?? "",
