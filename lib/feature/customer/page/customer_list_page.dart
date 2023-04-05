@@ -24,7 +24,23 @@ class _CustomersListPageState extends State<CustomersListPage> {
     context.read<CustomerBloc>().add(
           GetCustomers(),
         );
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    print("set dispose");
+    if (mounted)
+      context
+          .read<CustomerBloc>()
+          .add(IsUpdatingCustomer(isUpdatingCustomer: false));
+    super.didChangeDependencies();
   }
 
   @override
@@ -48,6 +64,7 @@ class _CustomersListPageState extends State<CustomersListPage> {
         appBar: AppBar(
           backgroundColor: Colors.purple,
           title: Text("Customers crud app"),
+          leading: null,
           actions: [
             InkWell(
               child: IconButton(
@@ -57,6 +74,9 @@ class _CustomersListPageState extends State<CustomersListPage> {
                   //     return CustomerAddPage();
                   //   },
                   // ));
+                  context
+                      .read<CustomerBloc>()
+                      .add(IsUpdatingCustomer(isUpdatingCustomer: false));
                   Navigator.pushNamed(this.context, "/add");
                 },
                 icon: Icon(Icons.add),
@@ -68,7 +88,10 @@ class _CustomersListPageState extends State<CustomersListPage> {
             BlocBuilder<CustomerBloc, CustomerState>(builder: (context, state) {
           switch (state.status) {
             case CustomerStatus.initial:
-              return Center(child: CircularProgressIndicator());
+              return _mainWidget(
+                controller: _controller,
+                customers: state.customers,
+              );
             case CustomerStatus.success:
               return _mainWidget(
                 controller: _controller,
@@ -89,8 +112,9 @@ class _CustomersListPageState extends State<CustomersListPage> {
                 ),
               );
             default:
-              return Center(
-                child: CircularProgressIndicator(),
+              return _mainWidget(
+                controller: _controller,
+                customers: state.customers,
               );
           }
         }),
@@ -127,10 +151,11 @@ class _mainWidget extends StatelessWidget {
                   context
                       .read<CustomerBloc>()
                       .add(SelectCustomer(selectedCustomerIndex: index));
+                  context.read<CustomerBloc>().add(
+                      UpdatingCustomer(updatingCustomer: customers[index]));
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
                       return CustomerDetailPage(
-                        customerData: customers[index],
                         index: index,
                       );
                     },

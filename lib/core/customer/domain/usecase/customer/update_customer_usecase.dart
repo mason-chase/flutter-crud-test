@@ -13,14 +13,15 @@ class UpdateCustomerImpl implements UpdateCustomer {
   final CustomerLocalDataSource customerLocalDataSource =
       CustomerLocalDataSource();
   CustomerDTO customerData;
+  CustomerDTO oldCustomerData;
   int index;
 
-  UpdateCustomerImpl(this.customerData, this.index);
+  UpdateCustomerImpl(this.customerData, this.oldCustomerData, this.index);
 
   @override
   Future<Either<Failure, CustomerUpdatedStatus>?> execute() async {
     var result = await customerLocalDataSource.updateCustomer(
-        customer: customerData, index: index);
+        customer: customerData, oldCustomer: oldCustomerData, index: index);
 
     return result;
   }

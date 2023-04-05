@@ -105,7 +105,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       UpdatingCustomer event, Emitter<CustomerState> emit) async {
     emit(
       state.copyWith(
-        status: CustomerStatus.selected,
+        status: CustomerStatus.initial,
         updatingCustomer: event.updatingCustomer,
       ),
     );
@@ -125,6 +125,10 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
       if (status == CustomerUpdatedStatus.updated) {
         emit(
           state.copyWith(status: CustomerStatus.updated),
+        );
+      } else {
+        emit(
+          state.copyWith(status: CustomerStatus.error),
         );
       }
     } catch (error, stacktrace) {
@@ -152,7 +156,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     } else {
       emit(
         state.copyWith(
-          status: CustomerStatus.error,
+          status: CustomerStatus.notDeleted,
           selectedCustomerIndex: event.selectedCustomerIndex,
         ),
       );

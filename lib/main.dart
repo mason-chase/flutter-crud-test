@@ -57,7 +57,7 @@ class App extends StatelessWidget {
             create: (context) => CustomerBloc(
                 getAllCustomersUseCase: GetAllCustomersImpl(),
                 updateCustomerUseCase:
-                    UpdateCustomerImpl(CustomerDTO.fromJson({}), 0),
+                    UpdateCustomerImpl(CustomerDTO.fromJson({}), CustomerDTO.fromJson({}), 0),
                 addCustomerUseCase: AddCustomerImpl(CustomerDTO.fromJson({})),
                 deleteCustomerUseCase: DeleteCustomerImpl(0))
               ..add(GetCustomers()))

@@ -28,8 +28,7 @@ void main() {
 
   setUp(() {
     mockCustomerLocalDataSource = MockCustomerLocalDataSource();
-    usecases = UpdateCustomerImpl(
-        customerData, 0);
+    usecases = UpdateCustomerImpl(customerData, customerData, 0);
   });
 
   test("should update existing customer", () async {
@@ -37,7 +36,7 @@ void main() {
         Right<Failure, CustomerUpdatedStatus>(CustomerUpdatedStatus.updated);
 
     when(mockCustomerLocalDataSource.updateCustomer(
-            customer: customerData, index: 0))
+            customer: customerData, oldCustomer: customerData, index: 0))
         .thenAnswer((_) async => repoResult);
 
     final result = await usecases.execute();
@@ -46,6 +45,6 @@ void main() {
 
     expect(result, equals(repoResult));
     verify(mockCustomerLocalDataSource.updateCustomer(
-        customer: customerData, index: 0));
+        customer: customerData, oldCustomer: customerData, index: 0));
   });
 }

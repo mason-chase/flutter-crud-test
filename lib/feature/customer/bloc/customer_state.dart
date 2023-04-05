@@ -8,7 +8,8 @@ enum CustomerStatus {
   loading,
   selected,
   deleted,
-  updated
+  updated,
+  notDeleted,
 }
 
 extension CustomerStatusX on CustomerStatus {
@@ -20,6 +21,7 @@ extension CustomerStatusX on CustomerStatus {
   bool get isAdded => this == CustomerStatus.added;
   bool get isDeleted => this == CustomerStatus.deleted;
   bool get isUpdated => this == CustomerStatus.updated;
+  bool get notDeleted => this == CustomerStatus.notDeleted;
 }
 
 class CustomerState extends Equatable {
@@ -28,27 +30,21 @@ class CustomerState extends Equatable {
     List<CustomerEntity>? customers,
     int selectedCustomerIndex = 0,
     bool isUpdating = false,
-    CustomerEntity? updatingCusomer,
+    CustomerEntity? updatingCustomer,
   })  : customers = customers ?? const [],
         isUpdating = isUpdating,
-        updatingCusomer = updatingCusomer ?? const CustomerEntity(
-                firstName: "",
-                lastName: "",
-                dateOfBirth: "",
-                phoneNumber: "",
-                email: "",
-                bankAcountNumber: ""),
+        updatingCustomer = updatingCustomer,
         selectedCustomerIndex = selectedCustomerIndex;
 
   final List<CustomerEntity> customers;
   final CustomerStatus status;
   final int selectedCustomerIndex;
   final bool isUpdating;
-  final CustomerEntity updatingCusomer;
+  final CustomerEntity? updatingCustomer;
 
   @override
   List<Object?> get props =>
-      [status, customers, selectedCustomerIndex, isUpdating, updatingCusomer];
+      [status, customers, selectedCustomerIndex, isUpdating, updatingCustomer];
 
   CustomerState copyWith({
     List<CustomerEntity>? customers,
@@ -61,7 +57,7 @@ class CustomerState extends Equatable {
       customers: customers ?? this.customers,
       status: status ?? this.status,
       isUpdating: isUpdating ?? this.isUpdating,
-      updatingCusomer: updatingCusomer,
+      updatingCustomer: updatingCustomer ?? this.updatingCustomer,
       selectedCustomerIndex:
           selectedCustomerIndex ?? this.selectedCustomerIndex,
     );

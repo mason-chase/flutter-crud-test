@@ -126,6 +126,7 @@ class MockCustomerLocalDataSource extends _i1.Mock
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i4.CustomerUpdatedStatus>>
       updateCustomer({
+    required _i7.CustomerDTO? oldCustomer,
     required _i7.CustomerDTO? customer,
     required int? index,
   }) =>
@@ -134,6 +135,7 @@ class MockCustomerLocalDataSource extends _i1.Mock
               #updateCustomer,
               [],
               {
+                #oldCustomer: oldCustomer,
                 #customer: customer,
                 #index: index,
               },
@@ -146,6 +148,7 @@ class MockCustomerLocalDataSource extends _i1.Mock
                 #updateCustomer,
                 [],
                 {
+                  #oldCustomer: oldCustomer,
                   #customer: customer,
                   #index: index,
                 },

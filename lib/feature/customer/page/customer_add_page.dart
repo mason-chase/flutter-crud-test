@@ -7,6 +7,8 @@ import 'package:mc_crud_test/core/customer/domain/usecase/customer/get_customer_
 import 'package:mc_crud_test/feature/customer/bloc/customer_bloc.dart';
 import 'package:mc_crud_test/feature/customer/widget/customer_button_widget.dart';
 
+CustomerEntity? oldCustomerData;
+
 class CustomerAddPage extends StatefulWidget {
   const CustomerAddPage({Key? key}) : super(key: key);
 
@@ -41,6 +43,7 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
   var _shouldKeepCursorAtEndOfInput = true;
   bool isUpdating = false;
   CustomerEntity? updatingCustomer;
+  CustomerEntity? updatedCustomer;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -59,7 +62,7 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
 
   Future<void> submitCustomer() async {
     CustomerDTO customerData;
-    if (!isUpdating) {
+    if (isUpdating == false) {
       customerData = CustomerDTO(
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
@@ -70,6 +73,13 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
       context.read<CustomerBloc>().add(AddCustomer(customerData: customerData));
     } else {
       int index = context.read<CustomerBloc>().state.selectedCustomerIndex;
+      CustomerDTO oldCustomer = CustomerDTO(
+          firstName: oldCustomerData?.firstName,
+          lastName: oldCustomerData?.lastName,
+          dateOfBirth: oldCustomerData?.dateOfBirth,
+          phoneNumber: oldCustomerData?.phoneNumber,
+          email: oldCustomerData?.email,
+          bankAcountNumber: oldCustomerData?.bankAcountNumber);
       customerData = CustomerDTO(
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
@@ -79,9 +89,42 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
           bankAcountNumber: _bankAcountNumberController.text);
       context.read<CustomerBloc>().add(UpdateCustomerEvent(
           customerData: customerData,
+          oldCustomerData: oldCustomer,
           index: index,
           selectedCustomerIndex: index));
+      updatedCustomer = CustomerEntity(
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          dateOfBirth: _dateOfBirthController.text,
+          phoneNumber: _phoneNumberController.text,
+          email: _emailController.text,
+          bankAcountNumber: _bankAcountNumberController.text);
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    Future.delayed(Duration(microseconds: 30), () {
+      // context.read<CustomerBloc>().emit(CustomerState(
+      //       customers: [],
+      //     ));
+      //isUpdating = context.read<CustomerBloc>().state.isUpdating;
+      updatingCustomer = context.read<CustomerBloc>().state.updatingCustomer;
+      if (isUpdating) {
+        _firstNameController.text = updatingCustomer?.firstName ?? "";
+        _lastNameController.text = updatingCustomer?.lastName ?? "";
+        _dateOfBirthController.text = updatingCustomer?.dateOfBirth ?? "";
+        _phoneNumberController.text = updatingCustomer?.phoneNumber ?? "";
+        _emailController.text = updatingCustomer?.email ?? "";
+        _bankAcountNumberController.text =
+            updatingCustomer?.bankAcountNumber ?? "";
+        context
+            .read<CustomerBloc>()
+            .add(IsUpdatingCustomer(isUpdatingCustomer: false));
+      }
+      setState(() {});
+    });
+    super.didChangeDependencies();
   }
 
   @override
@@ -91,7 +134,7 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
       //       customers: [],
       //     ));
       isUpdating = context.read<CustomerBloc>().state.isUpdating;
-      updatingCustomer = context.read<CustomerBloc>().state.updatingCusomer;
+      updatingCustomer = context.read<CustomerBloc>().state.updatingCustomer;
       if (isUpdating) {
         _firstNameController.text = updatingCustomer?.firstName ?? "";
         _lastNameController.text = updatingCustomer?.lastName ?? "";
@@ -108,7 +151,23 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
 
   @override
   void dispose() {
-    context.read<CustomerBloc>().add(GetCustomers());
+    print("dispose");
+    Future.delayed(Duration(microseconds: 30), () {
+      if (mounted) {
+        context
+            .read<CustomerBloc>()
+            .add(IsUpdatingCustomer(isUpdatingCustomer: false));
+        context.read<CustomerBloc>().add(UpdatingCustomer(
+            updatingCustomer: CustomerEntity(
+                firstName: "",
+                lastName: "",
+                dateOfBirth: "",
+                phoneNumber: "",
+                email: "",
+                bankAcountNumber: "")));
+        context.read<CustomerBloc>().add(GetCustomers());
+      }
+    });
     super.dispose();
   }
 
@@ -128,6 +187,18 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
         if (state.status == CustomerStatus.added) {
           context.read<CustomerBloc>().add(GetCustomers());
           Navigator.of(context).pop();
+        } else if (state.status == CustomerStatus.updated) {
+          Future.delayed(Duration(microseconds: 30), () {
+            context.read<CustomerBloc>().add(GetCustomers());
+            context
+                .read<CustomerBloc>()
+                .add(UpdatingCustomer(updatingCustomer: updatedCustomer));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.purple,
+              content: Text('Customer updated'),
+            ));
+            Navigator.of(context).pop();
+          });
         }
         switch (state.status) {
           case CustomerStatus.initial:
@@ -138,11 +209,14 @@ class _CustomerAddPageState extends State<CustomerAddPage> {
             );
           case CustomerStatus.added:
             return _mainWidget(state.status);
+          case CustomerStatus.updated:
+            return _mainWidget(state.status);
           case CustomerStatus.error:
             Future.delayed(Duration(microseconds: 500), () {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.purple,
-                content: Text('Customer exists and/or error in adding'),
+                content:
+                    Text('Customer exists and/or error in adding/updating'),
               ));
               context.read<CustomerBloc>().emit(
                     state.copyWith(status: CustomerStatus.initial),

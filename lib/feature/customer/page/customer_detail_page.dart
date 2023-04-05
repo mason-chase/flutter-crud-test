@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/core/customer/data/dto/customer_dto.dart';
 import 'package:mc_crud_test/core/customer/domain/entity/customer_entity.dart';
 import 'package:mc_crud_test/feature/customer/bloc/customer_bloc.dart';
+import 'package:mc_crud_test/feature/customer/page/customer_add_page.dart';
 import 'package:mc_crud_test/feature/customer/widget/customer_button_widget.dart';
 
 class CustomerDetailPage extends StatelessWidget {
-  CustomerDetailPage({Key? key, this.customerData, this.index})
-      : super(key: key);
-  CustomerEntity? customerData;
+  CustomerDetailPage({Key? key, this.index}) : super(key: key);
   int? index;
 
   @override
@@ -23,10 +22,12 @@ class CustomerDetailPage extends StatelessWidget {
       ),
       body: BlocBuilder<CustomerBloc, CustomerState>(
         builder: ((context, state) {
+          print(context.read<CustomerBloc>().state.updatingCustomer?.lastName);
           switch (state.status) {
             case CustomerStatus.initial:
               return _mainWidget(
-                customerData: customerData,
+                customerData:
+                    context.read<CustomerBloc>().state.updatingCustomer,
                 index: index,
               );
             case CustomerStatus.deleted:
@@ -35,10 +36,11 @@ class CustomerDetailPage extends StatelessWidget {
                 Navigator.of(context).pop();
               });
               return _mainWidget(
-                customerData: customerData,
+                customerData:
+                    context.read<CustomerBloc>().state.updatingCustomer,
                 index: index,
               );
-            case CustomerStatus.error:
+            case CustomerStatus.notDeleted:
               Future.delayed(Duration(microseconds: 500), () {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.purple,
@@ -46,12 +48,14 @@ class CustomerDetailPage extends StatelessWidget {
                 ));
               });
               return _mainWidget(
-                customerData: customerData,
+                customerData:
+                    context.read<CustomerBloc>().state.updatingCustomer,
                 index: index,
               );
             default:
               return _mainWidget(
-                customerData: customerData,
+                customerData:
+                    context.read<CustomerBloc>().state.updatingCustomer,
                 index: index,
               );
           }
@@ -139,11 +143,18 @@ class _mainWidget extends StatelessWidget {
               height: 60.0,
               child: CustomerButtonWidget(
                       onPressed: () {
+                        oldCustomerData = customerData;
                         context
                             .read<CustomerBloc>()
                             .add(IsUpdatingCustomer(isUpdatingCustomer: true));
+                        context
+                            .read<CustomerBloc>()
+                            .add(SelectCustomer(selectedCustomerIndex: index!));
                         context.read<CustomerBloc>().add(
-                            UpdatingCustomer(updatingCustomer: customerData!));
+                            UpdatingCustomer(updatingCustomer: customerData));
+                        CustomerEntity? customer =
+                            context.read<CustomerBloc>().state.updatingCustomer;
+                        Navigator.pushNamed(context, "/add");
                       },
                       text: "UPDATE")
                   .button()),
