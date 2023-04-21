@@ -21,6 +21,7 @@ Feature: Customer List
     Then I see "Failed to load customer list" text
 
   Scenario: click in add customer button
+    Given The app is running{1}
     When I tap add customer button
     Then I see add customer page
 

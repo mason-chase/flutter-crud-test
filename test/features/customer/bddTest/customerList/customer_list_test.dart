@@ -38,6 +38,7 @@ void main() {
       await iSeeFailedToLoadCustomerListText(tester);
     });
     testWidgets('''click in add customer button''', (tester) async {
+      await theAppIsRunning(tester, 1);
       await iTapAddCustomerButton(tester);
       await iSeeAddCustomerPage(tester);
     });
