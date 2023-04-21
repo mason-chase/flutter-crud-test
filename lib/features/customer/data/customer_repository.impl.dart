@@ -18,4 +18,10 @@ class CustomerRepositoryImpl implements CustomerRepository {
       return Left(DatabaseFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Customer>> addCustomer(Customer customer) {
+    // TODO: implement addCustomer
+    throw UnimplementedError();
+  }
 }

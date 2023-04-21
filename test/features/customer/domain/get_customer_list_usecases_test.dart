@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 
 import '../customer_test.constants.dart';
-import 'customer_usecases_test.mocks.dart';
+import 'get_customer_list_usecases_test.mocks.dart';
 
 @GenerateMocks([CustomerRepository])
 
