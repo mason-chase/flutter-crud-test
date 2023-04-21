@@ -11,8 +11,16 @@ const tCustomerList = [
       bankAccountNumber: '1234567890')
 ];
 
-const tFailure = DatabaseFailure("Error");
+const tCustomer = Customer(
+    firstname: 'Mohsen',
+    lastname: 'Balestani',
+    dateOfBirth: '1992-03-11',
+    phoneNumber: '+989353361996',
+    email: 'm.balestani@gmail.com',
+    bankAccountNumber: '1234567890');
 
-getCustomerList(){
+const tFailure = DatabaseFailure("Error");
+const tFailureAllReadyExist = DatabaseFailure("customer all ready exist");
+getCustomerList() {
   return tCustomerList;
 }
