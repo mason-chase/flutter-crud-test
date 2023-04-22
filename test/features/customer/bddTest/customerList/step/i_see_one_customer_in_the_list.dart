@@ -10,7 +10,7 @@ import 'package:mc_crud_test/features/customer/presentation/customerList/widgets
 import 'package:mockito/mockito.dart';
 
 import '../../../customer_test.constants.dart';
-import '../test_injection_helper.dart';
+import '../../../../test_injection_helper.dart';
 import 'the_app_is_running.dart';
 
 Future<void> iSeeOneCustomerInTheList(WidgetTester tester) async {

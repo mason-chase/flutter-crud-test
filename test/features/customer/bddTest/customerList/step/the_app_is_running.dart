@@ -10,7 +10,7 @@ import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/cu
 import 'package:mc_crud_test/features/customer/presentation/customerList/customer_list.page.dart';
 
 import '../../../customer_test.constants.dart';
-import '../test_injection_helper.dart';
+import '../../../../test_injection_helper.dart';
 
 Future<void> theAppIsRunning(WidgetTester tester,int state) async {
   setupTestInjection();

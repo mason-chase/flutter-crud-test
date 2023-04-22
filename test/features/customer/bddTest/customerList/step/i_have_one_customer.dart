@@ -5,7 +5,7 @@ import 'package:mc_crud_test/features/customer/domain/customer.respository.dart'
 import 'package:mockito/mockito.dart';
 
 import '../../../customer_test.constants.dart';
-import '../../../domain/customer_usecases_test.mocks.dart';
+
 
 Future<void> iHaveOneCustomer(WidgetTester tester) async {
   var repository = getIt<CustomerRepository>();
