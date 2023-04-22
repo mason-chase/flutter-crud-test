@@ -8,4 +8,7 @@ abstract class CustomerLocalDataSource {
   @Query('SELECT * FROM ${AppConstants.customerTable}')
   Future<List<Customer>> getCustomers();
 
+  @Insert(onConflict: OnConflictStrategy.fail)
+  Future<void> addCustomer(Customer customer);
+
 }

@@ -8,7 +8,7 @@ class AddCustomerUseCase {
 
   AddCustomerUseCase(this.repository);
 
-  Future<Either<Failure, Customer>> call(Customer customer) async {
+  Future<Either<Failure, void>> call(Customer customer) async {
     return await repository.addCustomer(customer);
   }
 }

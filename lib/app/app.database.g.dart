@@ -108,13 +108,27 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
   _$CustomerLocalDataSource(
     this.database,
     this.changeListener,
-  ) : _queryAdapter = QueryAdapter(database);
+  )   : _queryAdapter = QueryAdapter(database),
+        _customerInsertionAdapter = InsertionAdapter(
+            database,
+            'customer',
+            (Customer item) => <String, Object?>{
+                  'id': item.id,
+                  'firstname': item.firstname,
+                  'lastname': item.lastname,
+                  'dateOfBirth': item.dateOfBirth,
+                  'phoneNumber': item.phoneNumber,
+                  'email': item.email,
+                  'bankAccountNumber': item.bankAccountNumber
+                });
 
   final sqflite.DatabaseExecutor database;
 
   final StreamController<String> changeListener;
 
   final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<Customer> _customerInsertionAdapter;
 
   @override
   Future<List<Customer>> getCustomers() async {
@@ -127,5 +141,10 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
             phoneNumber: row['phoneNumber'] as String,
             email: row['email'] as String,
             bankAccountNumber: row['bankAccountNumber'] as String));
+  }
+
+  @override
+  Future<void> addCustomer(Customer customer) async {
+    await _customerInsertionAdapter.insert(customer, OnConflictStrategy.fail);
   }
 }

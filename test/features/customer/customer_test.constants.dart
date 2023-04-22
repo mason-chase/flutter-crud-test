@@ -20,7 +20,25 @@ const tCustomer = Customer(
     bankAccountNumber: '1234567890');
 
 const tFailure = DatabaseFailure("Error");
-const tFailureAllReadyExist = DatabaseFailure("customer all ready exist");
+const tFailureAllReadyExist = DatabaseFailure(
+    "This customer with this information has already been added");
+const String validFirstname = 'Mohsen';
+const String invalidFirstname = 'Mohsen123';
+
+const String validLastname = 'Balestani';
+const String invalidLastname = 'Balestani123';
+
+const String validEmail = 'm.balestani@gmail.com';
+const String invalidEmail = 'm.balestani@gmail';
+
+const String validPhone = '+989353361996';
+const String invalidPhone = '+989353361996123';
+
+DateTime validDateOfBirth = DateTime(1992, 03, 11);
+
+const String validBankAccount = '123456789123';
+const String invalidBankAccount = 'a1234567890123ss';
+
 getCustomerList() {
   return tCustomerList;
 }

@@ -4,5 +4,5 @@ import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 
 abstract class CustomerRepository {
   Future<Either<Failure, List<Customer>>> getCustomerList();
-  Future<Either<Failure, Customer>> addCustomer(Customer customer);
+  Future<Either<Failure, void>> addCustomer(Customer customer);
 }
