@@ -4,6 +4,7 @@ import 'package:mc_crud_test/core/utils/app.utils.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer.page.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
+import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/customer_list.page.dart';
 
 abstract class AppRoutes {
@@ -20,7 +21,7 @@ abstract class AppRoutes {
 
   static BlocProvider<CustomerListBloc> _makeCustomerListPage() {
     return BlocProvider(
-      create: (context) => CustomerListBloc(getCustomerListUseCase: inject()),
+      create: (context) => CustomerListBloc(getCustomerListUseCase: inject())..add(GetCustomerList()),
       child: const CustomerListPage(),
     );
   }
