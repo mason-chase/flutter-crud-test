@@ -35,7 +35,11 @@ class CustomerListPage extends StatelessWidget {
             return ListView.builder(
                 itemCount: state.customers.length,
                 itemBuilder: (context, index) {
-                  return CustomerListItem(customer: state.customers[index]);
+                  return CustomerListItem(
+                    customer: state.customers[index],
+                    index: index,
+                    key: Key("CustomerItem-$index"),
+                  );
                 });
           } else if (state is Error) {
             return CustomerListErrorWidget(state.message);

@@ -33,4 +33,14 @@ class CustomerRepositoryImpl implements CustomerRepository {
       return left(const DatabaseFailure('Something went wrong!!'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteCustomer(Customer customer) async {
+    try {
+      await appDatabase.customerLocalDataSource.deleteCustomer(customer);
+      return right(unit);
+    } catch (_) {
+      return left(const DatabaseFailure('Something went wrong!!'));
+    }
+  }
 }

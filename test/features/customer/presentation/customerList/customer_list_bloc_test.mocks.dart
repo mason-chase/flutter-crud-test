@@ -11,6 +11,8 @@ import 'package:mc_crud_test/features/customer/domain/customer.entity.dart'
     as _i7;
 import 'package:mc_crud_test/features/customer/domain/customer.respository.dart'
     as _i2;
+import 'package:mc_crud_test/features/customer/domain/usecases/delete_customer.usecase.dart'
+    as _i8;
 import 'package:mc_crud_test/features/customer/domain/usecases/get_customer_list.usecase.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
@@ -81,4 +83,31 @@ class MockGetCustomerListUseCase extends _i1.Mock
           ),
         )),
       ) as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Customer>>>);
+}
+
+/// A class which mocks [DeleteCustomerUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDeleteCustomerUseCase extends _i1.Mock
+    implements _i8.DeleteCustomerUseCase {
+  MockDeleteCustomerUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, void>> call(_i7.Customer? customer) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [customer],
+        ),
+        returnValue: _i5.Future<_i3.Either<_i6.Failure, void>>.value(
+            _FakeEither_1<_i6.Failure, void>(
+          this,
+          Invocation.method(
+            #call,
+            [customer],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i6.Failure, void>>);
 }

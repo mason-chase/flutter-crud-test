@@ -8,15 +8,16 @@ import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_cust
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
+import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.state.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/customer_list.page.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/widgets/customer_list_empty.widget.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/widgets/customer_list_error.widget.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/widgets/customer_list_loading.widget.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../test_injection_helper.dart';
-
-
+import '../../customer_test.constants.dart';
 
 main() {
   final bloc = MockCustomerListBloc();
@@ -29,13 +30,16 @@ main() {
 
     await tester.pumpWidget(
       MultiBlocProvider(
-        providers: [BlocProvider<CustomerListBloc>.value(value: bloc),BlocProvider<AddCustomerBloc>.value(value: addCustomerBloc)],
-        child:ScreenUtilInit(
-          builder: (ctx, child) => MaterialApp(
-          title: 'Flutter Demo',
-          routes: routes,
-          initialRoute: AppRoutes.customerList,
-        )),
+        providers: [
+          BlocProvider<CustomerListBloc>.value(value: bloc),
+          BlocProvider<AddCustomerBloc>.value(value: addCustomerBloc)
+        ],
+        child: ScreenUtilInit(
+            builder: (ctx, child) => MaterialApp(
+                  title: 'Flutter Demo',
+                  routes: routes,
+                  initialRoute: AppRoutes.customerList,
+                )),
       ),
     );
   }
@@ -72,18 +76,35 @@ main() {
       expect(find.byType(ListView), findsOneWidget);
     });
 
+    testWidgets("should show one List Items", (widgetTester) async {
+      whenListen(bloc, Stream.fromIterable([ListLoaded(tCustomerList)]),
+          initialState: ListLoaded(tCustomerList));
+      await _loadMain(widgetTester);
+      expect(find.byType(ListView), findsOneWidget);
+      expect(find.byKey(const Key("CustomerItem-0")), findsOneWidget);
+    });
+
+    testWidgets("delete customer successfully", (widgetTester) async {
+      when(()=>bloc.state).thenAnswer((_) => ListLoaded(tCustomerList));
+      await _loadMain(widgetTester);
+      expect(find.byType(ListView), findsOneWidget);
+      expect(find.byKey(const Key("delete-0")), findsOneWidget);
+      await widgetTester.tap(find.byKey(const Key("delete-0")));
+      verify(()=>bloc.add(DeleteCustomer(tCustomerList[0]))).called(1);
+    });
+
     testWidgets("should navigate to add customer page when tap on fab",
         (WidgetTester tester) async {
       whenListen(bloc, Stream.fromIterable([ListLoaded([])]),
           initialState: ListLoaded(const []));
 
-      whenListen(addCustomerBloc, Stream.fromIterable([const AddCustomerInitial()]),
+      whenListen(
+          addCustomerBloc, Stream.fromIterable([const AddCustomerInitial()]),
           initialState: const AddCustomerInitial());
       await _loadMain(tester);
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
       expect(find.byType(AddCustomerPage), findsOneWidget);
-
     });
   });
 }

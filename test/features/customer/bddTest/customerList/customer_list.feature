@@ -20,6 +20,20 @@ Feature: Customer List
     When I request customer list
     Then I see "Failed to load customer list" text
 
+  Scenario: delete customer success
+    Given The app is running{1}
+    And I have one customer
+    When I request customer list
+    And I tap delete customer button
+    Then Customer deleted successfully
+
+  Scenario: delete customer failed
+    Given The app is running{1}
+    And I have one customer
+    When I request customer list
+    And I tap delete customer button
+    Then I see one customer in the list
+
   Scenario: click in add customer button
     Given The app is running{1}
     When I tap add customer button

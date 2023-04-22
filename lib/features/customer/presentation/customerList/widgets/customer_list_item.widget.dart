@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
+import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
+import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.event.dart';
 
 class CustomerListItem extends StatelessWidget {
-  const CustomerListItem({Key? key, required this.customer}) : super(key: key);
+  const CustomerListItem(
+      {Key? key, required this.customer, required this.index})
+      : super(key: key);
   final Customer customer;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +45,26 @@ class CustomerListItem extends StatelessWidget {
               Column(
                 children: [
                   IconButton(
+                    key: Key("edit-$index"),
                     onPressed: () {},
-                    icon: const Icon(Icons.edit),
+                    icon: SvgPicture.asset(
+                      "assets/image/icon/edit.svg",
+                      height: 20.0,
+                      width: 20.0,
+                    ),
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.delete),
-                  ),
+                      key: Key("delete-$index"),
+                      onPressed: () {
+                        context.read<CustomerListBloc>().add(
+                              DeleteCustomer(customer),
+                            );
+                      },
+                      icon: SvgPicture.asset(
+                        "assets/image/icon/trash.svg",
+                        height: 20.0,
+                        width: 20.0,
+                      )),
                 ],
               )
             ],

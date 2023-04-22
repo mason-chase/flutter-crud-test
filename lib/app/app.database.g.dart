@@ -120,6 +120,19 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
                   'phoneNumber': item.phoneNumber,
                   'email': item.email,
                   'bankAccountNumber': item.bankAccountNumber
+                }),
+        _customerDeletionAdapter = DeletionAdapter(
+            database,
+            'customer',
+            ['id'],
+            (Customer item) => <String, Object?>{
+                  'id': item.id,
+                  'firstname': item.firstname,
+                  'lastname': item.lastname,
+                  'dateOfBirth': item.dateOfBirth,
+                  'phoneNumber': item.phoneNumber,
+                  'email': item.email,
+                  'bankAccountNumber': item.bankAccountNumber
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -129,6 +142,8 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Customer> _customerInsertionAdapter;
+
+  final DeletionAdapter<Customer> _customerDeletionAdapter;
 
   @override
   Future<List<Customer>> getCustomers() async {
@@ -146,5 +161,10 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
   @override
   Future<void> addCustomer(Customer customer) async {
     await _customerInsertionAdapter.insert(customer, OnConflictStrategy.fail);
+  }
+
+  @override
+  Future<void> deleteCustomer(Customer customer) async {
+    await _customerDeletionAdapter.delete(customer);
   }
 }

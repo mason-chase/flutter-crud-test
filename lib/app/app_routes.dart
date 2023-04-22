@@ -21,7 +21,9 @@ abstract class AppRoutes {
 
   static BlocProvider<CustomerListBloc> _makeCustomerListPage() {
     return BlocProvider(
-      create: (context) => CustomerListBloc(getCustomerListUseCase: inject())..add(GetCustomerList()),
+      create: (context) => CustomerListBloc(
+          getCustomerListUseCase: inject(), deleteCustomerUseCase: inject())
+        ..add(GetCustomerList()),
       child: const CustomerListPage(),
     );
   }

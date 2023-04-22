@@ -11,4 +11,7 @@ abstract class CustomerLocalDataSource {
   @Insert(onConflict: OnConflictStrategy.fail)
   Future<void> addCustomer(Customer customer);
 
+  @delete
+  Future<void> deleteCustomer(Customer customer);
+
 }
