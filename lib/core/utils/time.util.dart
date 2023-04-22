@@ -10,4 +10,9 @@ class TimeUtil {
     final day = int.parse(sepratedDate[2]);
     return DateTime(year, month, day);
   }
+
+  // day from datetime
+  static String getDayFromDateTime(DateTime dateTime) {
+    return dateTime.day.toString();
+  }
 }
