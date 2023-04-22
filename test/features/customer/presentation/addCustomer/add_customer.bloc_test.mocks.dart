@@ -65,20 +65,19 @@ class MockAddCustomerUseCase extends _i1.Mock
         ),
       ) as _i2.CustomerRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.Customer>> call(
-          _i7.Customer? customer) =>
+  _i5.Future<_i3.Either<_i6.Failure, void>> call(_i7.Customer? customer) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [customer],
         ),
-        returnValue: _i5.Future<_i3.Either<_i6.Failure, _i7.Customer>>.value(
-            _FakeEither_1<_i6.Failure, _i7.Customer>(
+        returnValue: _i5.Future<_i3.Either<_i6.Failure, void>>.value(
+            _FakeEither_1<_i6.Failure, void>(
           this,
           Invocation.method(
             #call,
             [customer],
           ),
         )),
-      ) as _i5.Future<_i3.Either<_i6.Failure, _i7.Customer>>);
+      ) as _i5.Future<_i3.Either<_i6.Failure, void>>);
 }
