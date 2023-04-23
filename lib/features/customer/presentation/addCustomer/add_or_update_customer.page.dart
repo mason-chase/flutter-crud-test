@@ -65,8 +65,10 @@ class _AddOrUpdateCustomerPageState extends State<AddOrUpdateCustomerPage> {
                   var snackBar = SnackBar(
                     content: Text(widget.initialCustomer != null
                         ? "Customer updated successfully"
-                        : "Customer added successfully"),
-                    backgroundColor: Colors.greenAccent,
+                        : "Customer added successfully",style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.white,
+                    ),),
+                    backgroundColor: Colors.black,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 

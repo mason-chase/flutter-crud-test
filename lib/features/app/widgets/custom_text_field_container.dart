@@ -21,7 +21,7 @@ class CustomTextFieldContainer extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
       decoration: ShapeDecoration(
-        color: fillColor ?? AppColors.neutralColor.shade300,
+        color: fillColor ?? Colors.black12,
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius.r),
           side: BorderSide(

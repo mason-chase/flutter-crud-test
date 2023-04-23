@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mc_crud_test/app/app_routes.dart';
+import 'package:mc_crud_test/features/app/app_routes.dart';
+import 'package:mc_crud_test/features/app/theme/app.color.dart';
+import 'package:mc_crud_test/features/app/theme/app_icons.dart';
+import 'package:mc_crud_test/features/app/widgets/icon_text.widget.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.event.dart';
-import 'package:mc_crud_test/features/customer/presentation/theme/app.color.dart';
-import 'package:mc_crud_test/features/customer/presentation/theme/app_icons.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/icon_text.widget.dart';
 
 class CustomerListItem extends StatelessWidget {
   const CustomerListItem(
@@ -77,7 +77,7 @@ class CustomerListItem extends StatelessWidget {
                     arguments: customer,
                   );
                 },
-                icon: const Icon(Icons.edit,color: Colors.green,),
+                icon: const Icon(Icons.edit,color: Colors.black,),
               ),
               IconButton(
                   key: Key("delete-$index"),
@@ -86,7 +86,7 @@ class CustomerListItem extends StatelessWidget {
                       DeleteCustomer(customer),
                     );
                   },
-                  icon:  Icon(Icons.delete,color:AppColors.warningColor.shade400 ,)),
+                  icon:  Icon(Icons.delete,color:AppColors.warningColor ,)),
             ],
           )
         ],

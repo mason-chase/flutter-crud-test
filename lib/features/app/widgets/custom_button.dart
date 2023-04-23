@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mc_crud_test/features/app/theme/app.color.dart';
 
 class CustomButton extends StatelessWidget {
   final double? height, width, fontSize;
@@ -32,7 +33,7 @@ class CustomButton extends StatelessWidget {
         height: height,
         width: width ?? MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color:enable ? color ?? Colors.blueAccent : disableColor,
+          color:enable ? color ?? AppColors.warningColor : disableColor,
           borderRadius: BorderRadius.circular(12),
         ),
         alignment: AlignmentDirectional.center,
@@ -48,10 +49,8 @@ class CustomButton extends StatelessWidget {
             : Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: textColor ?? Colors.white,
-                  letterSpacing: 2,
-                  fontSize: fontSize,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Colors.white,
                 ),
               ),
       ),
