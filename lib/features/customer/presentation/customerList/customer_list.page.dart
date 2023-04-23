@@ -42,7 +42,7 @@ class CustomerListPage extends StatelessWidget {
                   itemCount: state.customers.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 16),
+                      padding:  EdgeInsets.only(top: 16,bottom: state.customers.length - 1 == index ? 80 : 0),
                       child: CustomerListItem(
                         customer: state.customers[index],
                         index: index,

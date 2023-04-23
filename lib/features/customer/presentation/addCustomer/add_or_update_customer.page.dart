@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/core/models/app_form_state.enum.dart';
@@ -39,7 +37,7 @@ class _AddOrUpdateCustomerPageState extends State<AddOrUpdateCustomerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add a new Customer"),
+        title: const Text("Add Customer"),
         centerTitle: true,
       ),
       body: Padding(
@@ -76,10 +74,7 @@ class _AddOrUpdateCustomerPageState extends State<AddOrUpdateCustomerPage> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                  Timer(const Duration(milliseconds: 400), () {
-                    // pop to previous screen
-                    Navigator.pop(context);
-                  });
+                  Navigator.pop(context);
                 }
               },
               child: BlocBuilder<AddCustomerBloc, AddCustomerState>(

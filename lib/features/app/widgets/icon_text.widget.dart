@@ -17,13 +17,15 @@ class IconText extends StatelessWidget {
         children: [
           SvgPicture.asset(icon, color: Colors.black),
           const SizedBox(width: 8),
-          Text(
-            text,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                ),
+          Flexible(
+            child: Text(
+              text,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.black,
+                  ),
+            ),
           ),
 
         ],

@@ -37,6 +37,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
     if (state.formState == AppFormState.valid) {
       emit(state.copyWith(status: Status.loading));
       var customer = Customer(
+        id: state.customer?.id,
         firstname: state.firstname.value!,
         lastname: state.lastname.value!,
         email: state.email.value!,
