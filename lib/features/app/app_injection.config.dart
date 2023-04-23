@@ -1,5 +1,6 @@
-import 'package:mc_crud_test/app/app.database.dart';
 import 'package:mc_crud_test/core/utils/app.utils.dart';
+import 'package:mc_crud_test/features/app/app.database.dart';
+import 'package:mc_crud_test/features/customer/data/customer_repository.impl.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.respository.dart';
 import 'package:mc_crud_test/features/customer/domain/usecases/add_customer.usecase.dart';
 import 'package:mc_crud_test/features/customer/domain/usecases/delete_customer.usecase.dart';
@@ -8,7 +9,6 @@ import 'package:mc_crud_test/features/customer/domain/usecases/update_customer.u
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
 
-import '../features/customer/data/customer_repository.impl.dart';
 
 class _AppInjectionConfig extends AppInjectionConfig {}
 

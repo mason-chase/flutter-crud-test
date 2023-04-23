@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/features/app/widgets/custom_form_text_field.dart';
+import 'package:mc_crud_test/features/app/widgets/date_picker.widget.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer_form_keys.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/custom_form_text_field.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/date_picker.widget.dart';
 
 class AddCustomerFormWidget extends StatefulWidget {
   const AddCustomerFormWidget({Key? key, this.initialCustomer})

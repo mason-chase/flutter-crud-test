@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:mc_crud_test/app/app.database.dart';
 import 'package:mc_crud_test/core/models/failure.dart';
+import 'package:mc_crud_test/features/app/app.database.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.respository.dart';
 import 'package:sqflite/sqflite.dart';

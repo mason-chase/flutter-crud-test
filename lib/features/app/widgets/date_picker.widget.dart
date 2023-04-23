@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mc_crud_test/core/utils/time.util.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/label.dart';
+import 'package:mc_crud_test/features/app/widgets/label.dart';
 
 class DatePickerWidget extends StatelessWidget {
   final String? initialDateTime;

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mc_crud_test/features/customer/presentation/theme/app.color.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/custom_text_field_container.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/custom_text_field_error.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/custom_text_field_suffix.dart';
-import 'package:mc_crud_test/features/customer/presentation/widgets/label.dart';
+import 'package:mc_crud_test/features/app/theme/app.color.dart';
+import 'package:mc_crud_test/features/app/widgets/custom_text_field_container.dart';
+import 'package:mc_crud_test/features/app/widgets/custom_text_field_error.dart';
+import 'package:mc_crud_test/features/app/widgets/custom_text_field_suffix.dart';
+import 'package:mc_crud_test/features/app/widgets/label.dart';
 
 
 enum TextFieldSize { small, medium, big }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mc_crud_test/app/app_routes.dart';
+import 'package:mc_crud_test/features/app/app_routes.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.state.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/widgets/customer_list_empty.widget.dart';

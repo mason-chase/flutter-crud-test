@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mc_crud_test/app/app_routes.dart';
+import 'package:mc_crud_test/features/app/app_routes.dart';
+import 'package:mc_crud_test/features/app/theme/app.color.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +13,9 @@ class HomePage extends StatelessWidget {
         title: 'Flutter Demo',
         routes: AppRoutes.getRoutes(context),
         initialRoute: AppRoutes.customerList,
+        theme: ThemeData(
+          primarySwatch: AppColors.warningColor,
+        ),
       ),
     );
   }

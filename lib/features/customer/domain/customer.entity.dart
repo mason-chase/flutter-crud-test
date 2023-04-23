@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
-import 'package:mc_crud_test/app/app.constants.dart';
+import 'package:mc_crud_test/features/app/app.constants.dart';
 @Entity(tableName: AppConstants.customerTable, indices: [
   Index(value: [
     "firstname",

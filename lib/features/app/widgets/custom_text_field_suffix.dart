@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mc_crud_test/features/customer/presentation/theme/app.color.dart';
-import 'package:mc_crud_test/features/customer/presentation/theme/app_icons.dart';
+import 'package:mc_crud_test/features/app/theme/app.color.dart';
+import 'package:mc_crud_test/features/app/theme/app_icons.dart';
 
 class CustomTextFieldSuffix extends StatefulWidget {
   final TextEditingController controller;
