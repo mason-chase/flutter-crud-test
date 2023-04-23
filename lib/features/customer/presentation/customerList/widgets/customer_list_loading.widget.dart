@@ -7,7 +7,13 @@ class CustomerListLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: const [CircularProgressIndicator(), Text("Loading...")],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children:  [const SizedBox(width:50,height:50,child: CircularProgressIndicator()),
+          const SizedBox(height: 16),
+          Text("Loading...",style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: Colors.black,
+          ))],
       ),
     );
   }

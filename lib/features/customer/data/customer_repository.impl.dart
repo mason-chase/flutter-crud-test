@@ -49,6 +49,9 @@ class CustomerRepositoryImpl implements CustomerRepository {
     try {
       await appDatabase.customerLocalDataSource.updateCustomer(customer);
       return right(unit);
+    } on DatabaseException catch (_) {
+      return left(const DatabaseFailure(
+          'This customer with this information has already been added'));
     } catch (_) {
       return left(const DatabaseFailure('Something went wrong!!'));
     }

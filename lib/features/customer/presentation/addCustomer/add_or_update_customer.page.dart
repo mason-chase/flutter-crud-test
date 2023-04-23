@@ -62,12 +62,16 @@ class _AddOrUpdateCustomerPageState extends State<AddOrUpdateCustomerPage> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else if (state.status == Status.success) {
+
                   var snackBar = SnackBar(
-                    content: Text(widget.initialCustomer != null
-                        ? "Customer updated successfully"
-                        : "Customer added successfully",style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.white,
-                    ),),
+                    content: Text(
+                      widget.initialCustomer != null
+                          ? "Customer updated successfully"
+                          : "Customer added successfully",
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
                     backgroundColor: Colors.black,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);

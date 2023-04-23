@@ -59,10 +59,7 @@ class CustomerListItem extends StatelessWidget {
                   text: customer.bankAccountNumber,
                   icon: AppIcons.card,
                 ),
-
-
               ],
-
             ),
           ),
           Column(
@@ -75,18 +72,28 @@ class CustomerListItem extends StatelessWidget {
                     context,
                     AppRoutes.updateCustomer,
                     arguments: customer,
-                  );
+                  ).then((value) => {
+                        context.read<CustomerListBloc>().add(
+                              GetCustomerList(),
+                            )
+                      });
                 },
-                icon: const Icon(Icons.edit,color: Colors.black,),
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.black,
+                ),
               ),
               IconButton(
                   key: Key("delete-$index"),
                   onPressed: () {
                     context.read<CustomerListBloc>().add(
-                      DeleteCustomer(customer),
-                    );
+                          DeleteCustomer(customer),
+                        );
                   },
-                  icon:  Icon(Icons.delete,color:AppColors.warningColor ,)),
+                  icon: const Icon(
+                    Icons.delete,
+                    color: AppColors.warningColor,
+                  )),
             ],
           )
         ],
