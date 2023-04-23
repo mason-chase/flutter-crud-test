@@ -64,14 +64,13 @@ void main() {
       expect(result, const Right(unit));
     });
 
-    test("should emit [Loading, Error] when fail to delete customer", () async {
+    test("should emit [Error] when fail to delete customer", () async {
       // arrange
       when(bloc.deleteCustomerUseCase.call(tCustomer))
           .thenAnswer((_) async => const Left(tFailure));
 
       // assert later
       final expected = [
-        Loading(),
         Error(tFailure.message),
       ];
 
