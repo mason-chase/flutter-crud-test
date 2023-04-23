@@ -32,15 +32,22 @@ class CustomerListPage extends StatelessWidget {
           } else if (state is Loading) {
             return const CustomerListLoadingWidget();
           } else if (state is ListLoaded) {
-            return ListView.builder(
-                itemCount: state.customers.length,
-                itemBuilder: (context, index) {
-                  return CustomerListItem(
-                    customer: state.customers[index],
-                    index: index,
-                    key: Key("CustomerItem-$index"),
-                  );
-                });
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                shrinkWrap: true,
+                  itemCount: state.customers.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: CustomerListItem(
+                        customer: state.customers[index],
+                        index: index,
+                        key: Key("CustomerItem-$index"),
+                      ),
+                    );
+                  }),
+            );
           } else if (state is Error) {
             return CustomerListErrorWidget(state.message);
           } else {
