@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_crud_test/core/models/app_form_state.enum.dart';
 import 'package:mc_crud_test/core/models/status.enum.dart';
+import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer_form_keys.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
@@ -11,16 +12,26 @@ import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/widgets/add_customer_form.widget.dart';
 import 'package:mc_crud_test/features/customer/presentation/widgets/custom_button.dart';
 
-class AddCustomerPage extends StatefulWidget {
-  const AddCustomerPage({Key? key}) : super(key: key);
+class AddOrUpdateCustomerPage extends StatefulWidget {
+  const AddOrUpdateCustomerPage({Key? key, this.initialCustomer})
+      : super(key: key);
+  final Customer? initialCustomer;
 
   @override
-  State<AddCustomerPage> createState() => _AddCustomerPageState();
+  State<AddOrUpdateCustomerPage> createState() =>
+      _AddOrUpdateCustomerPageState();
 }
 
-class _AddCustomerPageState extends State<AddCustomerPage> {
+class _AddOrUpdateCustomerPageState extends State<AddOrUpdateCustomerPage> {
   @override
   void initState() {
+    if (widget.initialCustomer != null) {
+      BlocProvider.of<AddCustomerBloc>(context).add(
+        AddCustomer(
+          widget.initialCustomer!,
+        ),
+      );
+    }
     super.initState();
   }
 
@@ -35,9 +46,11 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const Expanded(
+            Expanded(
               child: SingleChildScrollView(
-                child: AddCustomerFormWidget(),
+                child: AddCustomerFormWidget(
+                  initialCustomer: widget.initialCustomer,
+                ),
               ),
             ),
             BlocListener<AddCustomerBloc, AddCustomerState>(
@@ -49,13 +62,15 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else if (state.status == Status.success) {
-                  var snackBar = const SnackBar(
-                    content: Text("Customer added successfully"),
+                  var snackBar = SnackBar(
+                    content: Text(widget.initialCustomer != null
+                        ? "Customer updated successfully"
+                        : "Customer added successfully"),
                     backgroundColor: Colors.greenAccent,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                  Timer(const Duration(seconds: 1), () {
+                  Timer(const Duration(milliseconds: 400), () {
                     // pop to previous screen
                     Navigator.pop(context);
                   });
@@ -73,7 +88,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
                         AppFormState.valid,
                     onTap: () {
                       context.read<AddCustomerBloc>().add(
-                            AddNewCustomer(),
+                            AddOrUpdateCustomer(),
                           );
                     },
                   );

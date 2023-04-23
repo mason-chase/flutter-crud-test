@@ -34,6 +34,12 @@ Feature: Customer List
     And I tap delete customer button
     Then I see one customer in the list
 
+  Scenario: navigate to update customer page
+    Given The app is running{1}
+    When I tap update customer button
+    Then I see update customer page
+
+
   Scenario: click in add customer button
     Given The app is running{1}
     When I tap add customer button

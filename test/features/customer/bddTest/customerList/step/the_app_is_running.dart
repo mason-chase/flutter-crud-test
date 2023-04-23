@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mc_crud_test/app/app_routes.dart';
 import 'package:mc_crud_test/core/utils/app.utils.dart';
-import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer.page.dart';
+import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_or_update_customer.page.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
@@ -21,7 +21,8 @@ Future<void> theAppIsRunning(WidgetTester tester,int state) async {
   final addCustomerBloc = getIt<AddCustomerBloc>();
   final Map<String, WidgetBuilder> routes = {
     AppRoutes.customerList: (_) => const CustomerListPage(),
-    AppRoutes.addCustomer: (_) => const AddCustomerPage(),
+    AppRoutes.addCustomer: (_) => const AddOrUpdateCustomerPage(),
+    AppRoutes.updateCustomer: (_) => const AddOrUpdateCustomerPage(initialCustomer: tCustomer,),
   };
   if(state==0) {
     whenListen(bloc, Stream.fromIterable([Loading()]),

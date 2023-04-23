@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer_form_keys.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
@@ -9,7 +10,9 @@ import 'package:mc_crud_test/features/customer/presentation/widgets/custom_form_
 import 'package:mc_crud_test/features/customer/presentation/widgets/date_picker.widget.dart';
 
 class AddCustomerFormWidget extends StatefulWidget {
-  const AddCustomerFormWidget({Key? key}) : super(key: key);
+  const AddCustomerFormWidget({Key? key, this.initialCustomer})
+      : super(key: key);
+  final Customer? initialCustomer;
 
   @override
   State<AddCustomerFormWidget> createState() => _AddCustomerFormWidgetState();
@@ -50,11 +53,12 @@ class _AddCustomerFormWidgetState extends State<AddCustomerFormWidget> {
                   onChange: (value) => context.read<AddCustomerBloc>().add(
                         FirstnameChanged(value),
                       ),
-                  initialValue: "",
+                  initialValue: widget.initialCustomer?.firstname,
                   title: 'First name',
                   size: TextFieldSize.medium,
                   currentFocusNode: _focusNodes[0],
                   nextFocusNode: _focusNodes[1],
+                  textInputType: TextInputType.name,
                   maxLength:
                       context.read<AddCustomerBloc>().state.firstname.maxLength,
                   validator: (_) => context
@@ -68,10 +72,11 @@ class _AddCustomerFormWidgetState extends State<AddCustomerFormWidget> {
                   onChange: (value) => context.read<AddCustomerBloc>().add(
                         LastnameChanged(value),
                       ),
-                  initialValue: "",
+                  initialValue: widget.initialCustomer?.lastname,
                   title: 'Last name',
                   currentFocusNode: _focusNodes[1],
                   nextFocusNode: _focusNodes[2],
+                  textInputType: TextInputType.name,
                   maxLength:
                       context.read<AddCustomerBloc>().state.lastname.maxLength,
                   validator: (_) => context
@@ -85,10 +90,11 @@ class _AddCustomerFormWidgetState extends State<AddCustomerFormWidget> {
                   onChange: (value) => context.read<AddCustomerBloc>().add(
                         EmailChanged(value),
                       ),
-                  initialValue: "",
+                  initialValue: widget.initialCustomer?.email,
                   title: 'Email',
                   currentFocusNode: _focusNodes[2],
                   nextFocusNode: _focusNodes[3],
+                  textInputType: TextInputType.emailAddress,
                   maxLength:
                       context.read<AddCustomerBloc>().state.email.maxLength,
                   validator: (_) =>
@@ -99,10 +105,11 @@ class _AddCustomerFormWidgetState extends State<AddCustomerFormWidget> {
                   onChange: (value) => context.read<AddCustomerBloc>().add(
                         PhoneChanged(value),
                       ),
-                  initialValue: "",
+                  initialValue: widget.initialCustomer?.phoneNumber,
                   title: 'Phone',
                   currentFocusNode: _focusNodes[3],
                   nextFocusNode: _focusNodes[4],
+                  textInputType: TextInputType.phone,
                   maxLength:
                       context.read<AddCustomerBloc>().state.phone.maxLength,
                   validator: (_) =>
@@ -113,9 +120,10 @@ class _AddCustomerFormWidgetState extends State<AddCustomerFormWidget> {
                   onChange: (value) => context.read<AddCustomerBloc>().add(
                         BankAccountChanged(value),
                       ),
-                  initialValue: "",
+                  initialValue: widget.initialCustomer?.bankAccountNumber,
                   title: 'Bank account',
                   currentFocusNode: _focusNodes[4],
+                  textInputType: TextInputType.number,
                   maxLength: context
                       .read<AddCustomerBloc>()
                       .state
@@ -129,7 +137,7 @@ class _AddCustomerFormWidgetState extends State<AddCustomerFormWidget> {
                 ),
                 DatePickerWidget(
                   key: AddCustomerFormKeys.dateOfBirthKey,
-                  initialDateTime: null,
+                  initialDateTime: widget.initialCustomer?.dateOfBirth,
                   onDateChange: (date) {
                     context.read<AddCustomerBloc>().add(
                           DateOfBirthChanged(date),

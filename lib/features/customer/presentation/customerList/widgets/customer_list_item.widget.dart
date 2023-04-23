@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mc_crud_test/app/app_routes.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.event.dart';
@@ -45,8 +46,15 @@ class CustomerListItem extends StatelessWidget {
               Column(
                 children: [
                   IconButton(
-                    key: Key("edit-$index"),
-                    onPressed: () {},
+                    key: Key("update-$index"),
+                    onPressed: () {
+                      // navigate to edit page
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.updateCustomer,
+                        arguments: customer,
+                      );
+                    },
                     icon: SvgPicture.asset(
                       "assets/image/icon/edit.svg",
                       height: 20.0,

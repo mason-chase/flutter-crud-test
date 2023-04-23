@@ -3,6 +3,7 @@ import 'package:mc_crud_test/core/utils/app.utils.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.respository.dart';
 import 'package:mc_crud_test/features/customer/domain/usecases/add_customer.usecase.dart';
 import 'package:mc_crud_test/features/customer/domain/usecases/get_customer_list.usecase.dart';
+import 'package:mc_crud_test/features/customer/domain/usecases/update_customer.usecase.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
@@ -25,6 +26,8 @@ void _setupAddCustomerInjection() async {
 
   getIt.registerLazySingleton<AddCustomerUseCase>(
           () => MockAddCustomerUseCase());
+  getIt.registerLazySingleton<UpdateCustomerUseCase>(
+          () => MockUpdateCustomerUseCase());
   getIt.registerLazySingleton<AddCustomerBloc>(() => MockAddCustomerBloc());
 }
 

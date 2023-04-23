@@ -94,4 +94,21 @@ class MockCustomerRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> updateCustomer(
+          _i6.Customer? customer) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateCustomer,
+          [customer],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+            _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #updateCustomer,
+            [customer],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
 }

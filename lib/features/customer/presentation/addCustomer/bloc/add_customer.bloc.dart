@@ -1,21 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mc_crud_test/core/models/custom_field.dart';
 import 'package:mc_crud_test/core/models/app_form_state.enum.dart';
+import 'package:mc_crud_test/core/models/custom_field.dart';
 import 'package:mc_crud_test/core/models/status.enum.dart';
 import 'package:mc_crud_test/core/utils/string_validation.ext.util.dart';
 import 'package:mc_crud_test/core/utils/time.util.dart';
 import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 import 'package:mc_crud_test/features/customer/domain/usecases/add_customer.usecase.dart';
+import 'package:mc_crud_test/features/customer/domain/usecases/update_customer.usecase.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
+import 'package:mc_crud_test/features/customer/presentation/addCustomer/utils/add_customer.util.dart';
 
 class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
   final AddCustomerUseCase addCustomerUseCase;
+  final UpdateCustomerUseCase updateCustomerUseCase;
 
   AddCustomerBloc({
     required this.addCustomerUseCase,
+    required this.updateCustomerUseCase,
   }) : super(const AddCustomerInitial()) {
     on<FirstnameChanged>(_mapFirstnameChangedToState);
     on<LastnameChanged>(_mapLastnameChangedToState);
@@ -23,12 +27,13 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
     on<PhoneChanged>(_mapPhoneChangedToState);
     on<DateOfBirthChanged>(_mapDateOfBirthChangedToState);
     on<BankAccountChanged>(_mapBankAccountChangedToState);
-    on<AddNewCustomer>(_mapAddCustomerToState);
-    on<AddInitialCustomer>(_mapAddInitialCustomerToState);
+    on<AddOrUpdateCustomer>(_mapAddOrUpdateCustomerToState);
+    on<InitialAddCustomer>(_mapAddInitialCustomerToState);
+    on<AddCustomer>(_mapInitialCustomerToState);
   }
 
-  _mapAddCustomerToState(
-      AddNewCustomer event, Emitter<AddCustomerState> emit) async {
+  _mapAddOrUpdateCustomerToState(
+      AddOrUpdateCustomer event, Emitter<AddCustomerState> emit) async {
     if (state.formState == AppFormState.valid) {
       emit(state.copyWith(status: Status.loading));
       var customer = Customer(
@@ -39,7 +44,9 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
         dateOfBirth: state.dateOfBirth.value!,
         bankAccountNumber: state.bankAccount.value!,
       );
-      var result = await addCustomerUseCase.call(customer);
+      var result = state.customer != null
+          ? await updateCustomerUseCase.call(customer)
+          : await addCustomerUseCase.call(customer);
       emit(result.fold(
         (failure) => state.copyWith(
           status: Status.error,
@@ -151,7 +158,12 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
   }
 
   FutureOr<void> _mapAddInitialCustomerToState(
-      AddInitialCustomer event, Emitter<AddCustomerState> emit) {
+      InitialAddCustomer event, Emitter<AddCustomerState> emit) {
     emit(const AddCustomerInitial());
+  }
+
+  FutureOr<void> _mapInitialCustomerToState(
+      AddCustomer event, Emitter<AddCustomerState> emit) {
+    emit(CustomerUtil.mapCustomerToAddCustomerState(event.customer));
   }
 }

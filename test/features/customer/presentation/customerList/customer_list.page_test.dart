@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mc_crud_test/app/app_routes.dart';
-import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer.page.dart';
+import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_or_update_customer.page.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
 import 'package:mc_crud_test/features/customer/presentation/customerList/bloc/customer_list.bloc.dart';
@@ -25,7 +25,8 @@ main() {
   Future _loadMain(WidgetTester tester) async {
     final Map<String, WidgetBuilder> routes = {
       AppRoutes.customerList: (_) => const CustomerListPage(),
-      AppRoutes.addCustomer: (_) => const AddCustomerPage(),
+      AppRoutes.addCustomer: (_) => const AddOrUpdateCustomerPage(),
+      AppRoutes.updateCustomer: (_) => const AddOrUpdateCustomerPage(initialCustomer: tCustomer,),
     };
 
     await tester.pumpWidget(
@@ -104,7 +105,23 @@ main() {
       await _loadMain(tester);
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
-      expect(find.byType(AddCustomerPage), findsOneWidget);
+      expect(find.byType(AddOrUpdateCustomerPage), findsOneWidget);
     });
+  });
+
+  group("update customerTap", () {
+    testWidgets("should navigate to update customer page when tap on update btn",
+            (WidgetTester tester) async {
+          whenListen(bloc, Stream.fromIterable([ListLoaded(tCustomerList)]),
+              initialState: ListLoaded(tCustomerList));
+
+          whenListen(
+              addCustomerBloc, Stream.fromIterable([const AddCustomerInitial()]),
+              initialState: const AddCustomerInitial());
+          await _loadMain(tester);
+          await tester.tap(find.byKey(const Key("update-0")));
+          await tester.pumpAndSettle();
+          expect(find.byType(AddOrUpdateCustomerPage), findsOneWidget);
+        });
   });
 }

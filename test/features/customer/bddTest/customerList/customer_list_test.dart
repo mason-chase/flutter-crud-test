@@ -14,8 +14,10 @@ import './step/i_see_add_customer_page.dart';
 import './step/i_see_empty_list_widget.dart';
 import './step/i_see_failed_to_load_customer_list_text.dart';
 import './step/i_see_one_customer_in_the_list.dart';
+import './step/i_see_update_customer_page.dart';
 import './step/i_tap_add_customer_button.dart';
 import './step/i_tap_delete_customer_button.dart';
+import './step/i_tap_update_customer_button.dart';
 import './step/the_app_is_running.dart';
 
 void main() {
@@ -52,6 +54,11 @@ void main() {
       await iRequestCustomerList(tester);
       await iTapDeleteCustomerButton(tester);
       await iSeeOneCustomerInTheList(tester);
+    });
+    testWidgets('''navigate to update customer page''', (tester) async {
+      await theAppIsRunning(tester, 1);
+      await iTapUpdateCustomerButton(tester);
+      await iSeeUpdateCustomerPage(tester);
     });
     testWidgets('''click in add customer button''', (tester) async {
       await theAppIsRunning(tester, 1);

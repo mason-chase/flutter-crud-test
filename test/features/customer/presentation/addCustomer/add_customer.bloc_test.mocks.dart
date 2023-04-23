@@ -13,6 +13,8 @@ import 'package:mc_crud_test/features/customer/domain/customer.respository.dart'
     as _i2;
 import 'package:mc_crud_test/features/customer/domain/usecases/add_customer.usecase.dart'
     as _i4;
+import 'package:mc_crud_test/features/customer/domain/usecases/update_customer.usecase.dart'
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -62,6 +64,41 @@ class MockAddCustomerUseCase extends _i1.Mock
         returnValue: _FakeCustomerRepository_0(
           this,
           Invocation.getter(#repository),
+        ),
+      ) as _i2.CustomerRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, void>> call(_i7.Customer? customer) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [customer],
+        ),
+        returnValue: _i5.Future<_i3.Either<_i6.Failure, void>>.value(
+            _FakeEither_1<_i6.Failure, void>(
+          this,
+          Invocation.method(
+            #call,
+            [customer],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i6.Failure, void>>);
+}
+
+/// A class which mocks [UpdateCustomerUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUpdateCustomerUseCase extends _i1.Mock
+    implements _i8.UpdateCustomerUseCase {
+  MockUpdateCustomerUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.CustomerRepository get customerRepository => (super.noSuchMethod(
+        Invocation.getter(#customerRepository),
+        returnValue: _FakeCustomerRepository_0(
+          this,
+          Invocation.getter(#customerRepository),
         ),
       ) as _i2.CustomerRepository);
   @override

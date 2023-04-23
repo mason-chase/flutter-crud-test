@@ -121,6 +121,19 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
                   'email': item.email,
                   'bankAccountNumber': item.bankAccountNumber
                 }),
+        _customerUpdateAdapter = UpdateAdapter(
+            database,
+            'customer',
+            ['id'],
+            (Customer item) => <String, Object?>{
+                  'id': item.id,
+                  'firstname': item.firstname,
+                  'lastname': item.lastname,
+                  'dateOfBirth': item.dateOfBirth,
+                  'phoneNumber': item.phoneNumber,
+                  'email': item.email,
+                  'bankAccountNumber': item.bankAccountNumber
+                }),
         _customerDeletionAdapter = DeletionAdapter(
             database,
             'customer',
@@ -143,6 +156,8 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
 
   final InsertionAdapter<Customer> _customerInsertionAdapter;
 
+  final UpdateAdapter<Customer> _customerUpdateAdapter;
+
   final DeletionAdapter<Customer> _customerDeletionAdapter;
 
   @override
@@ -161,6 +176,11 @@ class _$CustomerLocalDataSource extends CustomerLocalDataSource {
   @override
   Future<void> addCustomer(Customer customer) async {
     await _customerInsertionAdapter.insert(customer, OnConflictStrategy.fail);
+  }
+
+  @override
+  Future<void> updateCustomer(Customer customer) async {
+    await _customerUpdateAdapter.update(customer, OnConflictStrategy.fail);
   }
 
   @override

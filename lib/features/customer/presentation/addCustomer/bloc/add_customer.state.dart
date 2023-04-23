@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:mc_crud_test/core/models/custom_field.dart';
 import 'package:mc_crud_test/core/models/app_form_state.enum.dart';
+import 'package:mc_crud_test/core/models/custom_field.dart';
 import 'package:mc_crud_test/core/models/status.enum.dart';
+import 'package:mc_crud_test/features/customer/domain/customer.entity.dart';
 
 class AddCustomerState extends Equatable {
   final CustomFiled firstname;
@@ -13,6 +14,7 @@ class AddCustomerState extends Equatable {
   final AppFormState formState;
   final String? errorMessage;
   final Status status;
+  final Customer? customer;
 
   const AddCustomerState({
     required this.firstname,
@@ -24,6 +26,7 @@ class AddCustomerState extends Equatable {
     this.formState = AppFormState.initial,
     this.status = Status.initial,
     this.errorMessage,
+    this.customer,
   });
 
   @override
@@ -37,6 +40,7 @@ class AddCustomerState extends Equatable {
         formState,
         status,
         errorMessage,
+        customer,
       ];
 
   copyWith({
@@ -49,6 +53,7 @@ class AddCustomerState extends Equatable {
     AppFormState? formState,
     Status? status,
     errorMessage,
+    customer,
   }) {
     return AddCustomerState(
       firstname: firstname ?? this.firstname,
@@ -60,6 +65,7 @@ class AddCustomerState extends Equatable {
       formState: formState ?? this.formState,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
+      customer: customer ?? this.customer,
     );
   }
 }

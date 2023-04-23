@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mc_crud_test/app/app_routes.dart';
+import 'package:mc_crud_test/core/models/app_form_state.enum.dart';
 import 'package:mc_crud_test/core/models/custom_field.dart';
 import 'package:mc_crud_test/core/utils/app.utils.dart';
 import 'package:mc_crud_test/core/utils/time.util.dart';
-import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer.page.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_customer_form_keys.dart';
+import 'package:mc_crud_test/features/customer/presentation/addCustomer/add_or_update_customer.page.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
@@ -25,9 +26,9 @@ main() {
   setupTestInjection();
   final bloc = getIt<AddCustomerBloc>();
   late MockNavigatorObserver navigatorObserver;
-  Future _loadMain(WidgetTester tester) async {
+  Future _loadAddMode(WidgetTester tester) async {
     final Map<String, WidgetBuilder> routes = {
-      AppRoutes.addCustomer: (_) => const AddCustomerPage(),
+      AppRoutes.addCustomer: (_) => const AddOrUpdateCustomerPage(),
     };
     whenListen<AddCustomerState>(
         bloc,
@@ -49,6 +50,32 @@ main() {
     );
   }
 
+  Future _loadUpdateMode(WidgetTester tester) async {
+    final Map<String, WidgetBuilder> routes = {
+      AppRoutes.updateCustomer: (_) => const AddOrUpdateCustomerPage(
+            initialCustomer: tCustomer,
+          ),
+    };
+    whenListen<AddCustomerState>(
+        bloc,
+        Stream.fromIterable(
+          [const AddCustomerInitial()],
+        ),
+        initialState: const AddCustomerInitial());
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [BlocProvider<AddCustomerBloc>.value(value: bloc)],
+        child: ScreenUtilInit(
+            builder: (ctx, child) => MaterialApp(
+                  title: 'Flutter Demo',
+                  routes: routes,
+                  initialRoute: AppRoutes.updateCustomer,
+                  navigatorObservers: [navigatorObserver],
+                )),
+      ),
+    );
+  }
+
   setUp(() {
     navigatorObserver = MockNavigatorObserver();
   });
@@ -56,7 +83,7 @@ main() {
   group('event call validation', () {
     testWidgets('verify after changing first name FistNameChanged is called',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       await tester.pumpAndSettle();
 
       await tester.enterText(
@@ -68,7 +95,7 @@ main() {
 
     testWidgets('verify after changing last name LastNameChanged is called',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       await tester.pumpAndSettle();
 
       await tester.enterText(
@@ -80,7 +107,7 @@ main() {
 
     testWidgets('verify after changing email EmailChanged is called',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       await tester.pumpAndSettle();
 
       await tester.enterText(
@@ -92,7 +119,7 @@ main() {
 
     testWidgets('verify after changing phone PhoneChanged is called',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       await tester.pumpAndSettle();
 
       await tester.enterText(
@@ -106,7 +133,7 @@ main() {
     testWidgets(
         'verify after changing bank account BankAccountChanged is called',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       await tester.pumpAndSettle();
 
       await tester.enterText(
@@ -120,7 +147,7 @@ main() {
     testWidgets(
         'verify after changing date of birth DateOfBirthChanged is called',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       await tester.pumpAndSettle();
       await tester.ensureVisible(find.byType(CupertinoDatePicker));
       await tester.tap(find.byType(CupertinoDatePicker));
@@ -152,7 +179,7 @@ main() {
 
   group('form validation', () {
     testWidgets('verify first name validation', (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       when(() => bloc.state)
           .thenAnswer((invocation) => const AddCustomerInitial().copyWith(
                   firstname: const CustomFiled(
@@ -170,7 +197,7 @@ main() {
     });
 
     testWidgets('verify last name validation', (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       when(() => bloc.state)
           .thenAnswer((invocation) => const AddCustomerInitial().copyWith(
                   lastname: const CustomFiled(
@@ -188,7 +215,7 @@ main() {
     });
 
     testWidgets('verify email validation', (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       when(() => bloc.state)
           .thenAnswer((invocation) => const AddCustomerInitial().copyWith(
                   email: const CustomFiled(
@@ -206,7 +233,7 @@ main() {
     });
 
     testWidgets('verify phone validation', (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       when(() => bloc.state)
           .thenAnswer((invocation) => const AddCustomerInitial().copyWith(
                   phone: const CustomFiled(
@@ -224,7 +251,7 @@ main() {
     });
 
     testWidgets('verify bank account validation', (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
       when(() => bloc.state)
           .thenAnswer((invocation) => const AddCustomerInitial().copyWith(
                   bankAccount: const CustomFiled(
@@ -245,7 +272,7 @@ main() {
   group('form submit', () {
     testWidgets('verify submit button is disabled when form is invalid',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
 
       expect(
           tester
@@ -257,7 +284,7 @@ main() {
     testWidgets(
         'verify submit button is disabled when even one of the fields is invalid',
         (WidgetTester tester) async {
-      await _loadMain(tester);
+      await _loadAddMode(tester);
 
       await tester.enterText(
           find.byKey(AddCustomerFormKeys.bankAccountKey), invalidBankAccount);
@@ -268,6 +295,31 @@ main() {
                   find.byKey(AddCustomerFormKeys.submitButtonKey))
               .enable,
           false);
+    });
+  });
+
+  group('update customer', () {
+    testWidgets("initial customer should not be null", (widgetTester) async {
+      await _loadUpdateMode(widgetTester);
+      await widgetTester.pumpAndSettle();
+      var page = widgetTester.widget<AddOrUpdateCustomerPage>(
+          find.byType(AddOrUpdateCustomerPage));
+      expect(page.initialCustomer, isNotNull);
+    });
+
+    testWidgets("initial customer should be equal to customer",
+        (widgetTester) async {
+      await _loadUpdateMode(widgetTester);
+      await widgetTester.pumpAndSettle();
+      var page = widgetTester.widget<AddOrUpdateCustomerPage>(
+          find.byType(AddOrUpdateCustomerPage));
+      expect(page.initialCustomer, isNotNull);
+
+      when(() => bloc.state).thenAnswer((invocation) =>
+          const AddCustomerInitial().copyWith(
+              formState: AppFormState.valid, customer: page.initialCustomer!));
+
+      expect(bloc.state.formState, AppFormState.valid);
     });
   });
 }

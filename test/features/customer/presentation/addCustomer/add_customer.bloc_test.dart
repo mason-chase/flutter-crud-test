@@ -4,6 +4,7 @@ import 'package:mc_crud_test/core/models/app_form_state.enum.dart';
 import 'package:mc_crud_test/core/models/custom_field.dart';
 import 'package:mc_crud_test/core/models/status.enum.dart';
 import 'package:mc_crud_test/features/customer/domain/usecases/add_customer.usecase.dart';
+import 'package:mc_crud_test/features/customer/domain/usecases/update_customer.usecase.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.bloc.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.event.dart';
 import 'package:mc_crud_test/features/customer/presentation/addCustomer/bloc/add_customer.state.dart';
@@ -13,10 +14,10 @@ import 'package:mockito/mockito.dart';
 import '../../customer_test.constants.dart';
 import 'add_customer.bloc_test.mocks.dart';
 
-@GenerateMocks([AddCustomerUseCase])
+@GenerateMocks([AddCustomerUseCase,UpdateCustomerUseCase])
 void main() {
   AddCustomerBloc bloc =
-  AddCustomerBloc(addCustomerUseCase: MockAddCustomerUseCase());
+  AddCustomerBloc(addCustomerUseCase: MockAddCustomerUseCase(),updateCustomerUseCase: MockUpdateCustomerUseCase());
 
   test('initial state is Empty', () {
     expect(bloc.state, equals(AddCustomerInitial()));
@@ -27,7 +28,7 @@ void main() {
 
     test("should emits invalid FirstnameState when firstname is invalid",
             () async {
-          bloc.add(AddInitialCustomer());
+          bloc.add(InitialAddCustomer());
           bloc.add(FirstnameChanged(invalidFirstname));
           await pumpEventQueue();
           await expectLater(
@@ -42,7 +43,7 @@ void main() {
         });
 
     test("should emits valid FirstnameState when firstname is valid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(FirstnameChanged(validFirstname));
 
       await pumpEventQueue();
@@ -59,7 +60,7 @@ void main() {
     // lastname
     test("should emits invalid LastnameState when lastname is invalid",
             () async {
-          bloc.add(AddInitialCustomer());
+          bloc.add(InitialAddCustomer());
           bloc.add(LastnameChanged(invalidLastname));
           await pumpEventQueue();
           await expectLater(
@@ -74,7 +75,7 @@ void main() {
         });
 
     test("should emits valid LastnameState when lastname is valid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(LastnameChanged(validLastname));
 
       await pumpEventQueue();
@@ -89,7 +90,7 @@ void main() {
     });
 
     test("should emits invalid EmailState when email is invalid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(EmailChanged(invalidEmail));
       await pumpEventQueue();
       await expectLater(
@@ -104,7 +105,7 @@ void main() {
     });
 
     test("should emits valid EmailState when email is valid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(EmailChanged(validEmail));
 
       await pumpEventQueue();
@@ -119,7 +120,7 @@ void main() {
     });
 
     test("should emits invalid PhoneState when phone is invalid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(PhoneChanged(invalidPhone));
       await pumpEventQueue();
       await expectLater(
@@ -134,7 +135,7 @@ void main() {
     });
 
     test("should emits valid PhoneState when phone is valid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(PhoneChanged(validPhone));
 
       await pumpEventQueue();
@@ -150,7 +151,7 @@ void main() {
 
     test("should emits invalid BankAccountState when bank account is invalid",
             () async {
-          bloc.add(AddInitialCustomer());
+          bloc.add(InitialAddCustomer());
           bloc.add(BankAccountChanged(invalidBankAccount));
           await pumpEventQueue();
           await expectLater(
@@ -166,7 +167,7 @@ void main() {
 
     test("should emits valid BankAccountState when bank account is valid",
             () async {
-          bloc.add(AddInitialCustomer());
+          bloc.add(InitialAddCustomer());
           bloc.add(BankAccountChanged(validBankAccount));
 
           await pumpEventQueue();
@@ -182,7 +183,7 @@ void main() {
 
     test("should emits valid DateOfBirthState when date of birth is valid",
             () async {
-          bloc.add(AddInitialCustomer());
+          bloc.add(InitialAddCustomer());
           bloc.add(DateOfBirthChanged(validDateOfBirth));
 
           await pumpEventQueue();
@@ -198,7 +199,7 @@ void main() {
 
     // all data are valid
     test("should emits valid formState when all data are valid", () async {
-      bloc.add(AddInitialCustomer());
+      bloc.add(InitialAddCustomer());
       bloc.add(FirstnameChanged(validFirstname));
       bloc.add(LastnameChanged(validLastname));
       bloc.add(EmailChanged(validEmail));
@@ -259,8 +260,29 @@ void main() {
           realInvocation) async =>  const Left(tFailure));
     });
 
-    test("user fail to add customer because customer all ready exist", () async {
+    test("user fail to add customer because customer already exist", () async {
       when(bloc.addCustomerUseCase(tCustomer)).thenAnswer((
+          realInvocation) async =>  const Left(tFailureAllReadyExist));
+    });
+
+  });
+
+  group("update customer", () {
+
+    test("update customer successfully", () async {
+      when(bloc.updateCustomerUseCase(tCustomer)).thenAnswer((
+          realInvocation) async => const Right(tCustomer));
+    });
+
+    // user fail to add customer
+
+    test(" fail to update customer", () async {
+      when(bloc.updateCustomerUseCase(tCustomer)).thenAnswer((
+          realInvocation) async =>  const Left(tFailure));
+    });
+
+    test("fail to update customer because customer already exist", () async {
+      when(bloc.updateCustomerUseCase(tCustomer)).thenAnswer((
           realInvocation) async =>  const Left(tFailureAllReadyExist));
     });
 
