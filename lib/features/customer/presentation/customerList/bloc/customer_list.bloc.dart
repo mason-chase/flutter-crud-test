@@ -25,13 +25,13 @@ class CustomerListBloc extends Bloc<CustomerListEvent, CustomerListState> {
     var result = await getCustomerListUseCase.call();
     emit(result.fold(
       (failure) => Error(failure.message),
-      (data) => ListLoaded(data),
+      (data) => data.isNotEmpty ? ListLoaded(data) : Empty(),
     ));
   }
 
   _mapDeleteCustomerToState(
       DeleteCustomer event, Emitter<CustomerListState> emit) async {
-    emit(Loading());
+
     var result = await deleteCustomerUseCase.call(event.customer);
     if (result.isRight()) {
       emit(Deleted());

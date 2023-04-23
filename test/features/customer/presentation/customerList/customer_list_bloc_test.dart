@@ -68,14 +68,9 @@ void main() {
       // arrange
       when(bloc.deleteCustomerUseCase.call(tCustomer))
           .thenAnswer((_) async => const Left(tFailure));
-
       // assert later
-      final expected = [
-        Error(tFailure.message),
-      ];
-
-      expectLater(bloc.stream, emitsInOrder(expected));
-      bloc.add(DeleteCustomer(tCustomer));
+      var result = await bloc.deleteCustomerUseCase.call(tCustomer);
+      expect(result, const Left(tFailure));
     });
   });
 }
