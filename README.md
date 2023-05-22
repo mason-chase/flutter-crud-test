@@ -23,11 +23,9 @@ Customer {
 - [TDD](https://en.wikipedia.org/wiki/Test-driven_development)
 - [DDD](https://en.wikipedia.org/wiki/Domain-driven_design)
 - [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development): [Acceptance Test](https://en.wikipedia.org/wiki/Acceptance_testing)
+- Clean Architecture
+- Clean Code
 - Clean git commits that shows your work progress.
-
-## Clean Architecture (Must)
-
-<img src="./clean_architecture.png" max-width="250px" max-height="250px" />
 
 ### Validations (Must)
 
